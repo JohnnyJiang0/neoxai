@@ -4,7 +4,7 @@ const json = (o, c = 200) => new Response(JSON.stringify(o), { status: c, header
 
 // GET /api/chat -> tells the page whether photos are available
 export async function onRequestGet({ env }) {
-  return json({ vision: !!(env.AI_KEY ? env.VISION_MODEL : env.AI) });
+  return json({ vision: !!(env.AI_KEY ? env.VISION_MODEL : env.AI), hasKey: !!env.AI_KEY, hasAI: !!env.AI });
 }
 
 // POST /api/chat -> streams the AI answer. The key never leaves this server.
