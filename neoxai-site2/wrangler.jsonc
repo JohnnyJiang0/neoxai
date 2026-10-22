@@ -1,0 +1,7 @@
+{
+  "name": "neoxai",
+  "main": "neoxai-site2/src/worker.js",
+  "compatibility_date": "2025-09-01",
+  "keep_vars": true,
+  "assets": { "directory": "./neoxai-site2/public", "binding": "ASSETS" }
+}
