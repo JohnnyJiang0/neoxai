@@ -44,7 +44,7 @@ export async function onRequestPost({ request, env }) {
       const out = await env.AI.run(model, { messages: all, stream: true, max_tokens: 2048 });
       return new Response(out, { headers: { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache' } });
     }
-    return json({ error: 'No AI is connected yet. Add AI_KEY or a Workers AI binding in Cloudflare.' }, 500);
+    return json({ error: 'AI is on maintance mode. Please try again later.' }, 500);
   } catch (e) {
     const limit = /limit|quota|neuron|capacity/i.test(String((e && e.message) || e));
     return json({ error: limit ? 'Daily free limit reached' : 'AI error' }, limit ? 429 : 502);
