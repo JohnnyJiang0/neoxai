@@ -4,8 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>NeoXAI Math</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
 <meta name="description" content="NeoXAI Math: a math tutor that explains, draws graphs, makes quizzes and reads photos.">
-<link rel="icon" href="data:image/ xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
 <style>
 :root{--bg:#000;--fg:#fff;--dim:color-mix(in srgb,var(--fg) 55%,transparent);--line:color-mix(in srgb,var(--fg) 22%,transparent);--glass:color-mix(in srgb,var(--bg) 62%,transparent);--bubble:color-mix(in srgb,var(--fg) 7%,transparent);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
@@ -101,6 +103,7 @@ table.xt{border-collapse:collapse;font-size:13px;min-width:100%}
 .xlt{display:flex;border-top:1px solid var(--line)}
 .xlt button{background:none;border:0;border-right:1px solid var(--line);padding:6px 14px;font-size:12px;cursor:pointer}
 .xlt button.on{background:var(--bubble);font-weight:700}
+.mathd{margin:8px 0;overflow-x:auto;overflow-y:hidden}
 </style>
 </head>
 <body>
@@ -118,8 +121,8 @@ table.xt{border-collapse:collapse;font-size:13px;min-width:100%}
       <h2><b>NEO</b>X<b>AI</b></h2>
       <p>Your math tutor. Explains, draws and reads photos.</p>
       <div class="chips">
-        <button class="chip">Who is the Creator of NeoXAI</button>
-        <button class="chip">What AI model am I using?</button>
+        <button class="chip">Show me how y = x^2 - 4 looks</button>
+        <button class="chip">Explain the Pythagorean theorem with a drawing</button>
         <button class="chip">Give me a 5-question fractions quiz</button>
         <button class="chip">Make an Excel sheet to practice multiplication</button>
       </div>
@@ -145,13 +148,13 @@ table.xt{border-collapse:collapse;font-size:13px;min-width:100%}
 <dialog id="tdlg">
   <h3>Themes</h3>
   <div class="themes" id="tgrid">
-    <button class="btn" data-t="neo">Neo Dark</button>
-    <button class="btn" data-t="light">Neo Light</button>
-    <button class="btn" data-t="space">Space</button>
-    <button class="btn" data-t="kawaii">Kawaii</button>
-    <button class="btn" data-t="nothing">Nothing</button>
-    <button class="btn" data-t="emoji">Emoji</button>
-    <button class="btn" data-t="color">Color</button>
+    <button class="btn" data-t="neo">⚡ Neo</button>
+    <button class="btn" data-t="light">◻ Neo Light</button>
+    <button class="btn" data-t="space">🌌 Space</button>
+    <button class="btn" data-t="kawaii">🌸 Kawaii</button>
+    <button class="btn" data-t="nothing">○ Nothing</button>
+    <button class="btn" data-t="emoji">😎 Emoji</button>
+    <button class="btn" data-t="color">🎨 Color</button>
   </div>
   <label>Your emojis (Emoji theme)</label>
   <input id="emo" placeholder="🔥🐱🚀">
@@ -343,16 +346,22 @@ function svgImg(code){
   const img=new Image(); img.alt='diagram';
   img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(code.replace(/^\s*```\w*\s*|```\s*$/g,'').trim()); return img;
 }
-function inl(p,t){ t.split(/(\*\*[^*]+\*\*|`[^`]+`)/).forEach(x=>{ if(!x) return; let n;
-  if(/^\*\*[^*]+\*\*$/.test(x)){ n=document.createElement('b'); n.textContent=x.slice(2,-2); }
-  else if(/^`[^`]+`$/.test(x)){ n=document.createElement('code'); n.textContent=x.slice(1,-1); }
-  else n=document.createTextNode(x); p.appendChild(n); }); }
+function mathNode(tex,disp){ const el=document.createElement(disp?'div':'span'); if(disp) el.className='mathd';
+  if(window.katex){ try{ el.innerHTML=katex.renderToString(tex,{displayMode:disp,throwOnError:false,strict:false,trust:false}); return el; }catch(e){} }
+  el.textContent=tex; return el; }
+const MRE=/(\\\([\s\S]*?\\\)|\$(?!\s)[^$\n]+?(?<!\s)\$(?!\d))/;
+function inl(p,t){ t.split(/(\*\*[^*]+\*\*|`[^`]+`)/).forEach(x=>{ if(!x) return;
+  if(/^\*\*[^*]+\*\*$/.test(x)){ const n=document.createElement('b'); inl(n,x.slice(2,-2)); p.appendChild(n); }
+  else if(/^`[^`]+`$/.test(x)){ const n=document.createElement('code'); n.textContent=x.slice(1,-1); p.appendChild(n); }
+  else x.split(MRE).forEach((y,i)=>{ if(!y) return; if(i%2) p.appendChild(mathNode(y.startsWith('\\(')?y.slice(2,-2):y.slice(1,-1),false)); else p.appendChild(document.createTextNode(y)); }); }); }
 function md(el,s){
-  const L=s.replace(/```\w*/g,'').split('\n'); let i=0;
+  const MQ=[]; s=s.replace(/```\w*/g,'').replace(/\\\[([\s\S]*?)\\\]|\$\$([\s\S]*?)\$\$/g,(m,a,b)=>{ MQ.push((a!==undefined?a:b).trim()); return '\n§D'+(MQ.length-1)+'§\n'; });
+  const L=s.split('\n'); let i=0;
   const blk=(cls,fn)=>{ const d=document.createElement('div'); d.className=cls; fn(d); el.appendChild(d); };
   while(i<L.length){ const ln=L[i].trim(); let m;
     if(!ln){ i++; continue; }
-    if((m=ln.match(/^(#{1,3})\s+(.*)/))){ blk('h h'+m[1].length,d=>inl(d,m[2])); i++; }
+    if((m=ln.match(/^§D(\d+)§$/))){ el.appendChild(mathNode(MQ[+m[1]],true)); i++; }
+    else if((m=ln.match(/^(#{1,3})\s+(.*)/))){ blk('h h'+m[1].length,d=>inl(d,m[2])); i++; }
     else if(/^([-*_])\1{2,}$/.test(ln)){ const hr=document.createElement('hr'); hr.className='sep'; el.appendChild(hr); i++; }
     else if(ln[0]==='|'){ const rows=[]; while(i<L.length&&L[i].trim()[0]==='|'){ const cells=L[i].trim().replace(/^\||\|$/g,'').split('|').map(x=>x.trim()); if(!cells.every(x=>/^:?-{2,}:?$/.test(x))) rows.push(cells); i++; }
       const tb=document.createElement('table'); tb.className='t';
@@ -407,9 +416,9 @@ function quiz(body){
       const t=document.createElement('div'); t.className='qt'; inl(t,(qi+1)+'. '+q.q); card.appendChild(t);
       const opts=[...q.a]; for(let i=opts.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [opts[i],opts[j]]=[opts[j],opts[i]]; }
       const ex=document.createElement('div'); ex.className='qe';
-      const btns=opts.map((o,oi)=>{ const b=document.createElement('button'); b.className='qo'; b.textContent=String.fromCharCode(65+oi)+'. '+o.t;
+      const btns=opts.map((o,oi)=>{ const b=document.createElement('button'); b.className='qo'; b.append(String.fromCharCode(65+oi)+'. '); inl(b,o.t);
         b.onclick=()=>{ btns.forEach((x,k)=>{ x.disabled=true; if(opts[k].ok) x.classList.add('ok'); }); if(o.ok) score++; else b.classList.add('bad');
-          ex.textContent=(o.ok?'✓ Correct! ':'✗ Not quite. ')+q.e; ex.classList.add('show'); done++;
+          ex.replaceChildren(); ex.append(o.ok?'✓ Correct! ':'✗ Not quite. '); inl(ex,q.e); ex.classList.add('show'); done++;
           if(done===good.length){ fin.textContent='Score: '+score+' / '+good.length+(score===good.length?' 🎉 Perfect!':score*2>=good.length?' 👍 Nice work!':' Keep practicing!');
             const rb=document.createElement('button'); rb.className='btn'; rb.textContent='Try again'; rb.onclick=build; fin.appendChild(rb); fin.classList.add('show'); } };
         card.appendChild(b); return b; });
