@@ -104,6 +104,42 @@ table.xt{border-collapse:collapse;font-size:13px;min-width:100%}
 .xlt button{background:none;border:0;border-right:1px solid var(--line);padding:6px 14px;font-size:12px;cursor:pointer}
 .xlt button.on{background:var(--bubble);font-weight:700}
 .mathd{margin:8px 0;overflow-x:auto;overflow-y:hidden}
+.mwrap{position:relative;align-self:flex-end}
+.mbtn{height:42px;padding:0 14px;display:flex;align-items:center;gap:8px;white-space:nowrap;text-transform:none;letter-spacing:0;font-size:13px;background:none}
+.mbtn .car{font-size:11px;color:var(--dim);transition:transform .2s}
+.mbtn[aria-expanded=true] .car{transform:rotate(180deg)}
+.mmenu{position:absolute;right:0;bottom:calc(100% + 16px);width:min(300px,78vw);display:none;flex-direction:column;gap:4px;padding:8px;
+  background:color-mix(in srgb,var(--bg) 92%,transparent);border:1px solid var(--line);backdrop-filter:blur(14px);box-shadow:0 12px 40px rgba(0,0,0,.35);z-index:5}
+.mmenu.open{display:flex}
+.mopt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:10px 12px;border:0;background:none;cursor:pointer;font-size:14px}
+.mopt:hover,.mopt.on{background:var(--bubble)}
+.mopt b{display:block;font-weight:600;font-size:14px}
+.mopt span{display:block;font-size:12px;color:var(--dim);margin-top:3px}
+.mopt .ic{margin-left:auto;font-size:15px}
+.mopt.lock{opacity:.45;cursor:not-allowed}
+.mopt.lock:hover{background:none}
+@media(max-width:520px){.bar{flex-wrap:wrap}.bar textarea{flex:1 1 100%;order:-1}.mwrap{margin-left:auto}}
+/* smooth corners */
+.btn{border-radius:12px}
+.chip,.mbtn{border-radius:999px}
+.msg{border-radius:20px}
+.msg.user{border-bottom-right-radius:6px}
+.msg.bot{border-bottom-left-radius:6px}
+.bar{border-radius:28px}
+.send,.att{border-radius:50%}
+.mmenu{border-radius:20px}
+.mopt{border-radius:14px}
+dialog{border-radius:22px}
+dialog input{border-radius:12px}
+.draw{border-radius:14px}
+.gw canvas{border-radius:8px}
+.gt button{border-radius:10px}
+.quiz,.fcard{border-radius:16px}
+.qo{border-radius:12px}
+.ci{border-radius:14px}
+.xl{border-radius:14px;overflow:hidden}
+.pv img,.msg img.up{border-radius:10px}
+code{border-radius:6px}
 </style>
 </head>
 <body>
@@ -112,20 +148,20 @@ table.xt{border-collapse:collapse;font-size:13px;min-width:100%}
   <header>
     <h1><b>NEO</b>X<b>AI</b></h1>
     <div class="sp"></div>
+    <a class="btn" href="/" style="text-decoration:none;color:inherit">Home</a>
     <button class="btn" id="chats">Chats</button>
     <button class="btn" id="themes">Themes</button>
     <button class="btn" id="clear">New</button>
-    <button class="btn">Games</button>
-    <button class="btn">Developers</button>
   </header>
   <main id="chat">
     <div class="hero" id="hero">
       <h2><b>NEO</b>X<b>AI</b></h2>
-      <p>NeoXAI was made without purpose:P</p>
+      <p>Your math tutor. Explains, draws and reads photos.</p>
       <div class="chips">
-        <button class="chip">Who made you?</button>
-        <button class="chip">Give me few random math question</button>
-        <button class="chip">Random space fact</button>
+        <button class="chip">Show me how y = x^2 - 4 looks</button>
+        <button class="chip">Explain the Pythagorean theorem with a drawing</button>
+        <button class="chip">Give me a 5-question fractions quiz</button>
+        <button class="chip">Make an Excel sheet to practice multiplication</button>
       </div>
     </div>
   </main>
@@ -134,9 +170,13 @@ table.xt{border-collapse:collapse;font-size:13px;min-width:100%}
     <div class="bar">
       <button class="att" id="attach" hidden title="Add a photo of a problem">📷</button><input type="file" id="pick" accept="image/*" multiple hidden>
       <textarea id="in" rows="1" placeholder="Ask a math question…"></textarea>
+      <div class="mwrap">
+        <div class="mmenu" id="mmenu" role="menu"></div>
+        <button class="btn mbtn" id="models" aria-haspopup="menu" aria-expanded="false"><span id="mname">NeoStandard 1.0</span><span class="car">▾</span></button>
+      </div>
       <button class="send" id="send">➤</button>
     </div>
-    <div class="note" id="note">We made this AI just for fun.</div>
+    <div class="note" id="note">Johnny made this AI just for fun.</div>
   </footer>
 </div>
 
@@ -149,13 +189,13 @@ table.xt{border-collapse:collapse;font-size:13px;min-width:100%}
 <dialog id="tdlg">
   <h3>Themes</h3>
   <div class="themes" id="tgrid">
-    <button class="btn" data-t="neo">Neo</button>
-    <button class="btn" data-t="light">Neo Light</button>
-    <button class="btn" data-t="space">Space</button>
-    <button class="btn" data-t="kawaii">Kawaii</button>
-    <button class="btn" data-t="nothing">Nothing</button>
-    <button class="btn" data-t="emoji">Emoji</button>
-    <button class="btn" data-t="color">Color</button>
+    <button class="btn" data-t="neo">⚡ Neo</button>
+    <button class="btn" data-t="light">◻ Neo Light</button>
+    <button class="btn" data-t="space">🌌 Space</button>
+    <button class="btn" data-t="kawaii">🌸 Kawaii</button>
+    <button class="btn" data-t="nothing">○ Nothing</button>
+    <button class="btn" data-t="emoji">😎 Emoji</button>
+    <button class="btn" data-t="color">🎨 Color</button>
   </div>
   <label>Your emojis (Emoji theme)</label>
   <input id="emo" placeholder="🔥🐱🚀">
@@ -171,11 +211,41 @@ let th={theme:'neo',emoji:'🔥🐱🚀',color:'#1a1a2e'};
 try{th={...th,...JSON.parse(localStorage.getItem('neoxai-theme')||'{}')};}catch(e){}
 let history=[],busy=false,sample=null;
 
+/* ---------- models ---------- */
+const MODELS=[
+  {id:'standard',name:'NeoStandard 1.0',d:'Fast and compact explanations.'},
+  {id:'flash',name:'NeoFlash 1.5',d:'Deeper, more careful step-by-step help.'},
+  {id:'pro',name:'NeoPro 2.0',d:'Coming soon',lock:true},
+  {id:'galaxy',name:'Galaxy 2.5',d:'Coming soon',lock:true},
+  {id:'nebula',name:'Nebula 2.5',d:'Coming soon',lock:true}];
+let mid='standard'; try{ mid=localStorage.getItem('neoxai-model')||mid; }catch(e){}
+if(!MODELS.some(m=>m.id===mid&&!m.lock)) mid='standard';
+const curModel=()=>MODELS.find(m=>m.id===mid), mbtn=$('models'), menu=$('mmenu');
+function renderModels(){
+  $('mname').textContent=curModel().name; menu.textContent='';
+  for(const m of MODELS){
+    const b=document.createElement('button'); b.className='mopt'+(m.lock?' lock':'')+(m.id===mid?' on':'');
+    b.dataset.m=m.id; b.setAttribute('role','menuitem'); if(m.lock) b.setAttribute('aria-disabled','true');
+    const info=document.createElement('div'), n=document.createElement('b'), s=document.createElement('span'), ic=document.createElement('div');
+    n.textContent=m.name; s.textContent=m.d; info.append(n,s);
+    ic.className='ic'; ic.textContent=m.lock?'🔒':(m.id===mid?'✓':'');
+    b.append(info,ic); menu.appendChild(b);
+  }
+}
+function toggleMenu(open){ menu.classList.toggle('open',open); mbtn.setAttribute('aria-expanded',open); }
+mbtn.onclick=e=>{ e.stopPropagation(); toggleMenu(!menu.classList.contains('open')); };
+menu.onclick=e=>{ e.stopPropagation(); const b=e.target.closest('[data-m]'); if(!b) return;
+  const m=MODELS.find(x=>x.id===b.dataset.m); if(!m||m.lock) return;
+  mid=m.id; try{localStorage.setItem('neoxai-model',mid);}catch(e){} renderModels(); toggleMenu(false); inp.focus(); };
+document.addEventListener('click',()=>toggleMenu(false));
+addEventListener('keydown',e=>{ if(e.key==='Escape') toggleMenu(false); });
+renderModels();
+
 /* ---------- brain ---------- */
 let dl=null,imgCaps=null; sample=true;
 fetch('/api/chat').then(r=>r.json()).then(i=>{ if(i&&i.vision){ imgCaps={maxCount:3,maxInputBytes:20e6}; $('pick').accept='image/*'; $('attach').hidden=false; } }).catch(()=>{});
 async function ask(msgs,onText){
-  const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:msgs})});
+  const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:msgs,model:mid})});
   if(!res.ok){ let m=''; try{ m=(await res.json()).error||''; }catch(e){} const er=new Error(m||('Server '+res.status)); er.status=res.status; throw er; }
   const rd=res.body.getReader(),dec=new TextDecoder(); let buf='',out='';
   for(;;){ const {done,value}=await rd.read(); if(done) break; buf+=dec.decode(value,{stream:true}); const L=buf.split('\n'); buf=L.pop();
