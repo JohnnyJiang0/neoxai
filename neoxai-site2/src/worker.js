@@ -74,6 +74,42 @@ export async function onRequestPost({ request, env }) {
 // POST /api/order -> starts a subscription checkout (Stripe-hosted, so no card data touches this site)
 const PLANS = { standard: { name: 'NeoStandard 1.0', price: 'STRIPE_PRICE_STANDARD' }, flash: { name: 'NeoFlash 1.5', price: 'STRIPE_PRICE_FLASH' } };
 const clean = (v, n) => String(v == null ? '' : v).replace(/[\u0000-\u001f]/g, ' ').trim().slice(0, n);
+// ---- where customer details are stored: Supabase (preferred) or a Cloudflare KV namespace called LEADS ----
+const dbKind = env => (env.SUPABASE_URL && env.SUPABASE_SERVICE_KEY) ? 'supabase' : env.LEADS ? 'kv' : null;
+const sb = (env, path, init = {}) => fetch(String(env.SUPABASE_URL).replace(/\/+$/, '') + '/rest/v1/' + path, {
+  ...init, headers: { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY, 'Content-Type': 'application/json', ...(init.headers || {}) } });
+async function saveLead(env, l) {
+  const k = dbKind(env);
+  if (k === 'supabase') {
+    const r = await sb(env, 'leads', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({ plan: l.plan, name: l.name, email: l.email, company: l.company, use_case: l.use, status: l.status }) });
+    return r.ok;
+  }
+  if (k === 'kv') { await env.LEADS.put('lead:' + Date.now() + ':' + crypto.randomUUID(), JSON.stringify({ ...l, at: new Date().toISOString() })); return true; }
+  return false;
+}
+async function listLeads(env) {
+  if (dbKind(env) === 'supabase') {
+    const r = await sb(env, 'leads?select=*&order=created_at.desc&limit=300', { headers: { Prefer: 'count=exact' } });
+    if (!r.ok) throw new Error('db');
+    const rows = await r.json(), total = Number(((r.headers.get('content-range') || '').split('/')[1])) || rows.length;
+    return { total, leads: rows.map(x => ({ key: x.id, at: x.created_at, plan: x.plan, name: x.name, email: x.email, company: x.company, use: x.use_case, status: x.status })) };
+  }
+  let keys = [], cursor;
+  do { const r = await env.LEADS.list({ prefix: 'lead:', cursor }); keys = keys.concat(r.keys.map(k => k.name)); cursor = r.list_complete ? null : r.cursor; } while (cursor && keys.length < 2000);
+  keys = keys.sort().reverse();
+  const leads = (await Promise.all(keys.slice(0, 300).map(async k => { try { return { key: k, ...JSON.parse(await env.LEADS.get(k)) }; } catch { return null; } }))).filter(Boolean);
+  return { total: keys.length, leads };
+}
+async function removeLead(env, key) {
+  if (dbKind(env) === 'supabase') {
+    if (!/^[0-9a-f-]{36}$/i.test(key)) return false;
+    return (await sb(env, 'leads?id=eq.' + key, { method: 'DELETE' })).ok;
+  }
+  if (!key.startsWith('lead:')) return false;
+  await env.LEADS.delete(key); return true;
+}
+
+// POST /api/order is defined above; it saves the details first, then starts a Stripe checkout if payments are connected.
 async function onOrder({ request, env }) {
   let b;
   try { b = await request.json(); } catch { return json({ error: 'Bad request' }, 400); }
@@ -83,11 +119,8 @@ async function onOrder({ request, env }) {
   if (!name) return json({ error: 'Please enter your name.' }, 400);
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return json({ error: 'Please enter a valid email.' }, 400);
   const origin = new URL(request.url).origin, stripeReady = !!(env.STRIPE_SECRET_KEY && env[plan.price]);
-  let key = null;                           // keep every customer's details so the admin page can show them
-  if (env.LEADS) {
-    key = 'lead:' + Date.now() + ':' + crypto.randomUUID();
-    await env.LEADS.put(key, JSON.stringify({ plan: b.plan, name, email, company, use, at: new Date().toISOString(), status: stripeReady ? 'checkout_started' : 'request' }));
-  }
+  let saved = false;
+  try { saved = await saveLead(env, { plan: b.plan, name, email, company, use, status: stripeReady ? 'checkout_started' : 'request' }); } catch { saved = false; }
   if (stripeReady) {
     const f = new URLSearchParams({
       mode: 'subscription', 'line_items[0][price]': env[plan.price], 'line_items[0][quantity]': '1',
@@ -100,8 +133,8 @@ async function onOrder({ request, env }) {
     if (!r.ok || !d.url) return json({ error: 'Checkout could not be started. Please try again.' }, 502);
     return json({ url: d.url });
   }
-  if (key) return json({ saved: true });
-  return json({ error: 'Ordering is not connected yet.' }, 503);
+  if (saved) return json({ saved: true });
+  return json(dbKind(env) ? { error: 'We could not save your details. Please try again.' } : { error: 'Ordering is not connected yet.' }, dbKind(env) ? 502 : 503);
 }
 
 // ---- admin: GET lists the customer details, DELETE removes one. Needs the ADMIN_PASSWORD secret. ----
@@ -118,18 +151,15 @@ async function onAdmin({ request, env }) {
   const ok = await isAdmin(request, env);
   if (ok === null) return json({ error: 'Admin is not set up. Add an ADMIN_PASSWORD secret.' }, 503);
   if (!ok) return json({ error: 'Wrong password.' }, 401);
-  if (!env.LEADS) return json({ error: 'No LEADS storage is connected yet.' }, 503);
-  if (request.method === 'DELETE') {
-    const k = new URL(request.url).searchParams.get('key') || '';
-    if (!k.startsWith('lead:')) return json({ error: 'Bad key' }, 400);
-    await env.LEADS.delete(k); return json({ ok: true });
-  }
-  if (request.method !== 'GET') return json({ error: 'Method not allowed' }, 405);
-  let keys = [], cursor;
-  do { const r = await env.LEADS.list({ prefix: 'lead:', cursor }); keys = keys.concat(r.keys.map(k => k.name)); cursor = r.list_complete ? null : r.cursor; } while (cursor && keys.length < 2000);
-  keys = keys.sort().reverse();
-  const leads = (await Promise.all(keys.slice(0, 300).map(async k => { try { return { key: k, ...JSON.parse(await env.LEADS.get(k)) }; } catch { return null; } }))).filter(Boolean);
-  return json({ leads, total: keys.length });
+  if (!dbKind(env)) return json({ error: 'No database is connected yet. Add SUPABASE_URL and SUPABASE_SERVICE_KEY.' }, 503);
+  try {
+    if (request.method === 'DELETE') {
+      const done = await removeLead(env, new URL(request.url).searchParams.get('key') || '');
+      return done ? json({ ok: true }) : json({ error: 'Could not delete that customer.' }, 400);
+    }
+    if (request.method !== 'GET') return json({ error: 'Method not allowed' }, 405);
+    return json(await listLeads(env));
+  } catch { return json({ error: 'Database error. Check your Supabase settings.' }, 502); }
 }
 
 // Entry point: /api/chat is handled here, everything else is the website (public/index.html)
