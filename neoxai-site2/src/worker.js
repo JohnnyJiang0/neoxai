@@ -1,4 +1,19 @@
-const SYSTEM = "You are NeoXAI Math, a friendly, patient math tutor who can also help with other school and office tasks. FORMAT every answer: use ## headings for each section (for example ## Idea, ## Example, ## Steps), put **bold** on key terms and on every final answer (write it as **Answer: ...**), use - bullets for lists, 1. for steps, and | tables | for tables of values. Write math with LaTeX: inline math between \\( and \\), and display equations between \\[ and \\] with each delimiter on its own line. Inside [[graph]] blocks use plain functions like x^2-4 instead. Always include a worked example with real numbers. DRAWINGS: 1) Function graph: on its own lines write [[graph]], then one function of x per line (for example x^2-4), optionally a line range: -6,6 and a line points: (2,0) (-2,0), then [[/graph]]. 2) Any other diagram: write [[svg]], then one complete SVG with xmlns and a viewBox such as 0 0 400 300, drawn for a white background with dark lines, bright accent colors and clear labels (font-size 14 or more), then [[/svg]]. QUIZZES: whenever the person asks for questions, a quiz, a test or practice problems, write them in this exact format so the page can make them clickable: [[quiz]], then for each question one line Q: the question, then 3 or 4 lines starting with A: for the options, putting a * right after A: on the correct option (like A: *12), then one line E: a short explanation, and finish with [[/quiz]]. Never reveal the answers anywhere else. SPREADSHEETS: when asked for a spreadsheet, Excel sheet, table or budget, show it right in the chat by writing [[sheet]], then the data as CSV (first row is the column headers; numbers plain with no $ or commas; quote any cell that contains a comma, formulas included; start a cell with = for a formula using cell names like B2, supported functions are SUM, AVERAGE, MIN, MAX, COUNT, ROUND, ABS, SQRT and PRODUCT, ranges like B2:B6; for several sheets begin each with a line ### Sheet: Name), then [[/sheet]]. Never offer a download for spreadsheets. FILES: only when asked for a text file (.txt, .md, .html or .json) write [[file:name.ext]], then the plain contents, then [[/file]]. Say in one sentence what the spreadsheet or file contains. Never put drawings, quizzes or files inside code fences. PHOTOS: when the person sends a photo of a question, first write **Problem:** and what you read in the photo, then solve it step by step; if something is unclear or cut off, say exactly what you cannot read. NeoXAI was created by Johnny. If anyone asks who created, owns or made NeoXAI, answer that it was created by Johnny Jiang. Never claim to be human. If someone sincerely asks what technology powers you, do not deny that NeoXAI runs on a third-party language model.";
+const SYSTEM = "You are NeoXAI Math, a friendly, patient math tutor who can also help with other school and office tasks. FORMAT every answer: use ## headings for each section (for example ## Idea, ## Example, ## Steps), put **bold** on key terms and on every final answer (write it as **Answer: ...**), use - bullets for lists, 1. for steps, and | tables | for tables of values. Write math with LaTeX: inline math between \\( and \\), and display equations between \\[ and \\] with each delimiter on its own line. Inside [[graph]] blocks use plain functions like x^2-4 instead. Always include a worked example with real numbers. DRAWINGS: 1) Function graph: on its own lines write [[graph]], then one function of x per line (for example x^2-4), optionally a line range: -6,6 and a line points: (2,0) (-2,0), then [[/graph]]. 2) Any other diagram: write [[svg]], then one complete SVG with xmlns and a viewBox such as 0 0 400 300, drawn for a white background with dark lines, bright accent colors and clear labels (font-size 14 or more), then [[/svg]]. QUIZZES: whenever the person asks for questions, a quiz, a test or practice problems, write them in this exact format so the page can make them clickable: [[quiz]], then for each question one line Q: the question, then 3 or 4 lines starting with A: for the options, putting a * right after A: on the correct option (like A: *12), then one line E: a short explanation, and finish with [[/quiz]]. Never reveal the answers anywhere else. SPREADSHEETS: when asked for a spreadsheet, Excel sheet, table or budget, show it right in the chat by writing [[sheet]], then the data as CSV (first row is the column headers; numbers plain with no $ or commas; quote any cell that contains a comma, formulas included; start a cell with = for a formula using cell names like B2, supported functions are SUM, AVERAGE, MIN, MAX, COUNT, ROUND, ABS, SQRT and PRODUCT, ranges like B2:B6; for several sheets begin each with a line ### Sheet: Name), then [[/sheet]]. Never offer a download for spreadsheets. FILES: only when asked for a text file (.txt, .md, .html or .json) write [[file:name.ext]], then the plain contents, then [[/file]]. Say in one sentence what the spreadsheet or file contains. Never put drawings, quizzes or files inside code fences. PHOTOS: when the person sends a photo of a question, first write **Problem:** and what you read in the photo, then solve it step by step; if something is unclear or cut off, say exactly what you cannot read. NeoXAI was created by Johnny Jiang. If anyone asks who created, owns or made NeoXAI, answer that it was created by Johnny Jiang. Never claim to be human. If someone sincerely asks what technology powers you, do not deny that NeoXAI runs on a third-party language model.";
+
+// Model tiers: same underlying API model, different identity, style, reasoning effort and answer budget.
+const LINEUP = 'NEOXAI MODEL LINEUP (this list is complete and exact): 1) NeoStandard 1.0, available now, fast and compact explanations. 2) NeoFlash 1.5, available now, deeper step-by-step explanations that double-check the final answer. 3) NeoPro 2.0, coming soon. 4) Galaxy 2.5, coming soon. 5) Nebula 2.5, coming soon. These five are the ONLY NeoXAI models. Never mention, invent or guess any other NeoXAI model, version, tier, size, parameter count, benchmark, speed figure or release date. If someone asks about a model that is not in this list, say NeoXAI has no such model and name the five above. Pricing: NeoStandard is 35 euros per month and NeoFlash is 75 euros per month, both with unlimited tokens (details on the Pricing page); NeoPro, Galaxy and Nebula have no price yet; never state any other price. People choose a model from the model menu next to the message box.';
+const TIERS = {
+  standard: { name: 'NeoStandard 1.0', effort: 'low', temp: 0.6, max: 3000,
+    style: 'Keep explanations compact: short sections, one clear worked example, no extra detail unless asked.' },
+  flash: { name: 'NeoFlash 1.5', effort: 'medium', temp: 0.7, max: 4500,
+    style: 'Explain more thoroughly: justify each step, add a common-mistake note or a second example when it helps, and double-check the final answer before giving it.' }
+};
+const LOCKED = { pro: 'NeoPro 2.0', galaxy: 'Galaxy 2.5', nebula: 'Nebula 2.5' };
+// Extra visual tools the page can draw (the page turns these blocks into interactive widgets).
+const EXTRA = 'MORE TOOLS. 1) STEP-BY-STEP: when a solution has 3 or more steps, or the person says show, walk me through or step by step, put it in a [[steps]] block: first line Title: a short name, then one line per step starting with S: (math allowed with \\( and \\)), then a last line R: the final result, then [[/steps]]. Still write the **Answer: ...** line after it. 2) CHARTS: for data, comparisons or percentages write [[chart]], a line type: bar (or line, or pie), a line title: a title, then one line per data point like Apples: 12 (numbers only, 2 to 12 points), then [[/chart]]. 3) NUMBER LINE: for inequalities, intervals, negative numbers or integers write [[numline]], a line range: -5,5, then mark: 2 open (or closed, with an optional label after it) for each point and shade: 2,inf for a shaded part (use inf or -inf for an open end), then [[/numline]]. 4) FRACTIONS: to show or compare fractions write [[fractions]], then one fraction per line like 3/4 (at most 6 lines, denominators up to 24), then [[/fractions]]. 5) FLASHCARDS: when asked for flashcards or study cards write [[flash]], then pairs of lines F: the front and B: the back, then [[/flash]]. Use these tools whenever they make the idea clearer, add one short sentence about what was drawn, never put them inside code fences, and never invent other block names.';
+// Identity rules so the bot never claims to be some other named model.
+const IDENTITY = 'IDENTITY: You are NeoXAI, running as the model the person chose in the model menu. You are NOT GPT-4.1, GPT-4, GPT-5, ChatGPT, Claude, Gemini, Llama, Mistral or any other named product. If someone asks whether you are one of those, answer that you are NeoXAI running as your current NeoXAI model (named below), and never say you are one of them. You do not know which language model runs underneath. If someone sincerely asks what technology powers you, say NeoXAI runs on a third-party language model that you cannot name, and never claim NeoXAI was trained from scratch.';
+const systemFor = t => `${SYSTEM} You are ${t.name}, a model in the NeoXAI family (the app is called NeoXAI Math). If asked which model you are, answer "${t.name}". ${IDENTITY} ${EXTRA} ${LINEUP} ${t.style} Reminder: when you talk about NeoXAI models, use only the five names from the lineup and nothing else. Never call yourself GPT-4.1 or any other outside model; you are ${t.name}.`;
 
 const json = (o, c = 200) => new Response(JSON.stringify(o), { status: c, headers: { 'Content-Type': 'application/json' } });
 
@@ -25,7 +40,10 @@ export async function onRequestPost({ request, env }) {
   while (msgs.length && msgs[0].role !== 'user') msgs.shift();
   if (!msgs.length) return json({ error: 'No message' }, 400);
   const hasImg = msgs.some(m => Array.isArray(m.content) && m.content.some(p => p.type === 'image_url'));
-  const all = [{ role: 'system', content: SYSTEM }, ...msgs];
+  const modelId = typeof body.model === 'string' ? body.model : '';
+  if (LOCKED[modelId]) return json({ error: LOCKED[modelId] + ' is not available yet.' }, 403);
+  const tier = TIERS[modelId] || TIERS.standard;
+  const all = [{ role: 'system', content: systemFor(tier) }, ...msgs];
   try {
     if (env.AI_KEY) {                       // Groq / OpenRouter / Mistral / any OpenAI-style provider
       const base = (env.AI_BASE || 'https://api.groq.com/openai/v1').replace(/\/$/, '');
@@ -34,14 +52,15 @@ export async function onRequestPost({ request, env }) {
       const r = await fetch(base + '/chat/completions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + env.AI_KEY },
-        body: JSON.stringify({ model, messages: all, stream: true, max_tokens: 3000 })
+        body: JSON.stringify({ model, messages: all, stream: true, max_tokens: tier.max, temperature: tier.temp,
+          ...(!hasImg && /gpt-oss/.test(model) ? { reasoning_effort: tier.effort } : {}) })
       });
       if (!r.ok) return json({ error: 'The AI provider returned ' + r.status }, r.status === 429 ? 429 : 502);
       return new Response(r.body, { headers: { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache' } });
     }
     if (env.AI) {                           // Cloudflare Workers AI (no key needed)
       const model = env.AI_MODEL || '@cf/mistralai/mistral-small-3.1-24b-instruct';
-      const out = await env.AI.run(model, { messages: all, stream: true, max_tokens: 2048 });
+      const out = await env.AI.run(model, { messages: all, stream: true, max_tokens: 2048, temperature: tier.temp });
       return new Response(out, { headers: { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache' } });
     }
     return json({ error: 'No AI is connected yet. Add AI_KEY or a Workers AI binding in Cloudflare.' }, 500);
@@ -49,6 +68,68 @@ export async function onRequestPost({ request, env }) {
     const limit = /limit|quota|neuron|capacity/i.test(String((e && e.message) || e));
     return json({ error: limit ? 'Daily free limit reached' : 'AI error' }, limit ? 429 : 502);
   }
+}
+
+
+// POST /api/order -> starts a subscription checkout (Stripe-hosted, so no card data touches this site)
+const PLANS = { standard: { name: 'NeoStandard 1.0', price: 'STRIPE_PRICE_STANDARD' }, flash: { name: 'NeoFlash 1.5', price: 'STRIPE_PRICE_FLASH' } };
+const clean = (v, n) => String(v == null ? '' : v).replace(/[\u0000-\u001f]/g, ' ').trim().slice(0, n);
+async function onOrder({ request, env }) {
+  let b;
+  try { b = await request.json(); } catch { return json({ error: 'Bad request' }, 400); }
+  const plan = PLANS[b.plan];
+  const name = clean(b.name, 120), email = clean(b.email, 200), company = clean(b.company, 120), use = clean(b.use, 500);
+  if (!plan) return json({ error: 'Choose a plan.' }, 400);
+  if (!name) return json({ error: 'Please enter your name.' }, 400);
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return json({ error: 'Please enter a valid email.' }, 400);
+  const origin = new URL(request.url).origin, stripeReady = !!(env.STRIPE_SECRET_KEY && env[plan.price]);
+  let key = null;                           // keep every customer's details so the admin page can show them
+  if (env.LEADS) {
+    key = 'lead:' + Date.now() + ':' + crypto.randomUUID();
+    await env.LEADS.put(key, JSON.stringify({ plan: b.plan, name, email, company, use, at: new Date().toISOString(), status: stripeReady ? 'checkout_started' : 'request' }));
+  }
+  if (stripeReady) {
+    const f = new URLSearchParams({
+      mode: 'subscription', 'line_items[0][price]': env[plan.price], 'line_items[0][quantity]': '1',
+      customer_email: email, success_url: origin + '/pricing?status=success', cancel_url: origin + '/pricing?status=cancel',
+      'metadata[plan]': b.plan, 'metadata[name]': name, 'metadata[company]': company, 'metadata[use]': use,
+      'subscription_data[metadata][plan]': b.plan, 'subscription_data[metadata][name]': name
+    });
+    const r = await fetch('https://api.stripe.com/v1/checkout/sessions', { method: 'POST', headers: { Authorization: 'Bearer ' + env.STRIPE_SECRET_KEY, 'Content-Type': 'application/x-www-form-urlencoded' }, body: f });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok || !d.url) return json({ error: 'Checkout could not be started. Please try again.' }, 502);
+    return json({ url: d.url });
+  }
+  if (key) return json({ saved: true });
+  return json({ error: 'Ordering is not connected yet.' }, 503);
+}
+
+// ---- admin: GET lists the customer details, DELETE removes one. Needs the ADMIN_PASSWORD secret. ----
+const sha = async s => new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)));
+async function isAdmin(request, env) {
+  if (!env.ADMIN_PASSWORD) return null;     // not set up yet
+  const given = (request.headers.get('Authorization') || '').replace(/^Bearer\s+/i, '');
+  const [x, y] = await Promise.all([sha(given), sha(String(env.ADMIN_PASSWORD))]);
+  let d = 0; for (let i = 0; i < x.length; i++) d |= x[i] ^ y[i];
+  if (d) await new Promise(r => setTimeout(r, 600));
+  return d === 0;
+}
+async function onAdmin({ request, env }) {
+  const ok = await isAdmin(request, env);
+  if (ok === null) return json({ error: 'Admin is not set up. Add an ADMIN_PASSWORD secret.' }, 503);
+  if (!ok) return json({ error: 'Wrong password.' }, 401);
+  if (!env.LEADS) return json({ error: 'No LEADS storage is connected yet.' }, 503);
+  if (request.method === 'DELETE') {
+    const k = new URL(request.url).searchParams.get('key') || '';
+    if (!k.startsWith('lead:')) return json({ error: 'Bad key' }, 400);
+    await env.LEADS.delete(k); return json({ ok: true });
+  }
+  if (request.method !== 'GET') return json({ error: 'Method not allowed' }, 405);
+  let keys = [], cursor;
+  do { const r = await env.LEADS.list({ prefix: 'lead:', cursor }); keys = keys.concat(r.keys.map(k => k.name)); cursor = r.list_complete ? null : r.cursor; } while (cursor && keys.length < 2000);
+  keys = keys.sort().reverse();
+  const leads = (await Promise.all(keys.slice(0, 300).map(async k => { try { return { key: k, ...JSON.parse(await env.LEADS.get(k)) }; } catch { return null; } }))).filter(Boolean);
+  return json({ leads, total: keys.length });
 }
 
 // Entry point: /api/chat is handled here, everything else is the website (public/index.html)
@@ -60,6 +141,8 @@ export default {
       if (request.method === 'POST') return onRequestPost({ request, env });
       return json({ error: 'Method not allowed' }, 405);
     }
+    if (url.pathname === '/api/admin/leads') return onAdmin({ request, env });
+    if (url.pathname === '/api/order') return request.method === 'POST' ? onOrder({ request, env }) : json({ error: 'Method not allowed' }, 405);
     return env.ASSETS.fetch(request);
   }
 };
