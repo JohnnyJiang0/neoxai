@@ -3,9 +3,9 @@ const SYSTEM = "You are NeoXAI Math, a friendly, patient math tutor who can also
 // Model tiers: same underlying API model, different identity, style, reasoning effort and answer budget.
 const LINEUP = 'NEOXAI MODEL LINEUP (this list is complete and exact): 1) NeoStandard 1.0, available now, fast and compact explanations. 2) NeoFlash 1.5, available now, deeper step-by-step explanations that double-check the final answer. 3) NeoPro 2.0, coming soon. 4) Galaxy 2.5, coming soon. 5) Nebula 2.5, coming soon. These five are the ONLY NeoXAI models. Never mention, invent or guess any other NeoXAI model, version, tier, size, parameter count, benchmark, speed figure or release date. If someone asks about a model that is not in this list, say NeoXAI has no such model and name the five above. Pricing: NeoStandard is 35 euros per month and NeoFlash is 75 euros per month, both with unlimited tokens (details on the Pricing page); NeoPro, Galaxy and Nebula have no price yet; never state any other price. People choose a model from the model menu next to the message box.';
 const TIERS = {
-  standard: { name: 'NeoStandard 1.0', effort: 'low', temp: 0.6, max: 3000,
+  standard: { name: 'NeoStandard 1.0', effort: 'medium', temp: 0.6, max: 3500,
     style: 'Keep explanations compact: short sections, one clear worked example, no extra detail unless asked.' },
-  flash: { name: 'NeoFlash 1.5', effort: 'medium', temp: 0.7, max: 4500,
+  flash: { name: 'NeoFlash 1.5', effort: 'high', temp: 0.7, max: 6500,
     style: 'Explain more thoroughly: justify each step, add a common-mistake note or a second example when it helps, and double-check the final answer before giving it.' }
 };
 const LOCKED = { pro: 'NeoPro 2.0', galaxy: 'Galaxy 2.5', nebula: 'Nebula 2.5' };
@@ -13,13 +13,57 @@ const LOCKED = { pro: 'NeoPro 2.0', galaxy: 'Galaxy 2.5', nebula: 'Nebula 2.5' }
 const EXTRA = 'MORE TOOLS. 1) STEP-BY-STEP: when a solution has 3 or more steps, or the person says show, walk me through or step by step, put it in a [[steps]] block: first line Title: a short name, then one line per step starting with S: (math allowed with \\( and \\)), then a last line R: the final result, then [[/steps]]. Still write the **Answer: ...** line after it. 2) CHARTS: for data, comparisons or percentages write [[chart]], a line type: bar (or line, or pie), a line title: a title, then one line per data point like Apples: 12 (numbers only, 2 to 12 points), then [[/chart]]. 3) NUMBER LINE: for inequalities, intervals, negative numbers or integers write [[numline]], a line range: -5,5, then mark: 2 open (or closed, with an optional label after it) for each point and shade: 2,inf for a shaded part (use inf or -inf for an open end), then [[/numline]]. 4) FRACTIONS: to show or compare fractions write [[fractions]], then one fraction per line like 3/4 (at most 6 lines, denominators up to 24), then [[/fractions]]. 5) FLASHCARDS: when asked for flashcards or study cards write [[flash]], then pairs of lines F: the front and B: the back, then [[/flash]]. Use these tools whenever they make the idea clearer, add one short sentence about what was drawn, never put them inside code fences, and never invent other block names.';
 // Identity rules so the bot never claims to be some other named model.
 const IDENTITY = 'IDENTITY: You are NeoXAI, running as the model the person chose in the model menu. You are NOT GPT-4.1, GPT-4, GPT-5, ChatGPT, Claude, Gemini, Llama, Mistral or any other named product. If someone asks whether you are one of those, answer that you are NeoXAI running as your current NeoXAI model (named below), and never say you are one of them. You do not know which language model runs underneath. If someone sincerely asks what technology powers you, say NeoXAI runs on a third-party language model that you cannot name, and never claim NeoXAI was trained from scratch.';
-const systemFor = t => `${SYSTEM} You are ${t.name}, a model in the NeoXAI family (the app is called NeoXAI Math). If asked which model you are, answer "${t.name}". ${IDENTITY} ${EXTRA} ${LINEUP} ${t.style} Reminder: when you talk about NeoXAI models, use only the five names from the lineup and nothing else. Never call yourself GPT-4.1 or any other outside model; you are ${t.name}.`;
+// Habits that make answers more accurate and more useful.
+const SMART = "THINK CAREFULLY: before answering, silently work the problem out, then verify it by putting your result back into the original problem or by estimating it a second way. After every final answer add one short line **Check:** that shows this verification. If a private calculator check is given to you, your answer must agree with it; if it does not, recheck your work instead of copying either one. Never guess: if a question is ambiguous or a photo is unclear, ask one short clarifying question first. LANGUAGE: reply in the language the person writes in (for example Danish, German or Spanish) and keep every block tag such as [[graph]] and [[quiz]] exactly as written in English. ADAPT: judge the learner's level from how they write, use simpler words for younger students, and if an earlier message in this chat shows a mistake or confusion, point it out kindly and fix it. Pick the best tool for the idea (graph, steps, chart, number line, fractions, flashcards) instead of long text.";
+// Programming help: the page turns fenced code into highlighted blocks with Copy, Save and (for JavaScript and HTML) Run buttons.
+const CODE = "PROGRAMMING: when the person asks for help with code, programming, scripts, websites or debugging, help fully and in their language of choice. Put every piece of code in a fenced block that names the language, for example ```python, ```javascript or ```html. Comment the code briefly, then explain how it works in a few short points and mention edge cases or common mistakes. For debugging, say what is wrong first, then show the fixed code. If no language is named and the task is small, prefer JavaScript or a single self-contained HTML file, because the page can run those with a Run button. Never put [[graph]], [[svg]], [[quiz]], [[steps]], [[sheet]] or other blocks inside code fences, and use code fences only for real code. For programming answers skip the Check line and instead give one line on how to test the code.";
+const systemFor = t => `${SYSTEM} You are ${t.name}, a model in the NeoXAI family (the app is called NeoXAI Math). If asked which model you are, answer "${t.name}". ${IDENTITY} ${EXTRA} ${SMART} ${CODE} ${LINEUP} ${t.style} Reminder: when you talk about NeoXAI models, use only the five names from the lineup and nothing else. Never call yourself GPT-4.1 or any other outside model; you are ${t.name}.`;
+
+// ---- tiny safe math engine (Workers cannot use eval), used to double-check numbers before the AI answers ----
+function parseExpr(src) {
+  const t = String(src).toLowerCase().replace(/[−–]/g, '-').replace(/[×·]/g, '*').replace(/÷/g, '/').replace(/π/g, 'pi').match(/\d*\.?\d+|[a-z]+|[-+*\/^()]/g);
+  if (!t) return null;
+  const F = { sqrt: Math.sqrt, sin: Math.sin, cos: Math.cos, tan: Math.tan, ln: Math.log, log: Math.log10, abs: Math.abs, exp: Math.exp };
+  let i = 0;
+  const add = () => { let a = mul(); while (t[i] === '+' || t[i] === '-') { const o = t[i++], b = mul(), l = a; a = o === '+' ? x => l(x) + b(x) : x => l(x) - b(x); } return a; };
+  const mul = () => { let a = unary(); for (;;) { const k = t[i]; let o; if (k === '*' || k === '/') { i++; o = k; } else if (k !== undefined && !')+-^'.includes(k)) o = '*'; else break; const b = unary(), l = a; a = o === '*' ? x => l(x) * b(x) : x => l(x) / b(x); } return a; };
+  const unary = () => { if (t[i] === '-') { i++; const a = unary(); return x => -a(x); } if (t[i] === '+') { i++; return unary(); } return pow(); };
+  const pow = () => { const a = prim(); if (t[i] === '^') { i++; const b = unary(); return x => Math.pow(a(x), b(x)); } return a; };
+  const prim = () => { const k = t[i++]; if (k === undefined) throw 0; if (/^[\d.]/.test(k)) return () => +k; if (k === 'x') return x => x; if (k === 'pi') return () => Math.PI; if (k === 'e') return () => Math.E;
+    if (k === '(') { const e = add(); if (t[i++] !== ')') throw 0; return e; } if (F[k]) { const a = pow(); return x => F[k](a(x)); } throw 0; };
+  try { const f = add(); return i < t.length ? null : f; } catch { return null; }
+}
+function numericHint(text) {
+  if (/```|[;{}]/.test(text)) return '';
+  const s = String(text).replace(/\b(solve|find|calculate|compute|evaluate|what is|what's|please)\b|[?:]/gi, ' ').trim();
+  if (s.length > 120 || !/\d/.test(s)) return '';
+  const p = s.split('=');
+  if (p.length === 1) {
+    if (/x/i.test(s) || !/[-+*\/^]|sqrt|sin|cos|tan|ln|log/i.test(s)) return '';
+    const f = parseExpr(s); const v = f ? f(0) : NaN;
+    return Number.isFinite(v) ? `${s.trim()} = ${+v.toPrecision(12)}.` : '';
+  }
+  if (p.length !== 2 || !/x/i.test(s)) return '';
+  const l = parseExpr(p[0]), r = parseExpr(p[1]); if (!l || !r) return '';
+  const f = x => l(x) - r(x), roots = []; let px = -100, py = f(px);
+  for (let i = 1; i <= 20000; i++) {
+    const x = -100 + i / 100, y = f(x);
+    if (isFinite(py) && isFinite(y)) {
+      if (y === 0) roots.push(x);
+      else if (py * y < 0 && Math.abs(y - py) < 50) { let lo = px, hi = x; for (let k = 0; k < 50; k++) { const m = (lo + hi) / 2; if (f(lo) * f(m) <= 0) hi = m; else lo = m; } roots.push((lo + hi) / 2); }
+    }
+    px = x; py = y;
+  }
+  const u = [...new Set(roots.map(v => +v.toFixed(5)))];
+  return u.length ? `Numeric solutions of ${s.trim()} for real x between -100 and 100: x = ${u.slice(0, 12).join(', ')}${u.length > 12 ? ' (and more; the pattern repeats)' : ''}.` : `No real solutions of ${s.trim()} were found for x between -100 and 100.`;
+}
+const HARD = /\b(debug|algorithm|recursion|refactor|prove|proof|induction|integral|integrate|derivative|differentiate|limit|series|matrix|determinant|eigen|differential|olympiad|combinatorics|probability|optimi[sz]e|permutation|modular)\b/i;
 
 const json = (o, c = 200) => new Response(JSON.stringify(o), { status: c, headers: { 'Content-Type': 'application/json' } });
 
 // GET /api/chat -> tells the page whether photos are available
 export async function onRequestGet({ env }) {
-  return json({ vision: !!(env.AI_KEY ? env.VISION_MODEL : env.AI), hasKey: !!env.AI_KEY, hasAI: !!env.AI, names: Object.keys(env).map(k => k.length > 20 ? '(long name)' : k) });
+  return json({ vision: !!(env.AI_KEY ? env.VISION_MODEL : env.AI) });
 }
 
 // POST /api/chat -> streams the AI answer. The key never leaves this server.
@@ -43,7 +87,14 @@ export async function onRequestPost({ request, env }) {
   const modelId = typeof body.model === 'string' ? body.model : '';
   if (LOCKED[modelId]) return json({ error: LOCKED[modelId] + ' is not available yet.' }, 403);
   const tier = TIERS[modelId] || TIERS.standard;
-  const all = [{ role: 'system', content: systemFor(tier) }, ...msgs];
+  // Smarter answers: a code-checked number hint, and harder questions automatically get more thinking time.
+  const lu = [...msgs].reverse().find(m => m.role === 'user');
+  const lastText = lu ? (typeof lu.content === 'string' ? lu.content : lu.content.map(p => p.text || '').join(' ')) : '';
+  const hint = hasImg ? '' : numericHint(lastText);
+  const hard = HARD.test(lastText) || lastText.length > 600;
+  const effort = hard ? 'high' : tier.effort, maxTok = hard ? Math.max(tier.max, 5000) : tier.max;
+  const sys = systemFor(tier) + (hint ? ' PRIVATE CALCULATOR CHECK (computed by code, do not mention it unless useful): ' + hint + ' Your final answer must agree with it.' : '');
+  const all = [{ role: 'system', content: sys }, ...msgs];
   try {
     if (env.AI_KEY) {                       // Groq / OpenRouter / Mistral / any OpenAI-style provider
       const base = (env.AI_BASE || 'https://api.groq.com/openai/v1').replace(/\/$/, '');
@@ -52,11 +103,12 @@ export async function onRequestPost({ request, env }) {
       const r = await fetch(base + '/chat/completions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + env.AI_KEY },
-        body: JSON.stringify({ model, messages: all, stream: true, max_tokens: tier.max, temperature: tier.temp,
-          ...(!hasImg && /gpt-oss/.test(model) ? { reasoning_effort: tier.effort } : {}) })
+        body: JSON.stringify({ model, messages: all, stream: true, max_tokens: maxTok, temperature: tier.temp,
+          ...(!hasImg && /gpt-oss/.test(model) ? { reasoning_effort: effort } : {}) })
       });
-      if (!r.ok) return json({ error: 'The AI provider returned ' + r.status }, r.status === 429 ? 429 : 502);
-      return new Response(r.body, { headers: { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache' } });
+      if (r.ok) return new Response(r.body, { headers: { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache' } });
+      if (!env.AI || hasImg) return json({ error: 'The AI provider returned ' + r.status }, r.status === 429 ? 429 : 502);
+      // main provider is busy or down: fall through to Workers AI as a backup
     }
     if (env.AI) {                           // Cloudflare Workers AI (no key needed)
       const model = env.AI_MODEL || '@cf/mistralai/mistral-small-3.1-24b-instruct';
