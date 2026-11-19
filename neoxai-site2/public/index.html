@@ -179,6 +179,7 @@ body.nxsb #nxbk{display:block}
 .nxm button{background:none;border:1px solid var(--line);border-radius:10px;padding:3px 9px;font-size:12px;cursor:pointer;opacity:.75}
 .nxm button:hover{opacity:1;border-color:var(--fg)}
 .nxs .chip{padding:5px 11px;font-size:12px}
+.nxk{margin-top:8px;font-size:12px;color:var(--dim)}
 .cb{border:1px solid var(--line);border-radius:14px;margin:10px 0;background:var(--bubble);overflow:hidden}
 .cbh{display:flex;align-items:center;gap:6px;padding:6px 10px;border-bottom:1px solid var(--line);font-size:12px;color:var(--dim)}
 .cbh span{flex:1}
@@ -308,7 +309,7 @@ renderModels();
 let dl=null,imgCaps=null; sample=true;
 fetch('/api/chat').then(r=>r.json()).then(i=>{ if(i&&i.vision){ imgCaps={maxCount:3,maxInputBytes:20e6}; $('pick').accept='image/*'; $('attach').hidden=false; } }).catch(()=>{});
 async function ask(msgs,onText){
-  const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:msgs,model:mid})});
+  const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:msgs,model:mid,memory:memText()})});
   if(!res.ok){ let m=''; try{ m=(await res.json()).error||''; }catch(e){} const er=new Error(m||('Server '+res.status)); er.status=res.status; throw er; }
   const rd=res.body.getReader(),dec=new TextDecoder(); let buf='',out='';
   for(;;){ const {done,value}=await rd.read(); if(done) break; buf+=dec.decode(value,{stream:true}); const L=buf.split('\n'); buf=L.pop();
@@ -336,8 +337,8 @@ async function send(text){
   const msgs=hh.map(m=>{ let c=m.content; if(m.imgs&&m.imgs.length) c=(m===um?'The person attached '+m.imgs.length+' photo(s) of a question. Read the photo carefully, say what the problem is, then solve it step by step. ':'[Earlier the person sent a photo.] ')+c;
     if(m===um&&urls.length) return {role:m.role,content:[{type:'text',text:c},...urls.map(u=>({type:'image_url',image_url:{url:u}}))]}; return {role:m.role,content:c}; });
   try{
-    const r={text:await ask(msgs,t=>{ stopDots(); render(b,t); chat.scrollTop=chat.scrollHeight; })};
-    stopDots(); render(b,r.text); chat.scrollTop=chat.scrollHeight; history.push({role:'assistant',content:r.text}); addTools(b,r.text);
+    const raw=await ask(msgs,t=>{ stopDots(); render(b,noMem(t)); chat.scrollTop=chat.scrollHeight; }); const r={text:noMem(raw)}, fx=factsOf(raw); remember(fx);
+    stopDots(); render(b,r.text); chat.scrollTop=chat.scrollHeight; history.push({role:'assistant',content:r.text}); addTools(b,r.text); if(fx.length){ const k=document.createElement('div'); k.className='nxk'; k.textContent='🧠 Remembered: '+fx.join(' · '); b.appendChild(k); }
     if(!chats.includes(cur)) chats.unshift(cur); cur.title=cur.title||history[0].content.slice(0,50); cur.ts=Date.now(); saveChats();
   }catch(e){
     stopDots(); history.pop(); b.classList.add('err');
@@ -410,7 +411,7 @@ function renderSide(){ const L=$('nxl'); if(!L) return; const q=$('nxq').value.t
     const ed=mkb('✎','Rename',()=>{ const i=document.createElement('input'); i.className='nxr'; i.value=c.title||''; i.onclick=e=>e.stopPropagation(); t.replaceWith(i); i.focus(); i.select(); let fin=0;
       const done=ok=>{ if(fin) return; fin=1; if(ok&&i.value.trim()){ c.title=i.value.trim().slice(0,60); saveChats(); } else renderSide(); };
       i.onkeydown=e=>{ if(e.key==='Enter') done(true); if(e.key==='Escape') done(false); }; i.onblur=()=>done(true); });
-    let arm=0; const del=mkb('✕','Delete',x=>{ if(!arm){ arm=1; x.textContent='Delete?'; x.classList.add('warn'); setTimeout(()=>{ arm=0; x.textContent='✕'; x.classList.remove('warn'); },2500); return; }
+    let arm=0; const del=mkb('✕','Delete this chat and what I learned in it',x=>{ if(!arm){ arm=1; x.textContent='Delete?'; x.classList.add('warn'); setTimeout(()=>{ arm=0; x.textContent='✕'; x.classList.remove('warn'); },2500); return; }
       chats=chats.filter(k=>k!==c); if(cur===c) newChat(); saveChats(); });
     d.append(t,ed,del); L.appendChild(d); }); }
 $('chats').onclick=()=>document.body.classList.toggle('nxsb');
@@ -419,7 +420,19 @@ $('snew').onclick=()=>newChat();
 $('nxq').oninput=renderSide;
 addEventListener('keydown',e=>{ if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){ e.preventDefault(); document.body.classList.add('nxsb'); $('nxq').focus(); } });
 if(wide()) document.body.classList.add('nxsb');
-const HELP='**What I can do**\n- Type a calculation like `12*(3+4)^2` and I answer instantly\n- Type `y = x^2 - 4` and I draw it instantly\n- `/solve x^2 - 5x + 6 = 0` finds the roots and plots them\n- `/graph sin(x)` draws a function\n- `/quiz fractions`, `/flash topic`, `/steps problem`, `/explain topic`, `/hint problem`, `/code task` and `/debug code` ask the AI\n- `/export` saves this chat, `/clear` starts a new one\n- Use 🔊 to hear an answer and ↻ to redo it';
+const HELP='**What I can do**\n- Type a calculation like `12*(3+4)^2` and I answer instantly\n- Type `y = x^2 - 4` and I draw it instantly\n- `/solve x^2 - 5x + 6 = 0` finds the roots and plots them\n- `/graph sin(x)` draws a function\n- `/quiz fractions`, `/flash topic`, `/steps problem`, `/explain topic`, `/hint problem`, `/code task` and `/debug code` ask the AI\n- `/memory` shows what I remember about you\n- `/export` saves this chat, `/clear` starts a new one\n- Use 🔊 to hear an answer and ↻ to redo it';
+/* ---------- memory: notes live on each chat, so deleting a chat deletes what was learned in it ---------- */
+const noMem=t=>t.replace(/\[\[mem\]\][\s\S]*?\[\[\/mem\]\]/g,'').replace(/\[\[mem\]\][\s\S]*$/,'').replace(/\[\[?m?e?m?\]?$/,'').trimEnd();
+const factsOf=t=>[...t.matchAll(/\[\[mem\]\]([\s\S]*?)\[\[\/mem\]\]/g)].map(m=>m[1].trim().replace(/\s+/g,' ').slice(0,160)).filter(Boolean);
+function remember(arr){ cur.mem=cur.mem||[]; arr.forEach(f=>{ if(!cur.mem.some(x=>x.toLowerCase()===f.toLowerCase())) cur.mem.push(f); }); cur.mem=cur.mem.slice(-25); }
+function memText(){ const all=chats.includes(cur)?chats:[cur,...chats], notes=[], asked=[];
+  [...all].sort((a,b)=>b.ts-a.ts).forEach(c=>{ (c.mem||[]).forEach(f=>{ if(!notes.includes(f)) notes.push(f); });
+    if(c!==cur){ const q=(c.msgs||[]).filter(m=>m.role==='user').slice(-3).map(m=>String(m.content).replace(/\s+/g,' ').slice(0,100)); if(q.length) asked.push((c.title||'Chat')+': '+q.join(' | ')); } });
+  let t=''; if(notes.length) t+='Facts about the person: '+notes.join('; ')+'\n'; if(asked.length) t+='What they asked in other chats (newest first):\n- '+asked.join('\n- ');
+  return t.slice(0,2800); }
+function memReply(){ const all=chats.includes(cur)?chats:[cur,...chats]; let out='**What I remember about you**\n', any=0;
+  [...all].sort((a,b)=>b.ts-a.ts).forEach(c=>{ const f=c.mem||[]; if(f.length){ any=1; out+='\n**'+(c.title||'This chat')+'**\n'+f.map(x=>'- '+x).join('\n')+'\n'; } });
+  return any?out+'\nI also remember what you asked in your other chats. If you delete a chat, I forget everything I learned in it.':'I haven’t saved any personal notes yet. Tell me about yourself, like your name, grade or goals, and I’ll remember it. I also remember what you ask in each chat, until you delete that chat.'; }
 function persist(){ if(!chats.includes(cur)) chats.unshift(cur); cur.title=cur.title||history[0].content.slice(0,50); cur.ts=Date.now(); saveChats(); }
 function graphReply(a){ return mkFn(a)?'Here is the graph of `'+a+'`. Drag, zoom and hover for points.\n\n[[graph]]\n'+a+'\n[[/graph]]':null; }
 function calcReply(s){ s=s.replace(/[=?\s]+$/,''); const r=s.replace(/\b(sqrt|sin|cos|tan|asin|acos|atan|log|ln|abs|exp|floor|ceil|pi|e)\b/gi,'').replace(/π/g,'');
@@ -437,6 +450,7 @@ function solveReply(a){ if(!a) return null; const p=(a.includes('=')?a:a+'=0').s
 function auto(t){ const s=t.trim().replace(/[=?\s]+$/,''); if(/^(y|f\(x\))\s*=.*x/i.test(s)&&mkFn(s)) return graphReply(s); return calcReply(s); }
 function cmd(t){ const m=t.match(/^\/(\w+)\s*([\s\S]*)$/); if(!m) return null; const k=m[1].toLowerCase(),a=m[2].trim();
   if(k==='help') return {local:HELP};
+  if(k==='memory') return {local:memReply()};
   if(k==='export'){ exportChat(); return {done:1}; }
   if(k==='clear'||k==='new'){ newChat(); return {done:1}; }
   if(k==='graph') return {local:graphReply(a)||'Usage: `/graph x^2 - 4`'};
@@ -452,7 +466,7 @@ function cmd(t){ const m=t.match(/^\/(\w+)\s*([\s\S]*)$/); if(!m) return null; c
   return null; }
 function exportChat(){ const t=history.map(m=>(m.role==='user'?'## You\n':'## NeoXAI\n')+m.content).join('\n\n'); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([t],{type:'text/markdown'})); a.download='neoxai-chat.md'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),2000); }
 $('exp').onclick=exportChat;
-const CMDS=[['/solve','x^2 - 5x + 6 = 0','Find the roots and plot them',1],['/graph','sin(x)','Draw a function',1],['/calc','3*(4+5)^2','Calculate instantly',1],['/quiz','fractions','Make a 5-question quiz',1],['/flash','topic','Make flashcards',1],['/steps','problem','Walk through it step by step',1],['/explain','topic','Explain it simply',1],['/hint','problem','A hint, not the answer',1],['/code','python reverse a string','Write code and explain it',1],['/debug','paste your code','Find and fix a bug',1],['/export','','Save this chat as a file',0],['/clear','','Start a new chat',0],['/help','','Show all commands',0]];
+const CMDS=[['/solve','x^2 - 5x + 6 = 0','Find the roots and plot them',1],['/graph','sin(x)','Draw a function',1],['/calc','3*(4+5)^2','Calculate instantly',1],['/quiz','fractions','Make a 5-question quiz',1],['/flash','topic','Make flashcards',1],['/steps','problem','Walk through it step by step',1],['/explain','topic','Explain it simply',1],['/hint','problem','A hint, not the answer',1],['/code','python reverse a string','Write code and explain it',1],['/debug','paste your code','Find and fix a bug',1],['/memory','','See what I remember about you',0],['/export','','Save this chat as a file',0],['/clear','','Start a new chat',0],['/help','','Show all commands',0]];
 const cbox=$('nxcmd'); let cl=[],ci=0;
 function cHide(){ cbox.classList.remove('open'); cl=[]; }
 function cShow(){ const v=inp.value.toLowerCase(); if(!/^\/\S*$/.test(v)){ cHide(); return; }
