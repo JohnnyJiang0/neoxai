@@ -179,6 +179,57 @@ body.nxsb #nxbk{display:block}
 .nxm button{background:none;border:1px solid var(--line);border-radius:10px;padding:3px 9px;font-size:12px;cursor:pointer;opacity:.75}
 .nxm button:hover{opacity:1;border-color:var(--fg)}
 .nxs .chip{padding:5px 11px;font-size:12px}
+#nxlab{position:fixed;inset:0;z-index:8;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.55);backdrop-filter:blur(6px)}
+#nxlab.open{display:flex}
+.lab{width:min(1000px,96vw);height:min(740px,92vh);display:flex;flex-direction:column;background:var(--bg);border:1px solid var(--line);border-radius:20px;overflow:hidden;color:var(--fg)}
+.labh{display:flex;align-items:center;gap:6px;padding:10px 12px;border-bottom:1px solid var(--line)}
+.labh span{flex:1}
+.labh button,.lb{background:none;border:1px solid var(--line);border-radius:10px;padding:6px 12px;cursor:pointer;font-size:13px}
+.labh button.on,.labh button:hover,.lb:hover{border-color:var(--fg)}
+.labb{flex:1;min-height:0;display:flex;flex-direction:column;padding:12px;gap:10px;overflow:hidden}
+.labb[hidden]{display:none}
+.nbt{display:flex;gap:8px}
+#nbq,.glx input[type=text],.glk input[type=number]{background:var(--bubble);border:1px solid var(--line);border-radius:10px;padding:7px 10px;color:var(--fg);outline:0}
+#nbq{flex:1}
+#nbq:focus,.glx input[type=text]:focus{border-color:var(--fg)}
+.nbn{font-size:13px;color:var(--dim)}
+.nbc{display:flex;flex-wrap:wrap;gap:6px}
+.nbb{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:10px;padding:5px 10px;font-size:12px;cursor:pointer;display:flex;gap:8px;min-width:120px}
+.nbb.on{border-color:var(--fg)}
+.nbb i{position:absolute;left:0;top:0;bottom:0;background:var(--bubble);z-index:0}
+.nbb span,.nbb b{position:relative;z-index:1}
+.nbb b{margin-left:auto}
+.nbl{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px}
+.nbi{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:14px;padding:10px 12px;background:var(--bubble)}
+.nbi>button{background:none;border:0;cursor:pointer;font-size:16px;opacity:.7}
+.nbi>div{flex:1;min-width:0}
+.nbq{font-size:14px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;white-space:pre-wrap;word-break:break-word}
+.nbm{font-size:12px;color:var(--dim);margin-top:4px;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center}
+.nbm button{background:none;border:1px solid var(--line);border-radius:8px;padding:2px 8px;font-size:12px;cursor:pointer}
+.glw{flex:1;min-height:0;display:flex;gap:12px}
+.glp{width:300px;flex:none;display:flex;flex-direction:column;gap:8px;overflow-y:auto}
+.glc{flex:1;min-width:0;min-height:240px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--bubble)}
+#labcv{display:block;width:100%;height:100%;touch-action:none;cursor:crosshair;color:var(--fg)}
+.glx{display:flex;gap:6px;align-items:center}
+.glx input[type=text]{flex:1;min-width:0;font-family:ui-monospace,Consolas,monospace;font-size:13px}
+.glx input.bad{border-color:#f77}
+.glx button,.glk button{background:none;border:0;cursor:pointer;color:var(--dim)}
+.glk{display:flex;gap:6px;align-items:center}
+.glk b{width:14px;text-align:center}
+.glk input[type=range]{flex:1;min-width:0;accent-color:var(--fg)}
+.glk input[type=number]{width:70px}
+.glpre{display:flex;flex-wrap:wrap;gap:6px}
+.glpre button{background:none;border:1px solid var(--line);border-radius:8px;padding:3px 8px;font-size:12px;cursor:pointer}
+.glh,.glr{font-size:12px;color:var(--dim);white-space:pre-wrap}
+@media(max-width:760px){.glw{flex-direction:column}.glp{width:auto;max-height:42%}}
+.s3{border:1px solid var(--line);border-radius:14px;margin:10px 0;background:var(--bubble);overflow:hidden;color:var(--fg)}
+.s3 canvas{display:block;width:100%;height:300px;touch-action:none;cursor:grab}
+.s3 .si3{padding:10px 14px;font-size:13px;line-height:1.6;border-top:1px solid var(--line)}
+.s3 .si3 i{font-style:normal;color:var(--dim)}
+.s3 .bt3{display:flex;gap:6px;padding:0 14px 12px}
+.s3 .bt3 button{background:none;border:1px solid var(--line);border-radius:8px;padding:3px 10px;font-size:12px;cursor:pointer}
+.s3 .bt3 button:hover{border-color:var(--fg)}
+#nxstop{position:absolute;left:50%;transform:translateX(-50%);bottom:100%;margin-bottom:8px;z-index:5}
 .nxk{margin-top:8px;font-size:12px;color:var(--dim)}
 .cb{border:1px solid var(--line);border-radius:14px;margin:10px 0;background:var(--bubble);overflow:hidden}
 .cbh{display:flex;align-items:center;gap:6px;padding:6px 10px;border-bottom:1px solid var(--line);font-size:12px;color:var(--dim)}
@@ -198,6 +249,39 @@ footer{position:relative}
 .nxc b{font-weight:700;white-space:nowrap}
 .nxc i{font-style:normal;color:var(--dim);white-space:nowrap}
 .nxc span{margin-left:auto;color:var(--dim);font-size:12px;text-align:right}
+/* ---- NeoXAI+ : palette, calculator, formulas, symbols, streak, focus ---- */
+dialog.nxd{background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:20px;padding:16px;width:min(560px,94vw);box-shadow:0 20px 80px rgba(0,0,0,.6)}
+dialog.nxd::backdrop{background:rgba(0,0,0,.55);backdrop-filter:blur(6px)}
+.nxd h3{margin:0 0 10px;font-weight:300;letter-spacing:3px;text-transform:uppercase;font-size:14px}
+.nxd input.nxi2{width:100%;background:var(--bubble);border:1px solid var(--line);border-radius:12px;padding:10px 12px;color:var(--fg);font:inherit;outline:0}
+.nxd input.nxi2:focus{border-color:var(--fg)}
+#pl{max-height:50vh;overflow-y:auto;margin-top:8px}
+.pi{display:flex;gap:10px;align-items:center;padding:9px 10px;border-radius:12px;cursor:pointer}.pi.on,.pi:hover{background:var(--bubble)}.pi small{margin-left:auto;color:var(--dim);font-size:11px;letter-spacing:1px;text-transform:uppercase}
+.ctabs{display:flex;gap:6px;margin-bottom:10px}.ctabs .btn.on{border-color:var(--fg)}
+#cdisp{font-size:28px;text-align:right;min-height:40px;padding:8px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bubble);overflow-x:auto;white-space:nowrap}
+#chist{font-size:12px;color:var(--dim);text-align:right;min-height:18px;margin:4px 6px}
+.kp{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:8px}.kp button{padding:11px 0;border:1px solid var(--line);border-radius:12px;background:var(--bubble);color:var(--fg);font:inherit;cursor:pointer}.kp button:hover{border-color:var(--fg)}.kp .op{background:var(--glass)}.kp .eq{background:var(--fg);color:var(--bg)}
+#fl{max-height:46vh;overflow-y:auto;margin-top:8px;display:grid;gap:6px}
+.fi{border:1px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;display:flex;justify-content:space-between;gap:10px;align-items:center;background:var(--bubble)}.fi:hover{border-color:var(--fg)}.fi b{font-size:13px}.fi small{display:block;color:var(--dim);font-size:11px;letter-spacing:1px;text-transform:uppercase}
+#sympop{position:absolute;bottom:calc(100% + 8px);left:230px;display:none;flex-wrap:wrap;gap:4px;max-width:300px;padding:8px;border:1px solid var(--line);border-radius:14px;background:var(--bg);z-index:6}#sympop.open{display:flex}
+#sympop button{min-width:34px;padding:6px 0;border:1px solid var(--line);border-radius:8px;background:var(--bubble);color:var(--fg);cursor:pointer;font:inherit}#sympop button:hover{border-color:var(--fg)}
+.bar{position:relative}.att2.on{border-color:#ef4444;box-shadow:0 0 18px rgba(239,68,68,.6)}
+body.nxfocus header,body.nxfocus .note,body.nxfocus #nxside{display:none!important}body.nxfocus{padding-left:0!important}
+
+/* ---- fewer buttons, + menu, file cards ---- */
+header #themes,header #nbbtn,header #glbtn,header #exp,header #nxc,header #nxst,header #nxk,header a.btn{display:none!important}
+#nxmenu,#plusmenu{display:none;position:absolute;z-index:9;min-width:210px;padding:6px;border:1px solid var(--line);border-radius:16px;background:var(--bg);box-shadow:0 14px 50px rgba(0,0,0,.5)}
+#nxmenu{position:fixed;top:calc(54px + env(safe-area-inset-top,0px));right:14px}#plusmenu{bottom:calc(100% + 8px);left:0}
+#nxmenu.open,#plusmenu.open{display:block}
+.pmi{display:flex;gap:10px;align-items:center;width:100%;text-align:left;padding:9px 12px;border:0;border-radius:10px;background:none;color:var(--fg);font:inherit;font-size:14px;cursor:pointer}.pmi:hover{background:var(--bubble)}.pmi span:first-child{width:20px;text-align:center}
+.fcard.fcx{display:block}.fch{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.fch .ic{font-size:26px}.fch .nm{font-weight:700;word-break:break-all}.fch small{display:block;color:var(--dim);font-size:12px}.fch .acts{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}.fcv{margin-top:10px}
+.mbtn.on{border-color:var(--fg);box-shadow:0 0 22px var(--fg)}
+
+/* ---- button animations: hover pop, press squish (plus the magnet below) ---- */
+.btn,.send,.att,.chip,.pmi{transition:transform .18s cubic-bezier(.2,.8,.2,1),box-shadow .2s,border-color .2s,background .2s}
+.btn:not(.mbtn):hover,.send:hover,.att:hover,.chip:hover{transform:translateY(-2px) scale(1.05);box-shadow:0 6px 26px var(--line)}
+.btn:not(.mbtn):active,.send:active,.att:active,.chip:active{transform:scale(.93)!important;box-shadow:none}
+@media(prefers-reduced-motion:reduce){.btn,.send,.att,.chip{transition:none}.btn:hover,.send:hover,.att:hover,.chip:hover{transform:none}}
 </style>
 </head>
 <body>
@@ -207,11 +291,13 @@ footer{position:relative}
     <button class="btn" id="chats" title="Show or hide chats">☰</button>
     <h1><b>NEO</b>X<b>AI</b></h1>
     <div class="sp"></div>
-    <a class="btn" href="/" style="text-decoration:none;color:inherit">Home</a>
+    <a class="btn" href="https://home.neoxai.website" style="text-decoration:none;color:inherit">Home</a>
     <a class="btn" href="https://pricing.neoxai.website" style="text-decoration:none;color:inherit">Pricing</a>
     <button class="btn" id="themes">Themes</button>
+    <button class="btn still" id="nbbtn" title="Question notebook">📒</button>
+    <button class="btn still" id="glbtn" title="Graph Lab">📈</button>
     <button class="btn" id="exp">Export</button>
-    <button class="btn still" id="clear">New</button>
+    <button class="btn" id="clear">New</button>
   </header>
   <main id="chat">
     <div class="hero" id="hero">
@@ -224,11 +310,13 @@ footer{position:relative}
         <button class="chip">Make an Excel sheet to practice multiplication</button>
         <button class="chip">/solve x^2 - 5x + 6 = 0</button>
         <button class="chip">Write a Python program that checks if a number is prime</button>
+        <button class="chip">Show me a 3D cylinder and its volume</button>
       </div>
     </div>
   </main>
   <footer>
     <div id="nxcmd" role="listbox"></div>
+    <button class="btn still" id="nxstop" hidden>■ Stop</button>
     <div id="prev"></div>
     <div class="bar">
       <button class="att" id="attach" hidden title="Add a photo of a problem">📷</button><input type="file" id="pick" accept="image/*" multiple hidden>
@@ -249,6 +337,17 @@ footer{position:relative}
   <div id="nxl"></div>
 </aside>
 <div id="nxbk"></div>
+<div id="nxlab" role="dialog" aria-modal="true"><div class="lab">
+  <div class="labh"><button class="tab on" data-t="nb">📒 Notebook</button><button class="tab" data-t="gl">📈 Graph Lab</button><span></span><button id="labx" aria-label="Close">✕</button></div>
+  <div id="nbv" class="labb">
+    <div class="nbt"><input id="nbq" placeholder="Search every question you have asked…" autocomplete="off"><button class="lb" id="nbx">Export</button></div>
+    <div id="nbn" class="nbn"></div><div id="nbc" class="nbc"></div><div id="nbl" class="nbl"></div>
+  </div>
+  <div id="glv" class="labb" hidden><div class="glw">
+    <div class="glp"><div id="glf"></div><button class="lb" id="gla">+ Add function</button><div class="glpre" id="glpre"></div><div id="glk"></div><div id="glr" class="glr"></div><button class="lb" id="glai">Ask AI about this graph</button><div class="glh">Drag to move, scroll to zoom, double-click to reset.</div></div>
+    <div class="glc"><canvas id="labcv"></canvas></div>
+  </div></div>
+</div></div>
 
 <dialog id="tdlg">
   <h3>Themes</h3>
@@ -277,11 +376,10 @@ let history=[],busy=false,sample=null;
 
 /* ---------- models ---------- */
 const MODELS=[
-  {id:'standard',name:'NeoStandard 1.0',d:'Fast and compact explanations.'},
-  {id:'flash',name:'NeoFlash 1.5',d:'Deeper, more careful step-by-step help.'},
-  {id:'pro',name:'NeoPro 2.0',d:'Coming soon',lock:true},
-  {id:'galaxy',name:'Galaxy 2.5',d:'Coming soon',lock:true},
-  {id:'nebula',name:'Nebula 2.5',d:'Coming soon',lock:true}];
+  {id:'standard',name:'NeoStandard 1.0',d:'Fast answers, graphs, quizzes and photo problems.'},
+  {id:'flash',name:'NeoLight 1.5',d:'Everything: code files, Graph Lab, notebook, memory, 3D and step-by-step.'},
+  {id:'asteroids',name:'NeoAsteroids 2.0',d:'Unavailable right now. Great for programming and design: writes code, builds layouts and explains it step by step.',lock:true},
+  {id:'galaxy',name:'NeoGalaxy 2.0',d:'Unavailable right now. The deep thinker: it questions assumptions, explores the big ideas behind a problem and reasons slowly before it answers.',lock:true}];
 let mid='standard'; try{ mid=localStorage.getItem('neoxai-model')||mid; }catch(e){}
 if(!MODELS.some(m=>m.id===mid&&!m.lock)) mid='standard';
 const curModel=()=>MODELS.find(m=>m.id===mid), mbtn=$('models'), menu=$('mmenu');
@@ -306,10 +404,10 @@ addEventListener('keydown',e=>{ if(e.key==='Escape') toggleMenu(false); });
 renderModels();
 
 /* ---------- brain ---------- */
-let dl=null,imgCaps=null; sample=true;
+let dl=null,imgCaps=null,deepNext=false,ctl=null; sample=true;
 fetch('/api/chat').then(r=>r.json()).then(i=>{ if(i&&i.vision){ imgCaps={maxCount:3,maxInputBytes:20e6}; $('pick').accept='image/*'; $('attach').hidden=false; } }).catch(()=>{});
 async function ask(msgs,onText){
-  const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:msgs,model:mid,memory:memText()})});
+  const res=await fetch('/api/chat',{method:'POST',signal:ctl&&ctl.signal,headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:msgs,model:mid,memory:memText(),deep:(()=>{ const d=deepNext; deepNext=false; return d; })()})});
   if(!res.ok){ let m=''; try{ m=(await res.json()).error||''; }catch(e){} const er=new Error(m||('Server '+res.status)); er.status=res.status; throw er; }
   const rd=res.body.getReader(),dec=new TextDecoder(); let buf='',out='';
   for(;;){ const {done,value}=await rd.read(); if(done) break; buf+=dec.decode(value,{stream:true}); const L=buf.split('\n'); buf=L.pop();
@@ -336,14 +434,17 @@ async function send(text){
   const urls=(await Promise.all(ims.map(p=>shrink(p.file).catch(()=>null)))).filter(Boolean);
   const msgs=hh.map(m=>{ let c=m.content; if(m.imgs&&m.imgs.length) c=(m===um?'The person attached '+m.imgs.length+' photo(s) of a question. Read the photo carefully, say what the problem is, then solve it step by step. ':'[Earlier the person sent a photo.] ')+c;
     if(m===um&&urls.length) return {role:m.role,content:[{type:'text',text:c},...urls.map(u=>({type:'image_url',image_url:{url:u}}))]}; return {role:m.role,content:c}; });
+  let part=''; ctl=new AbortController(); $('nxstop').hidden=false;
   try{
-    const raw=await ask(msgs,t=>{ stopDots(); render(b,noMem(t)); chat.scrollTop=chat.scrollHeight; }); const r={text:noMem(raw)}, fx=factsOf(raw); remember(fx);
+    const raw=await ask(msgs,t=>{ part=t; stopDots(); render(b,noMem(t)); chat.scrollTop=chat.scrollHeight; }); const r={text:noMem(raw)}, fx=factsOf(raw); remember(fx);
     stopDots(); render(b,r.text); chat.scrollTop=chat.scrollHeight; history.push({role:'assistant',content:r.text}); addTools(b,r.text); if(fx.length){ const k=document.createElement('div'); k.className='nxk'; k.textContent='🧠 Remembered: '+fx.join(' · '); b.appendChild(k); }
     if(!chats.includes(cur)) chats.unshift(cur); cur.title=cur.title||history[0].content.slice(0,50); cur.ts=Date.now(); saveChats();
   }catch(e){
-    stopDots(); history.pop(); b.classList.add('err');
+    stopDots(); if(e&&e.name==='AbortError'){ const pt=noMem(part).trim(); if(pt){ render(b,pt); history.push({role:'assistant',content:pt}); addTools(b,pt); persist(); } else { history.pop(); b.remove(); } busy=false; sendBtn.disabled=!sample; $('nxstop').hidden=true; ctl=null; inp.focus(); return; }
+    history.pop(); b.classList.add('err');
     b.textContent=e&&e.status===429?'NeoXAI is busy right now (the free daily limit may be used up). Please try again later.':e&&e.message&&e.message!=='empty'?'Something went wrong: '+e.message:'Something went wrong. Please try again.';
   }
+  $('nxstop').hidden=true; ctl=null;
   busy=false; sendBtn.disabled=!sample; inp.focus();
 }
 sendBtn.onclick=()=>send();
@@ -420,7 +521,7 @@ $('snew').onclick=()=>newChat();
 $('nxq').oninput=renderSide;
 addEventListener('keydown',e=>{ if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){ e.preventDefault(); document.body.classList.add('nxsb'); $('nxq').focus(); } });
 if(wide()) document.body.classList.add('nxsb');
-const HELP='**What I can do**\n- Type a calculation like `12*(3+4)^2` and I answer instantly\n- Type `y = x^2 - 4` and I draw it instantly\n- `/solve x^2 - 5x + 6 = 0` finds the roots and plots them\n- `/graph sin(x)` draws a function\n- `/quiz fractions`, `/flash topic`, `/steps problem`, `/explain topic`, `/hint problem`, `/code task` and `/debug code` ask the AI\n- `/memory` shows what I remember about you\n- `/export` saves this chat, `/clear` starts a new one\n- Use 🔊 to hear an answer and ↻ to redo it';
+const HELP='**What I can do**\n- Type a calculation like `12*(3+4)^2` and I answer instantly\n- Type `y = x^2 - 4` and I draw it instantly\n- `/solve x^2 - 5x + 6 = 0` finds the roots and plots them\n- `/graph sin(x)` draws a function\n- `/quiz fractions`, `/flash topic`, `/steps problem`, `/explain topic`, `/hint problem`, `/code task` and `/debug code` ask the AI\n- `/memory` shows what I remember about you\n- `/3d cylinder r=3 h=5` shows a 3D shape you can spin, and `/stats`, `/factor`, `/convert` are instant tools\n- `/notes` makes study notes from this chat and `/plan topic` makes a study plan\n- `/notebook` collects every question you ask, and `/lab a*x^2+b*x+c` opens a graph with sliders\n- 🧠 Deeper re-answers with more thinking, and ■ Stop cuts an answer short\n- `/export` saves this chat, `/clear` starts a new one\n- Use 🔊 to hear an answer and ↻ to redo it';
 /* ---------- memory: notes live on each chat, so deleting a chat deletes what was learned in it ---------- */
 const noMem=t=>t.replace(/\[\[mem\]\][\s\S]*?\[\[\/mem\]\]/g,'').replace(/\[\[mem\]\][\s\S]*$/,'').replace(/\[\[?m?e?m?\]?$/,'').trimEnd();
 const factsOf=t=>[...t.matchAll(/\[\[mem\]\]([\s\S]*?)\[\[\/mem\]\]/g)].map(m=>m[1].trim().replace(/\s+/g,' ').slice(0,160)).filter(Boolean);
@@ -433,6 +534,165 @@ function memText(){ const all=chats.includes(cur)?chats:[cur,...chats], notes=[]
 function memReply(){ const all=chats.includes(cur)?chats:[cur,...chats]; let out='**What I remember about you**\n', any=0;
   [...all].sort((a,b)=>b.ts-a.ts).forEach(c=>{ const f=c.mem||[]; if(f.length){ any=1; out+='\n**'+(c.title||'This chat')+'**\n'+f.map(x=>'- '+x).join('\n')+'\n'; } });
   return any?out+'\nI also remember what you asked in your other chats. If you delete a chat, I forget everything I learned in it.':'I haven’t saved any personal notes yet. Tell me about yourself, like your name, grade or goals, and I’ll remember it. I also remember what you ask in each chat, until you delete that chat.'; }
+
+/* ---------- instant tools: stats, factor, convert ---------- */
+function statsReply(a){ const x=(a.match(/-?\d*\.?\d+/g)||[]).map(Number); if(x.length<2) return 'Usage: `/stats 4, 8, 15, 16, 23, 42`';
+  const s=[...x].sort((p,q)=>p-q),n=x.length,sum=x.reduce((p,q)=>p+q,0),mean=sum/n,med=n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2,cnt={}; x.forEach(v=>{ cnt[v]=(cnt[v]||0)+1; });
+  const mx=Math.max(...Object.values(cnt)),mode=mx>1?Object.keys(cnt).filter(k=>cnt[k]===mx).join(', '):'none',ss=x.reduce((p,q)=>p+(q-mean)**2,0),f=v=>+v.toFixed(4);
+  return '**Statistics for '+x.join(', ')+'**\n- Count: '+n+'\n- Sum: '+f(sum)+'\n- Mean: '+f(mean)+'\n- Median: '+f(med)+'\n- Mode: '+mode+'\n- Min and max: '+s[0]+' and '+s[n-1]+'\n- Range: '+f(s[n-1]-s[0])+'\n- Standard deviation: '+f(Math.sqrt(ss/n))+' (population), '+f(Math.sqrt(ss/(n-1)))+' (sample)'; }
+function factorReply(a){ let n=parseInt(a); if(!(n>1)||n>1e12) return 'Usage: `/factor 360` (a whole number from 2 to 1,000,000,000,000)';
+  const o=n,f=[]; for(let p=2;p*p<=n;p++){ let c=0; while(n%p===0){ n/=p; c++; } if(c) f.push([p,c]); } if(n>1) f.push([n,1]);
+  const sup=c=>String(c).replace(/\d/g,d=>'⁰¹²³⁴⁵⁶⁷⁸⁹'[d]), dv=f.reduce((p,x)=>p*(x[1]+1),1);
+  return '**'+o+'** = '+f.map(x=>x[1]>1?x[0]+sup(x[1]):x[0]).join(' × ')+'\n\n'+(f.length===1&&f[0][1]===1?'It is a prime number.':'It has '+dv+' divisors.'); }
+const UN={mm:['l',.001],cm:['l',.01],m:['l',1],km:['l',1000],in:['l',.0254],ft:['l',.3048],yd:['l',.9144],mi:['l',1609.344],mg:['m',1e-6],g:['m',.001],kg:['m',1],t:['m',1000],oz:['m',.028349523],lb:['m',.45359237],ml:['v',.001],l:['v',1],gal:['v',3.785411784],qt:['v',.946352946],cup:['v',.2365882365],floz:['v',.0295735296],s:['t',1],min:['t',60],h:['t',3600],d:['t',86400],wk:['t',604800],'m/s':['s',1],'km/h':['s',1/3.6],mph:['s',.44704],kn:['s',.514444],c:['T',0],f:['T',0],k:['T',0]};
+const UA={mile:'mi',miles:'mi',kilometer:'km',kilometers:'km',kilometre:'km',kilometres:'km',meter:'m',meters:'m',metre:'m',metres:'m',centimeter:'cm',centimeters:'cm',millimeter:'mm',millimeters:'mm',inch:'in',inches:'in',foot:'ft',feet:'ft',yard:'yd',yards:'yd',gram:'g',grams:'g',kilogram:'kg',kilograms:'kg',kilo:'kg',kilos:'kg',pound:'lb',pounds:'lb',lbs:'lb',ounce:'oz',ounces:'oz',liter:'l',liters:'l',litre:'l',litres:'l',milliliter:'ml',milliliters:'ml',gallon:'gal',gallons:'gal',cups:'cup',second:'s',seconds:'s',sec:'s',minute:'min',minutes:'min',hour:'h',hours:'h',hr:'h',day:'d',days:'d',week:'wk',weeks:'wk',kph:'km/h',celsius:'c',fahrenheit:'f',kelvin:'k','°c':'c','°f':'f',tonne:'t',tonnes:'t'};
+function convertReply(a){ const m=a.toLowerCase().match(/^(-?\d*\.?\d+)\s*(\S+)\s+(?:to|in|into)\s+(\S+)$/); const bad='Usage: `/convert 5 km to miles` or `/convert 70 f to c`';
+  if(!m) return bad; const v=+m[1],A=UA[m[2]]||m[2],B=UA[m[3]]||m[3],x=UN[A],y=UN[B]; if(!x||!y||x[0]!==y[0]) return bad+'\n\nI can convert length, mass, volume, time, speed and temperature.';
+  let r; if(x[0]==='T'){ const c=A==='c'?v:A==='f'?(v-32)*5/9:v-273.15; r=B==='c'?c:B==='f'?c*9/5+32:c+273.15; } else r=v*x[1]/y[1];
+  return '`'+v+' '+A+'` = **'+(+r.toPrecision(8))+' '+B+'**'; }
+
+/* ---------- 3D solids ---------- */
+function solid3d(body){
+  const P={}; body.split('\n').forEach(l=>{ const k=l.match(/^\s*([A-Za-z]+)\s*[:=]\s*(.+?)\s*$/); if(k) P[k[1].toLowerCase()]=k[2]; });
+  const sh=(P.shape||'cube').toLowerCase().replace(/[^a-z]/g,''), nm=(k,d)=>{ const v=parseFloat(P[k]); return v>0&&isFinite(v)?v:d; };
+  const a=nm('a',nm('s',nm('edge',3))), r=nm('r',nm('radius',2)), h=nm('h',nm('height',4)), w=nm('w',a), dp=nm('d',nm('depth',a));
+  const n=Math.max(3,Math.min(12,Math.round(nm('n',nm('sides',4))))), MJ=nm('major',3), MN=nm('minor',1), PI=Math.PI, un=(P.unit||'').replace(/[^A-Za-z]/g,'').slice(0,4);
+  const ring=(q,y,k)=>Array.from({length:k},(_,i)=>[q*Math.cos(2*PI*i/k),y,q*Math.sin(2*PI*i/k)]);
+  const bx=(x,y,z)=>{ const X=x/2,Y=y/2,Z=z/2,v=[[-X,-Y,-Z],[X,-Y,-Z],[X,Y,-Z],[-X,Y,-Z],[-X,-Y,Z],[X,-Y,Z],[X,Y,Z],[-X,Y,Z]]; return [[0,1,2,3],[4,5,6,7],[0,1,5,4],[2,3,7,6],[1,2,6,5],[0,3,7,4]].map(f=>f.map(i=>v[i])); };
+  const grid=(fn,A,B)=>{ const o=[]; for(let i=0;i<A;i++) for(let j=0;j<B;j++) o.push([fn(i,j),fn(i+1,j),fn(i+1,j+1),fn(i,j+1)]); return o; };
+  const side=(lo,hi)=>lo.map((p,i)=>[p,lo[(i+1)%lo.length],hi[(i+1)%hi.length],hi[i]]);
+  const bs=n/(4*Math.tan(PI/n)); let F,V,S,title,pars,fv;
+  if(sh==='cube'){ F=bx(a,a,a); V=a**3; S=6*a*a; title='Cube'; pars='a = '+a; fv='V = a³ · SA = 6a²'; }
+  else if(sh==='box'||sh==='cuboid'||sh==='rectangularprism'){ F=bx(w,h,dp); V=w*h*dp; S=2*(w*h+w*dp+h*dp); title='Box'; pars='w = '+w+', h = '+h+', d = '+dp; fv='V = w·h·d · SA = 2(wh + wd + hd)'; }
+  else if(sh==='sphere'||sh==='ball'){ F=grid((i,j)=>{ const t=PI*i/10,p=2*PI*j/18; return [r*Math.sin(t)*Math.cos(p),r*Math.cos(t),r*Math.sin(t)*Math.sin(p)]; },10,18); V=4/3*PI*r**3; S=4*PI*r*r; title='Sphere'; pars='r = '+r; fv='V = 4/3·πr³ · SA = 4πr²'; }
+  else if(sh==='cylinder'){ const lo=ring(r,-h/2,28),hi=ring(r,h/2,28); F=[...side(lo,hi),lo,hi]; V=PI*r*r*h; S=2*PI*r*(r+h); title='Cylinder'; pars='r = '+r+', h = '+h; fv='V = πr²h · SA = 2πr(r + h)'; }
+  else if(sh==='cone'){ const lo=ring(r,-h/2,28),ap=[0,h/2,0]; F=[...lo.map((p,i)=>[p,lo[(i+1)%28],ap]),lo]; V=PI*r*r*h/3; S=PI*r*(r+Math.hypot(r,h)); title='Cone'; pars='r = '+r+', h = '+h; fv='V = ⅓πr²h · SA = πr(r + l), l = √(r² + h²)'; }
+  else if(sh==='pyramid'){ const lo=ring(a/(2*Math.sin(PI/n)),-h/2,n),ap=[0,h/2,0],B=bs*a*a,sl=Math.hypot(h,a/(2*Math.tan(PI/n))); F=[...lo.map((p,i)=>[p,lo[(i+1)%n],ap]),lo]; V=B*h/3; S=B+n*a*sl/2; title=n+'-sided pyramid'; pars='base side a = '+a+', h = '+h; fv='V = ⅓·B·h · SA = B + ½·n·a·slant height'; }
+  else if(sh==='prism'){ const rb=a/(2*Math.sin(PI/n)),lo=ring(rb,-h/2,n),hi=ring(rb,h/2,n),B=bs*a*a; F=[...side(lo,hi),lo,hi]; V=B*h; S=2*B+n*a*h; title=n+'-sided prism'; pars='base side a = '+a+', h = '+h; fv='V = B·h · SA = 2B + n·a·h'; }
+  else if(sh==='torus'||sh==='donut'){ F=grid((i,j)=>{ const t=2*PI*i/16,p=2*PI*j/28; return [(MJ+MN*Math.cos(t))*Math.cos(p),MN*Math.sin(t),(MJ+MN*Math.cos(t))*Math.sin(p)]; },16,28); V=2*PI*PI*MJ*MN*MN; S=4*PI*PI*MJ*MN; title='Torus'; pars='R = '+MJ+', r = '+MN; fv='V = 2π²Rr² · SA = 4π²Rr'; }
+  else if(sh==='tetrahedron'){ const k=a/(2*Math.SQRT2),v=[[1,1,1],[1,-1,-1],[-1,1,-1],[-1,-1,1]].map(p=>p.map(c=>c*k)); F=[[0,1,2],[0,1,3],[0,2,3],[1,2,3]].map(f=>f.map(i=>v[i])); V=a**3/(6*Math.SQRT2); S=Math.sqrt(3)*a*a; title='Tetrahedron'; pars='edge a = '+a; fv='V = a³/(6√2) · SA = √3·a²'; }
+  else if(sh==='octahedron'){ const k=a/Math.SQRT2,v=[[k,0,0],[-k,0,0],[0,k,0],[0,-k,0],[0,0,k],[0,0,-k]]; F=[]; [0,1].forEach(x=>[2,3].forEach(y=>[4,5].forEach(z=>F.push([v[x],v[y],v[z]])))); V=Math.SQRT2/3*a**3; S=2*Math.sqrt(3)*a*a; title='Octahedron'; pars='edge a = '+a; fv='V = (√2/3)·a³ · SA = 2√3·a²'; }
+  else throw new Error('shape');
+  let mx=0; F.forEach(f=>f.forEach(p=>p.forEach(c=>{ mx=Math.max(mx,Math.abs(c)); }))); const sc=1/mx, cull=sh!=='torus'&&sh!=='donut';
+  const box=document.createElement('div'); box.className='s3'; const cv=document.createElement('canvas'); let yaw=.7,pitch=.5,zoom=1,auto=true,drag=null,seen=false;
+  const draw=()=>{ const W=cv.clientWidth||320,H=300,dpr=window.devicePixelRatio||1; if(cv.width!==Math.round(W*dpr)){ cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr); }
+    const g=cv.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,W,H);
+    const cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch),K=Math.min(W,H)*.34*zoom,D=4;
+    const T=p=>{ const x=p[0]*sc,y=p[1]*sc,z=p[2]*sc,x1=x*cy+z*sy,z1=-x*sy+z*cy; return [x1,y*cp-z1*sp,y*sp+z1*cp]; };
+    const pr=q=>{ const f=D/(D-q[2]); return [W/2+q[0]*K*f,H/2-q[1]*K*f]; }, items=[];
+    F.forEach(f=>{ const q=f.map(T), c=[0,1,2].map(i=>q.reduce((s,p)=>s+p[i],0)/q.length); let n=[0,0,0];
+      q.forEach((p,i)=>{ const o=q[(i+1)%q.length]; n[0]+=(p[1]-o[1])*(p[2]+o[2]); n[1]+=(p[2]-o[2])*(p[0]+o[0]); n[2]+=(p[0]-o[0])*(p[1]+o[1]); });
+      const L=Math.hypot(n[0],n[1],n[2])||1; n=n.map(x=>x/L); if(n[0]*c[0]+n[1]*c[1]+n[2]*c[2]<0) n=n.map(x=>-x);
+      if(cull&&n[2]<=0) return; items.push([c[2],q,n]); });
+    items.sort((p,q)=>p[0]-q[0]); const fg=getComputedStyle(cv).color; g.lineJoin='round';
+    items.forEach(it=>{ const n=it[2],lum=.3+.7*Math.max(0,n[0]*.35+n[1]*.6+n[2]*.72); g.beginPath(); it[1].map(pr).forEach((p,i)=>{ if(i) g.lineTo(p[0],p[1]); else g.moveTo(p[0],p[1]); }); g.closePath();
+      g.fillStyle='hsl(212 75% '+Math.round(22+46*lum)+'%)'; g.fill(); g.globalAlpha=.45; g.strokeStyle=fg; g.lineWidth=.8; g.stroke(); g.globalAlpha=1; }); };
+  const f2=v=>+v.toFixed(2), info=document.createElement('div'); info.className='si3';
+  const l1=document.createElement('div'), tb=document.createElement('b'); tb.textContent=title; l1.append(tb,' · '+pars);
+  const l2=document.createElement('div'); l2.textContent='Volume ≈ '+f2(V)+(un?' '+un+'³':'')+'  ·  Surface area ≈ '+f2(S)+(un?' '+un+'²':'');
+  const l3=document.createElement('div'), it3=document.createElement('i'); it3.textContent=fv; l3.appendChild(it3); info.append(l1,l2,l3);
+  const bt=document.createElement('div'); bt.className='bt3'; const mkb=(t,f)=>{ const x=document.createElement('button'); x.textContent=t; x.onclick=f; bt.appendChild(x); };
+  mkb('Spin on/off',()=>{ auto=!auto; }); mkb('Reset',()=>{ yaw=.7; pitch=.5; zoom=1; auto=true; draw(); }); box.append(cv,info,bt);
+  cv.onpointerdown=e=>{ drag=[e.clientX,e.clientY]; auto=false; try{ cv.setPointerCapture(e.pointerId); }catch(x){} };
+  cv.onpointermove=e=>{ if(!drag) return; yaw+=(e.clientX-drag[0])*.01; pitch=Math.max(-1.5,Math.min(1.5,pitch+(e.clientY-drag[1])*.01)); drag=[e.clientX,e.clientY]; draw(); };
+  cv.onpointerup=cv.onpointercancel=()=>{ drag=null; };
+  cv.onwheel=e=>{ e.preventDefault(); zoom=Math.max(.5,Math.min(2.5,zoom*(e.deltaY<0?1.1:.9))); draw(); };
+  const tm=setInterval(()=>{ if(cv.isConnected){ if(!seen){ seen=true; draw(); } else if(auto&&!drag){ yaw+=.012; draw(); } } else if(seen) clearInterval(tm); },40);
+  return box; }
+
+/* ---------- Question Notebook + Graph Lab ---------- */
+const TOPICS=[['Coding',/\b(code|python|javascript|html|css|program|bug|debug|java|c\+\+|sql|script)\b|```/i],['Calculus',/\b(derivative|integral|limit|calculus|differentiate|integrate|dx)\b/i],['Geometry',/\b(triangle|circle|angle|area|perimeter|volume|cylinder|cone|sphere|pyramid|prism|3d|geometry|pythag\w*|radius|diameter)\b/i],['Statistics',/\b(mean|median|mode|average|probability|statistics|standard deviation|chance|dice|data)\b/i],['Fractions',/fraction|\d\/\d|decimal|percent|ratio|%/i],['Graphs',/\b(graph|plot|slope|intercept|function)\b|y\s*=/i],['Algebra',/\b(solve|equation|expression|factor|polynomial|quadratic|variable|inequalit\w*|simplify)\b|x\^|x²/i],['Arithmetic',/^[\d\s+\-*\/^().=%×÷]+$|\b(add|subtract|multiply|divide|times|plus|minus)\b/i]];
+const topicOf=q=>{ for(const t of TOPICS) if(t[1].test(q)) return t[0]; return 'Other'; };
+let nbTopic='All',nbStar=false;
+function collect(){ const all=chats.includes(cur)?chats:[cur,...chats],out=[]; all.forEach(c=>(c.msgs||[]).forEach((m,i)=>{ if(m.role==='user'&&String(m.content).trim()) out.push({q:String(m.content).trim(),t:c.id>1e12?c.id:c.ts,chat:c,i,star:!!m.star}); })); return out.sort((a,b)=>b.t-a.t||b.i-a.i); }
+const fdate=t=>new Date(t).toLocaleDateString(undefined,{month:'short',day:'numeric'});
+function nbRender(){ const all=collect(),q=$('nbq').value.trim().toLowerCase(),counts={}; all.forEach(r=>{ r.topic=topicOf(r.q); counts[r.topic]=(counts[r.topic]||0)+1; });
+  $('nbn').textContent=all.length+' question'+(all.length===1?'':'s')+' collected across '+new Set(all.map(r=>r.chat)).size+' chat(s)';
+  const C=$('nbc'); C.replaceChildren(); const mx=Math.max(1,...Object.values(counts));
+  const chip=(name,n,on,fn,w)=>{ const d=document.createElement('div'); d.className='nbb'+(on?' on':''); const bar=document.createElement('i'); bar.style.width=w+'%'; const l=document.createElement('span'); l.textContent=name; const c=document.createElement('b'); c.textContent=n; d.append(bar,l,c); d.onclick=fn; C.appendChild(d); };
+  chip('All',all.length,nbTopic==='All'&&!nbStar,()=>{ nbTopic='All'; nbStar=false; nbRender(); },100);
+  chip('★ Starred',all.filter(r=>r.star).length,nbStar,()=>{ nbStar=!nbStar; nbRender(); },0);
+  Object.keys(counts).sort((a,b)=>counts[b]-counts[a]).forEach(k=>chip(k,counts[k],nbTopic===k,()=>{ nbTopic=nbTopic===k?'All':k; nbRender(); },counts[k]/mx*100));
+  const L=$('nbl'); L.replaceChildren(); const list=all.filter(r=>(nbTopic==='All'||r.topic===nbTopic)&&(!nbStar||r.star)&&(!q||r.q.toLowerCase().includes(q)));
+  if(!list.length){ const e=document.createElement('div'); e.className='nbn'; e.textContent=all.length?'No questions match.':'Nothing here yet. Every question you ask will be collected in this notebook.'; L.appendChild(e); return; }
+  list.forEach(r=>{ const d=document.createElement('div'); d.className='nbi'; const st=document.createElement('button'); st.textContent=r.star?'★':'☆'; st.title='Star'; st.onclick=()=>{ const m=r.chat.msgs[r.i]; m.star=!m.star; saveChats(); nbRender(); };
+    const b=document.createElement('div'),qq=document.createElement('div'); qq.className='nbq'; qq.textContent=r.q; const mt=document.createElement('div'); mt.className='nbm';
+    const tg=document.createElement('span'); tg.textContent=r.topic+' · '+(r.chat.title||'New chat')+' · '+fdate(r.t); mt.appendChild(tg);
+    const mkb=(t,f)=>{ const x=document.createElement('button'); x.textContent=t; x.onclick=f; mt.appendChild(x); };
+    mkb('Ask again',()=>{ closeLab(); send(r.q); }); mkb('Open chat',()=>{ closeLab(); openChat(r.chat); });
+    b.append(qq,mt); d.append(st,b); L.appendChild(d); }); }
+$('nbq').oninput=nbRender;
+$('nbx').onclick=()=>{ const all=collect(),by={}; all.forEach(r=>{ (by[topicOf(r.q)]=by[topicOf(r.q)]||[]).push(r); });
+  const t='# My question notebook\n\n'+Object.keys(by).map(k=>'## '+k+'\n'+by[k].map(r=>'- '+r.q.replace(/\n+/g,' ')+' ('+(r.chat.title||'chat')+', '+fdate(r.t)+')').join('\n')).join('\n\n')+'\n';
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([t],{type:'text/markdown'})); a.download='neoxai-notebook.md'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),2000); };
+/* Graph Lab */
+const COL=['#4aa3ff','#ff6b8a','#3ddc97','#ffb454','#b794f6'], KNOWN=new Set(['sin','cos','tan','asin','acos','atan','sqrt','abs','exp','ln','log','floor','ceil','pi','e','x','y']), LPL='abcdkmnpq';
+const lab={fx:[{e:'a*x^2+b*x+c',on:true}],P:{a:1,b:0,c:0},v:{x0:-10,x1:10,y0:-7,y1:7},mx:null,anim:{},rows:{},keys:'',fxIn:[],raf:0,fitted:false,lastR:''};
+try{ const sv=JSON.parse(localStorage.getItem('neoxai-lab')||'null'); if(sv&&Array.isArray(sv.fx)&&sv.fx.length){ lab.fx=sv.fx.slice(0,5).map(f=>({e:String(f.e||''),on:f.on!==false})); Object.assign(lab.P,sv.P||{}); } }catch(e){}
+const labSave=()=>{ try{ localStorage.setItem('neoxai-lab',JSON.stringify({fx:lab.fx,P:lab.P})); }catch(e){} };
+const wordMap=(e,fn)=>e.replace(/[A-Za-z]+/g,w=>{ const l=w.toLowerCase(); if(KNOWN.has(l)) return w; return [...l].every(c=>LPL.includes(c)||c==='x')?fn(l):w; });
+const paramsOf=e=>{ const s=new Set(); wordMap(e,l=>{ [...l].forEach(c=>{ if(LPL.includes(c)) s.add(c); }); return l; }); return s; };
+const substP=e=>wordMap(e,l=>[...l].map(c=>c==='x'?'x':'('+(lab.P[c]===undefined?1:lab.P[c])+')').join('*'));
+const fnCache=new Map(); const compile=t=>{ let f=fnCache.get(t); if(f===undefined){ try{ f=mkFn(t); if(f){ const z=f(1); if(typeof z!=='number') f=null; } }catch(e){ f=null; } if(fnCache.size>400) fnCache.clear(); fnCache.set(t,f); } return f; };
+const cleanE=e=>e.replace(/^\s*(y|f\(x\))\s*=\s*/i,'').trim();
+const getFn=f=>{ const e=cleanE(f.e); return e?compile(substP(e)):null; };
+function buildFx(){ const box=$('glf'); box.replaceChildren(); lab.fxIn=[];
+  lab.fx.forEach((f,i)=>{ const r=document.createElement('div'); r.className='glx'; const cb=document.createElement('input'); cb.type='checkbox'; cb.checked=f.on; cb.style.accentColor=COL[i%5]; cb.onchange=()=>{ f.on=cb.checked; labSave(); labDraw(); };
+    const t=document.createElement('input'); t.type='text'; t.value=f.e; t.placeholder='y = …  try a*x^2 + b*x + c'; t.spellcheck=false; t.oninput=()=>{ f.e=t.value; syncParams(); labSave(); labDraw(); };
+    const x=document.createElement('button'); x.textContent='✕'; x.title='Remove'; x.onclick=()=>{ if(lab.fx.length>1){ lab.fx.splice(i,1); buildFx(); syncParams(); labSave(); labDraw(); } };
+    r.append(cb,t,x); box.appendChild(r); lab.fxIn.push(t); }); $('gla').hidden=lab.fx.length>=5; }
+function syncParams(){ const s=new Set(); lab.fx.forEach(f=>paramsOf(cleanE(f.e)).forEach(c=>s.add(c))); const ks=[...s].sort(); ks.forEach(c=>{ if(!(c in lab.P)) lab.P[c]=1; }); const key=ks.join(''); if(key===lab.keys) return; lab.keys=key;
+  const box=$('glk'); box.replaceChildren(); lab.rows={};
+  ks.forEach(c=>{ const r=document.createElement('div'); r.className='glk'; const l=document.createElement('b'); l.textContent=c;
+    const rg=document.createElement('input'); rg.type='range'; rg.min=-10; rg.max=10; rg.step=.1; rg.value=lab.P[c]; const nu=document.createElement('input'); nu.type='number'; nu.step='any'; nu.value=lab.P[c];
+    const pl=document.createElement('button'); pl.textContent='▶'; pl.title='Animate';
+    rg.oninput=()=>{ lab.P[c]=+rg.value; nu.value=rg.value; labSave(); labDraw(); };
+    nu.oninput=()=>{ const v=parseFloat(nu.value); if(isFinite(v)){ lab.P[c]=v; rg.value=v; labSave(); labDraw(); } };
+    pl.onclick=()=>{ if(lab.anim[c]!==undefined){ delete lab.anim[c]; pl.textContent='▶'; } else { lab.anim[c]=Math.asin(Math.max(-1,Math.min(1,lab.P[c]/5)))-performance.now()/1000*1.2; pl.textContent='❚❚'; if(!lab.raf) lab.raf=requestAnimationFrame(labTick); } };
+    r.append(l,rg,nu,pl); box.appendChild(r); lab.rows[c]={rg,nu}; });
+  if(!ks.length){ const n=document.createElement('div'); n.className='glh'; n.textContent='Use letters like a, b, c in a function and sliders appear here.'; box.appendChild(n); } }
+function labTick(){ lab.raf=0; if(!$('nxlab').classList.contains('open')||!Object.keys(lab.anim).length) return; const t=performance.now()/1000;
+  for(const c in lab.anim){ const v=+(Math.sin(t*1.2+lab.anim[c])*5).toFixed(2); lab.P[c]=v; const r=lab.rows[c]; if(r){ r.rg.value=v; r.nu.value=v; } } labDraw(); lab.raf=requestAnimationFrame(labTick); }
+function labRoots(fn){ const V=lab.v,out=[],N=500; let px=V.x0,py; try{ py=fn(px); }catch(e){ py=NaN; }
+  for(let i=1;i<=N&&out.length<6;i++){ const x=V.x0+(V.x1-V.x0)*i/N; let y; try{ y=fn(x); }catch(e){ y=NaN; }
+    if(isFinite(py)&&isFinite(y)){ if(y===0) out.push(x); else if(py*y<0&&Math.abs(y-py)<(V.y1-V.y0)*2){ let lo=px,hi=x; for(let k=0;k<30;k++){ const m=(lo+hi)/2; if(fn(lo)*fn(m)<=0) hi=m; else lo=m; } out.push((lo+hi)/2); } } px=x; py=y; } return out; }
+function labDraw(){ const cv=$('labcv'); if(!cv||$('glv').hidden||!cv.clientWidth) return; const W=cv.clientWidth,H=cv.clientHeight,dpr=window.devicePixelRatio||1;
+  if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){ cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr); }
+  const g=cv.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,W,H); const V=lab.v,fg=getComputedStyle(cv).color,X=x=>(x-V.x0)/(V.x1-V.x0)*W,Y=y=>H-(y-V.y0)/(V.y1-V.y0)*H;
+  const nice=r=>{ const p=10**Math.floor(Math.log10(r/6)),m=r/6/p; return (m<1.5?1:m<3.5?2:m<7.5?5:10)*p; }, sx=nice(V.x1-V.x0), sy=nice(V.y1-V.y0);
+  g.font='11px system-ui'; g.fillStyle=fg; g.strokeStyle=fg; g.lineWidth=1;
+  for(let i=Math.ceil(V.x0/sx);i*sx<=V.x1;i++){ const x=i*sx; g.globalAlpha=i===0?.9:.14; g.beginPath(); g.moveTo(X(x),0); g.lineTo(X(x),H); g.stroke(); if(i){ g.globalAlpha=.6; g.fillText(+x.toFixed(6),X(x)+3,Math.min(H-4,Math.max(12,Y(0)+13))); } }
+  for(let i=Math.ceil(V.y0/sy);i*sy<=V.y1;i++){ const y=i*sy; g.globalAlpha=i===0?.9:.14; g.beginPath(); g.moveTo(0,Y(y)); g.lineTo(W,Y(y)); g.stroke(); if(i){ g.globalAlpha=.6; g.fillText(+y.toFixed(6),Math.min(W-34,Math.max(4,X(0)+4)),Y(y)-3); } }
+  const rl=[]; g.globalAlpha=1;
+  lab.fx.forEach((f,fi)=>{ const fn=getFn(f); if(lab.fxIn[fi]) lab.fxIn[fi].classList.toggle('bad',!fn&&f.e.trim()!==''); if(!f.on||!fn) return;
+    g.strokeStyle=COL[fi%5]; g.lineWidth=2.2; g.beginPath(); let pen=false,py=0;
+    for(let px=0;px<=W;px+=1.5){ const x=V.x0+px/W*(V.x1-V.x0); let y; try{ y=fn(x); }catch(e){ y=NaN; } if(!isFinite(y)||Math.abs(Y(y))>1e5){ pen=false; continue; } const q=Y(y); if(pen&&Math.abs(q-py)>H*2) pen=false; if(pen) g.lineTo(px,q); else g.moveTo(px,q); pen=true; py=q; } g.stroke();
+    const rt=labRoots(fn); g.fillStyle=COL[fi%5]; rt.forEach(r=>{ g.beginPath(); g.arc(X(r),Y(0),4,0,7); g.fill(); }); rl.push('y'+(fi+1)+(rt.length?'  zeros at x ≈ '+rt.map(r=>+r.toFixed(3)).join(', '):'  no zeros in view')); });
+  const rs=rl.join('\n'); if(rs!==lab.lastR){ lab.lastR=rs; $('glr').textContent=rs; }
+  if(lab.mx!=null){ const x=V.x0+lab.mx/W*(V.x1-V.x0); g.globalAlpha=.35; g.strokeStyle=fg; g.lineWidth=1; g.beginPath(); g.moveTo(lab.mx,0); g.lineTo(lab.mx,H); g.stroke(); g.globalAlpha=1; g.fillStyle=fg; let ty=16; g.fillText('x = '+(+x.toFixed(3)),8,ty);
+    lab.fx.forEach((f,fi)=>{ const fn=getFn(f); if(!f.on||!fn) return; let y; try{ y=fn(x); }catch(e){ y=NaN; } if(!isFinite(y)) return; ty+=15; g.fillStyle=COL[fi%5]; g.fillText('y'+(fi+1)+' = '+(+y.toFixed(3)),8,ty); g.beginPath(); g.arc(lab.mx,Y(y),4,0,7); g.fill(); }); } }
+function labFit(){ const cv=$('labcv'),ar=(cv.clientHeight/cv.clientWidth)||.6; lab.v={x0:-10,x1:10,y0:-10*ar,y1:10*ar}; }
+function labInit(){ const cv=$('labcv'); let drag=null;
+  cv.onpointerdown=e=>{ drag={x:e.clientX,y:e.clientY}; try{ cv.setPointerCapture(e.pointerId); }catch(x){} };
+  cv.onpointermove=e=>{ const r=cv.getBoundingClientRect(); lab.mx=e.clientX-r.left; if(drag){ const V=lab.v,dx=(e.clientX-drag.x)/r.width*(V.x1-V.x0),dy=(e.clientY-drag.y)/r.height*(V.y1-V.y0); V.x0-=dx; V.x1-=dx; V.y0+=dy; V.y1+=dy; drag={x:e.clientX,y:e.clientY}; } labDraw(); };
+  cv.onpointerup=cv.onpointercancel=()=>{ drag=null; }; cv.onpointerleave=()=>{ lab.mx=null; labDraw(); };
+  cv.onwheel=e=>{ e.preventDefault(); const r=cv.getBoundingClientRect(),V=lab.v,f=e.deltaY<0?.85:1.18,cx=V.x0+(e.clientX-r.left)/r.width*(V.x1-V.x0),cy=V.y1-(e.clientY-r.top)/r.height*(V.y1-V.y0);
+    V.x0=cx-(cx-V.x0)*f; V.x1=cx+(V.x1-cx)*f; V.y0=cy-(cy-V.y0)*f; V.y1=cy+(V.y1-cy)*f; labDraw(); };
+  cv.ondblclick=()=>{ labFit(); labDraw(); }; if(window.ResizeObserver) new ResizeObserver(()=>labDraw()).observe(cv);
+  $('gla').onclick=()=>{ if(lab.fx.length<5){ lab.fx.push({e:'',on:true}); buildFx(); labSave(); lab.fxIn[lab.fx.length-1].focus(); } };
+  const PRE=[['Line','m*x+b',{m:1,b:0}],['Parabola','a*x^2+b*x+c',{a:1,b:0,c:0}],['Wave','a*sin(b*x+c)',{a:2,b:1,c:0}],['Exponential','a*2^(b*x)',{a:1,b:.5}],['Cubic','a*x^3+b*x',{a:.2,b:-1}]];
+  PRE.forEach(p=>{ const b=document.createElement('button'); b.textContent=p[0]; b.onclick=()=>{ lab.fx=[{e:p[1],on:true}]; lab.P=Object.assign({},p[2]); lab.keys=''; buildFx(); syncParams(); labSave(); labDraw(); }; $('glpre').appendChild(b); });
+  $('glai').onclick=()=>{ const es=lab.fx.filter(f=>f.on&&f.e.trim()).map(f=>'y = '+cleanE(f.e)); if(!es.length) return; const ps=[...lab.keys].map(c=>c+' = '+lab.P[c]).join(', ');
+    closeLab(); send('Explain this graph and what changing the sliders does: '+es.join(' and ')+(ps?' (with '+ps+')':'')); }; }
+function showTab(t){ $('nbv').hidden=t!=='nb'; $('glv').hidden=t!=='gl'; document.querySelectorAll('#nxlab .tab').forEach(b=>b.classList.toggle('on',b.dataset.t===t));
+  if(t==='nb') nbRender(); else{ if(!lab.fitted){ labFit(); lab.fitted=true; } buildFx(); syncParams(); requestAnimationFrame(()=>{ if(!lab.fitted2){ labFit(); lab.fitted2=true; } labDraw(); }); } }
+function openLab(tab,expr){ $('nxlab').classList.add('open'); if(expr&&tab==='gl'){ lab.fx=[{e:cleanE(expr),on:true}]; lab.keys=''; } showTab(tab||'nb'); }
+function closeLab(){ lab.anim={}; lab.keys=''; $('nxlab').classList.remove('open'); }
+document.querySelectorAll('#nxlab .tab').forEach(b=>{ b.onclick=()=>showTab(b.dataset.t); });
+$('labx').onclick=closeLab; $('nxlab').onclick=e=>{ if(e.target===$('nxlab')) closeLab(); };
+$('nbbtn').onclick=()=>openLab('nb'); $('glbtn').onclick=()=>openLab('gl');
+addEventListener('keydown',e=>{ if(e.key==='Escape'&&$('nxlab').classList.contains('open')) closeLab(); });
+labInit();
 function persist(){ if(!chats.includes(cur)) chats.unshift(cur); cur.title=cur.title||history[0].content.slice(0,50); cur.ts=Date.now(); saveChats(); }
 function graphReply(a){ return mkFn(a)?'Here is the graph of `'+a+'`. Drag, zoom and hover for points.\n\n[[graph]]\n'+a+'\n[[/graph]]':null; }
 function calcReply(s){ s=s.replace(/[=?\s]+$/,''); const r=s.replace(/\b(sqrt|sin|cos|tan|asin|acos|atan|log|ln|abs|exp|floor|ceil|pi|e)\b/gi,'').replace(/π/g,'');
@@ -450,6 +710,14 @@ function solveReply(a){ if(!a) return null; const p=(a.includes('=')?a:a+'=0').s
 function auto(t){ const s=t.trim().replace(/[=?\s]+$/,''); if(/^(y|f\(x\))\s*=.*x/i.test(s)&&mkFn(s)) return graphReply(s); return calcReply(s); }
 function cmd(t){ const m=t.match(/^\/(\w+)\s*([\s\S]*)$/); if(!m) return null; const k=m[1].toLowerCase(),a=m[2].trim();
   if(k==='help') return {local:HELP};
+  if(k==='3d'){ const p=a.split(/\s+/).filter(Boolean); if(!p.length) return {local:'Try `/3d cylinder r=3 h=5`. Shapes: cube, box, sphere, cylinder, cone, pyramid, prism, torus, tetrahedron, octahedron.'}; const L=['shape: '+p[0]]; p.slice(1).forEach(x=>{ const m=x.match(/^([A-Za-z]+)=(.+)$/); if(m) L.push(m[1]+': '+m[2]); }); return {local:'Here is your 3D '+p[0]+'. Drag to turn it and scroll to zoom.\n\n[[3d]]\n'+L.join('\n')+'\n[[/3d]]'}; }
+  if(k==='stats') return {local:statsReply(a)};
+  if(k==='factor') return {local:factorReply(a)};
+  if(k==='convert') return {local:convertReply(a)};
+  if(k==='notes') return {prompt:'Turn our conversation so far into short study notes with headings, key formulas and three practice questions.'};
+  if(k==='plan') return {prompt:'Make a short, realistic study plan for '+(a||'what I am learning')+', with steps for this week.'};
+  if(k==='notebook'){ openLab('nb'); return {done:1}; }
+  if(k==='lab'){ openLab('gl',a); return {done:1}; }
   if(k==='memory') return {local:memReply()};
   if(k==='export'){ exportChat(); return {done:1}; }
   if(k==='clear'||k==='new'){ newChat(); return {done:1}; }
@@ -466,7 +734,7 @@ function cmd(t){ const m=t.match(/^\/(\w+)\s*([\s\S]*)$/); if(!m) return null; c
   return null; }
 function exportChat(){ const t=history.map(m=>(m.role==='user'?'## You\n':'## NeoXAI\n')+m.content).join('\n\n'); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([t],{type:'text/markdown'})); a.download='neoxai-chat.md'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),2000); }
 $('exp').onclick=exportChat;
-const CMDS=[['/solve','x^2 - 5x + 6 = 0','Find the roots and plot them',1],['/graph','sin(x)','Draw a function',1],['/calc','3*(4+5)^2','Calculate instantly',1],['/quiz','fractions','Make a 5-question quiz',1],['/flash','topic','Make flashcards',1],['/steps','problem','Walk through it step by step',1],['/explain','topic','Explain it simply',1],['/hint','problem','A hint, not the answer',1],['/code','python reverse a string','Write code and explain it',1],['/debug','paste your code','Find and fix a bug',1],['/memory','','See what I remember about you',0],['/export','','Save this chat as a file',0],['/clear','','Start a new chat',0],['/help','','Show all commands',0]];
+const CMDS=[['/solve','x^2 - 5x + 6 = 0','Find the roots and plot them',1],['/graph','sin(x)','Draw a function',1],['/calc','3*(4+5)^2','Calculate instantly',1],['/quiz','fractions','Make a 5-question quiz',1],['/flash','topic','Make flashcards',1],['/steps','problem','Walk through it step by step',1],['/explain','topic','Explain it simply',1],['/hint','problem','A hint, not the answer',1],['/code','python reverse a string','Write code and explain it',1],['/debug','paste your code','Find and fix a bug',1],['/memory','','See what I remember about you',0],['/3d','cylinder r=3 h=5','Show a 3D shape you can spin',1],['/stats','4, 8, 15, 16, 23','Mean, median, mode, spread',1],['/factor','360','Prime factors of a number',1],['/convert','5 km to miles','Convert units',1],['/notes','','Study notes from this chat',0],['/plan','fractions','Make a study plan',1],['/notebook','','Open your question notebook',0],['/lab','a*x^2 + b*x + c','Open the adjustable graph',1],['/export','','Save this chat as a file',0],['/clear','','Start a new chat',0],['/help','','Show all commands',0]];
 const cbox=$('nxcmd'); let cl=[],ci=0;
 function cHide(){ cbox.classList.remove('open'); cl=[]; }
 function cShow(){ const v=inp.value.toLowerCase(); if(!/^\/\S*$/.test(v)){ cHide(); return; }
@@ -484,18 +752,25 @@ inp.addEventListener('keydown',e=>{ if(!cl.length) return;
   if(e.key==='ArrowDown'||e.key==='ArrowUp'){ e.preventDefault(); ci=(ci+(e.key==='ArrowDown'?1:cl.length-1))%cl.length; cShow(); }
   else if(e.key==='Escape'){ cHide(); }
   else if(e.key==='Tab'||(e.key==='Enter'&&!e.shiftKey&&cl[ci][0]!==inp.value.trim().toLowerCase())){ e.preventDefault(); e.stopImmediatePropagation(); cPick(cl[ci]); } },true);
-const plain=t=>t.replace(/```[\s\S]*?```/g,' ').replace(/\[\[(graph|svg|quiz|file|sheet|steps|chart|numline|fractions|flash)[^\]]*\]\][\s\S]*?\[\[\/\1\]\]/g,' ').replace(/\\[()\[\]]|[$*#`|_^]/g,' ');
+const plain=t=>t.replace(/```[\s\S]*?```/g,' ').replace(/\[\[(graph|svg|quiz|file|sheet|steps|chart|numline|fractions|flash|3d)[^\]]*\]\][\s\S]*?\[\[\/\1\]\]/g,' ').replace(/\\[()\[\]]|[$*#`|_^]/g,' ');
 function regen(){ if(busy||history.length<2||history[history.length-1].role!=='assistant') return; history.pop(); const u=history.pop(); chat.lastElementChild.remove(); chat.lastElementChild.remove(); send(u.content); }
 function addTools(b,text){ chat.querySelectorAll('.nxm,.nxs').forEach(x=>x.remove());
   const t=document.createElement('div'); t.className='nxm';
   const mkb=(l,f)=>{ const x=document.createElement('button'); x.textContent=l; x.onclick=()=>f(x); t.appendChild(x); };
   mkb('Copy',async x=>{ try{ await navigator.clipboard.writeText(text); x.textContent='Copied'; }catch(e){ x.textContent='Can’t copy'; } setTimeout(()=>{ x.textContent='Copy'; },1500); });
   mkb('🔊',()=>{ const s=window.speechSynthesis; if(!s) return; if(s.speaking){ s.cancel(); return; } s.speak(new SpeechSynthesisUtterance(plain(text))); });
-  mkb('↻ Redo',regen); b.appendChild(t);
+  mkb('🧠 Deeper',()=>{ if(!isLight()) return lock('Deeper mode'); if(!busy){ deepNext=true; regen(); } }); mkb('↻ Redo',regen); b.appendChild(t);
   const sg=document.createElement('div'); sg.className='nxs';
   ['Explain it more simply','Give me a similar problem','Quiz me on this'].forEach(x=>{ const c=document.createElement('button'); c.className='chip'; c.textContent=x; c.onclick=()=>send(x); sg.appendChild(c); }); b.appendChild(sg); }
 $('clear').onclick=()=>newChat();
 
+
+/* ---------- NeoLight-only features ---------- */
+const isLight=()=>mid==='flash';
+function lock(f){ note.textContent='🔒 '+f+' is a NeoLight feature. Pick NeoLight 1.5 in the model menu.'; mbtn.classList.add('on'); setTimeout(()=>{ mbtn.classList.remove('on'); note.textContent='Johnny made this AI just for fun.'; },4500); }
+{ const _ol=openLab; openLab=function(t,e){ if(!isLight()){ lock(t==='gl'?'The Graph Lab':'The question notebook'); return; } return _ol.apply(this,arguments); };
+  const GATED={'3d':'3D shapes',code:'Coding',debug:'Coding',memory:'Memory',flash:'Flashcards',steps:'Step-by-step mode',notes:'Study notes',plan:'Study plans'}, _cmd=cmd;
+  cmd=function(t){ const m=t.match(/^\/(\w+)/), k=m&&m[1].toLowerCase(); if(k&&GATED[k]&&!isLight()) return {local:'🔒 **'+GATED[k]+' is a NeoLight feature.** Pick **NeoLight 1.5** in the model menu next to the message box to use `/'+k+'`.'}; return _cmd.apply(this,arguments); }; }
 /* ---------- drawing ---------- */
 const PD=['#4da3ff','#ff5c8a','#3ddc97','#ffb84d','#b388ff'],PL=['#2563eb','#e11d48','#059669','#d97706','#7c3aed'],G={bg:'#000000',fg:'#ffffff',dark:true};
 function mkFn(src){
@@ -643,14 +918,22 @@ function xlsx(body){
 }
 function fileCard(name,body){
   name=name.replace(/[\\\/]/g,'-'); if(!/\.\w+$/.test(name)) name+='.txt';
-  const box=document.createElement('div'); box.className='fcard';
-  const info=document.createElement('span'); info.textContent='📄 '+name; box.appendChild(info);
-  const btn=document.createElement('button'); btn.className='btn'; btn.textContent='Download'; box.appendChild(btn);
-  btn.onclick=async()=>{ try{
+  const ext=name.match(/\.(\w+)$/)[1].toLowerCase(), lang=ext==='mjs'?'js':ext==='htm'?'html':ext;
+  const IC={py:'🐍',js:'🟨',mjs:'🟨',ts:'🔷',html:'🌐',htm:'🌐',css:'🎨',java:'☕',json:'🧾',md:'📝',txt:'📄',sql:'🗄️',c:'⚙️',cpp:'⚙️',go:'🐹',rs:'🦀',php:'🐘',rb:'💎'};
+  const lines=body.split('\n').length, size=body.length<1024?body.length+' B':(body.length/1024).toFixed(1)+' KB';
+  const box=document.createElement('div'); box.className='fcard fcx';
+  const head=document.createElement('div'); head.className='fch';
+  const ic=document.createElement('span'); ic.className='ic'; ic.textContent=IC[ext]||'📄';
+  const meta=document.createElement('div'); const nm=document.createElement('span'); nm.className='nm'; nm.textContent=name; const sm=document.createElement('small'); sm.textContent=lines+' lines · '+size; meta.append(nm,sm);
+  const acts=document.createElement('div'); acts.className='acts'; head.append(ic,meta,acts); box.appendChild(head);
+  const mkb=(t,f)=>{ const b=document.createElement('button'); b.className='btn still'; b.textContent=t; b.onclick=()=>f(b); acts.appendChild(b); return b; };
+  let view=null; const pv=mkb('Preview',b=>{ if(view){ view.remove(); view=null; b.textContent='Preview'; return; } view=document.createElement('div'); view.className='fcv'; view.appendChild(codeBox(lang,body)); box.appendChild(view); b.textContent='Hide'; });
+  mkb('Copy',async b=>{ try{ await navigator.clipboard.writeText(body); b.textContent='Copied'; }catch(e){ b.textContent='Can’t copy'; } setTimeout(()=>{ b.textContent='Copy'; },1500); });
+  const dl=mkb('Download',async()=>{ try{
     let fn=name,data=body;
     if(/\.xlsx$/i.test(name)){ if(window.XLSX) data=xlsx(body); else fn=name.replace(/\.xlsx$/i,'.csv'); }
-    const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([data],{type:'text/plain;charset=utf-8'})); a.download=fn; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),2000); btn.textContent='Saved ✓';
-  }catch(e){ btn.textContent=e&&e.code==='declined'?'Download':'Could not save'; } };
+    const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([data],{type:'text/plain;charset=utf-8'})); a.download=fn; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),2000); dl.textContent='Saved ✓';
+  }catch(e){ dl.textContent=e&&e.code==='declined'?'Download':'Could not save'; } });
   return box;
 }
 function quiz(body){
@@ -817,11 +1100,11 @@ function flash(body){
 }
 const mk=m=>{ const b=m[3].replace(/^\n+|\s+$/g,''),nm=(m[2]||'').trim();
   if(m[1]==='graph') return drawBox(graph(m[3])); if(m[1]==='svg') return drawBox(svgImg(m[3])); if(m[1]==='quiz') return quiz(m[3]);
-  if(m[1]==='steps') return steps(b); if(m[1]==='chart') return chart(b); if(m[1]==='numline') return numline(b); if(m[1]==='fractions') return fractions(b); if(m[1]==='flash') return flash(b);
+  if(m[1]==='steps') return steps(b); if(m[1]==='chart') return chart(b); if(m[1]==='numline') return numline(b); if(m[1]==='fractions') return fractions(b); if(m[1]==='flash') return flash(b); if(m[1]==='3d') return solid3d(b);
   if(m[1]==='sheet'||/\.(xlsx?|csv)$/i.test(nm)) return sheetBox(b,nm); return fileCard(nm||'file.txt',b); };
 function render(el,text){
   const cache=el._c||(el._c=new Map()); el.replaceChildren();
-  const re=/\[\[(graph|svg|quiz|file|sheet|steps|chart|numline|fractions|flash)(?::([^\]\n]*))?\]\]([\s\S]*?)\[\[\/\1\]\]/g; let last=0,m;
+  const re=/\[\[(graph|svg|quiz|file|sheet|steps|chart|numline|fractions|flash|3d)(?::([^\]\n]*))?\]\]([\s\S]*?)\[\[\/\1\]\]/g; let last=0,m;
   while((m=re.exec(text))){
     md(el,text.slice(last,m.index)); last=re.lastIndex;
     let box=cache.get(m[0]);
@@ -830,8 +1113,8 @@ function render(el,text){
       cache.set(m[0],box); }
     el.appendChild(box);
   }
-  const rest=text.slice(last), pm=rest.match(/\[\[(graph|svg|quiz|file|sheet|steps|chart|numline|fractions|flash)/);
-  if(pm){ md(el,rest.slice(0,pm.index)); const d=document.createElement('div'); d.className='pend'; d.textContent=pm[1]==='quiz'?'Building quiz…':pm[1]==='steps'?'Writing steps…':pm[1]==='flash'?'Making flashcards…':(pm[1]==='file'||pm[1]==='sheet')?'Building spreadsheet…':'Drawing…'; el.appendChild(d); }
+  const rest=text.slice(last), pm=rest.match(/\[\[(graph|svg|quiz|file|sheet|steps|chart|numline|fractions|flash|3d)/);
+  if(pm){ md(el,rest.slice(0,pm.index)); const d=document.createElement('div'); d.className='pend'; d.textContent=pm[1]==='3d'?'Building 3D model…':pm[1]==='quiz'?'Building quiz…':pm[1]==='file'?'Writing file…':pm[1]==='steps'?'Writing steps…':pm[1]==='flash'?'Making flashcards…':(pm[1]==='file'||pm[1]==='sheet')?'Building spreadsheet…':'Drawing…'; el.appendChild(d); }
   else md(el,rest);
 }
 
@@ -905,12 +1188,79 @@ chats.length?openChat([...chats].sort((a,b)=>b.ts-a.ts)[0]):newChat();
 (function(){
   if(matchMedia('(hover:none)').matches||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
   let raf=0,px=0,py=0;
-  function tick(){raf=0;document.querySelectorAll('.btn:not(.mbtn):not(.still)').forEach(b=>{
+  function tick(){raf=0;document.querySelectorAll('.btn:not(.mbtn):not(.still),.send,.att').forEach(b=>{
     const r=b.getBoundingClientRect();if(!r.width){b.style.transform='';return}
     const dx=px-(r.left+r.width/2),dy=py-(r.top+r.height/2),d=Math.hypot(dx,dy),R=Math.max(90,r.width*.9);
     b.style.transform=d<R?`translate(${(dx*.28).toFixed(1)}px,${(dy*.28).toFixed(1)}px)`:''})}
   addEventListener('pointermove',e=>{px=e.clientX;py=e.clientY;if(!raf)raf=requestAnimationFrame(tick)},{passive:true});
-  document.addEventListener('pointerleave',()=>document.querySelectorAll('.btn:not(.mbtn):not(.still)').forEach(b=>b.style.transform=''));
+  document.addEventListener('pointerleave',()=>document.querySelectorAll('.btn:not(.mbtn):not(.still),.send,.att').forEach(b=>b.style.transform=''));
+})();
+/* ================= NeoXAI+ : more features ================= */
+(function(){
+  const E=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+  const dlg=(id,html)=>{const d=E('dialog','nxd');d.id=id;d.innerHTML=html;document.body.appendChild(d);d.addEventListener('click',e=>{if(e.target===d)d.close()});return d};
+  /* ---- header buttons ---- */
+  const ex=$('exp');
+  const bc=E('button','btn still','🧮');bc.id='nxc';bc.title='Calculator and formulas';ex.before(bc);
+  const bs=E('button','btn still','🔥 0');bs.id='nxst';bs.title='Your study streak';ex.before(bs);
+  const bk=E('button','btn still','⌘K');bk.id='nxk';ex.before(bk);
+  const more=E('button','btn','⋯');more.id='nxmore';more.title='Menu';$('clear').before(more);const mm=E('div');mm.id='nxmenu';document.body.appendChild(mm);
+  /* ---- streak ---- */
+  const SK='neoxai-stats',day=d=>(d||new Date()).toLocaleDateString('en-CA');
+  const ld=()=>{try{return JSON.parse(localStorage.getItem(SK))||{days:{},total:0}}catch(e){return{days:{},total:0}}};
+  function streak(S){let n=0,d=new Date();if(!S.days[day(d)])d.setDate(d.getDate()-1);while(S.days[day(d)]){n++;d.setDate(d.getDate()-1)}return n}
+  const paint=()=>{const S=ld();bs.textContent='🔥 '+streak(S)};paint();
+  const _s=send;send=async function(t){const typed=typeof t==='string'?t:inp.value;if(!busy&&typed&&typed.trim()){const S=ld();S.days[day()]=(S.days[day()]||0)+1;S.total++;try{localStorage.setItem(SK,JSON.stringify(S))}catch(e){}paint()}return _s.apply(this,arguments)};
+  const statsMsg=()=>{const S=ld();return '🔥 '+streak(S)+'-day streak · '+(S.days[day()]||0)+' questions today · '+S.total+' in total'};
+  /* ---- calculator + formulas ---- */
+  const FM=[['Algebra','Quadratic formula','x=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}'],['Algebra','Difference of squares','a^2-b^2=(a-b)(a+b)'],['Algebra','Slope of a line','m=\\frac{y_2-y_1}{x_2-x_1}'],['Geometry','Pythagorean theorem','a^2+b^2=c^2'],['Geometry','Circle area','A=\\pi r^2'],['Geometry','Circumference','C=2\\pi r'],['Geometry','Cylinder volume','V=\\pi r^2 h'],['Geometry','Sphere volume','V=\\tfrac43\\pi r^3'],['Geometry','Triangle area','A=\\tfrac12 bh'],['Trig','Pythagorean identity','\\sin^2\\theta+\\cos^2\\theta=1'],['Trig','Law of cosines','c^2=a^2+b^2-2ab\\cos C'],['Calculus','Power rule','\\tfrac{d}{dx}x^n=nx^{n-1}'],['Calculus','Product rule',"(uv)'=u'v+uv'"],['Calculus','Power rule for integrals','\\int x^n\\,dx=\\tfrac{x^{n+1}}{n+1}+C'],['Statistics','Mean','\\bar{x}=\\tfrac{\\sum x_i}{n}'],['Statistics','Standard deviation','\\sigma=\\sqrt{\\tfrac{\\sum(x_i-\\mu)^2}{N}}'],['Finance','Compound interest','A=P\\left(1+\\tfrac rn\\right)^{nt}'],['Logs','Product rule for logs','\\log_b(xy)=\\log_b x+\\log_b y']];
+  const cd=dlg('nxcalc','<div class="ctabs"><button class="btn still on" data-k="c">🧮 Calculator</button><button class="btn still" data-k="f">📐 Formulas</button><span style="flex:1"></span><button class="btn still" data-k="x">✕</button></div><div id="cv"><div id="chist"></div><div id="cdisp">0</div><div class="kp" id="kp"></div><div class="ctabs" style="margin-top:10px"><button class="btn still" id="cask">Ask AI how</button></div></div><div id="fv" hidden><input class="nxi2" id="fq" placeholder="Search formulas…"><div id="fl"></div></div>');
+  const disp=cd.querySelector('#cdisp'),hist=cd.querySelector('#chist');let ex1='',ans='';
+  const sh=()=>{disp.textContent=ex1||'0'};
+  function calc(){if(!ex1)return;let s=ex1.replace(/√\(/g,'sqrt(').replace(/ans/g,'('+(ans||0)+')');const f=mkFn(s);let v=NaN;try{v=f?f(0):NaN}catch(e){}
+    if(!Number.isFinite(v)){hist.textContent='Check the expression';return}v=+v.toPrecision(12);hist.textContent=ex1+' ='; ans=String(v);ex1=ans;sh()}
+  '7 8 9 ÷ C|4 5 6 × ⌫|1 2 3 − (|0 . ^ + )|sin( cos( tan( √( π|ln( log( ans , =' .split('|').join(' ').split(' ').forEach(k=>{const b=E('button',k==='='?'eq':/[÷×−+^]/.test(k)?'op':'',k);b.onclick=()=>{if(k==='C')ex1='';else if(k==='⌫')ex1=ex1.replace(/(sin\(|cos\(|tan\(|ln\(|log\(|√\(|ans|.)$/,'');else if(k==='=')return calc();else ex1+=k;sh()};cd.querySelector('#kp').appendChild(b)});
+  cd.querySelector('#cask').onclick=()=>{cd.close();if(ex1)send('How do I calculate '+ex1+' step by step?')};
+  const fl=cd.querySelector('#fl');
+  function fRender(){const q=cd.querySelector('#fq').value.toLowerCase();fl.replaceChildren();FM.filter(f=>(f[0]+f[1]).toLowerCase().includes(q)).forEach(f=>{const d=E('div','fi');const l=E('div');l.innerHTML='<small>'+f[0]+'</small><b>'+f[1]+'</b>';d.appendChild(l);d.appendChild(mathNode(f[2],false));d.onclick=()=>{cd.close();inp.value='Explain the '+f[1].toLowerCase()+' with a worked example';inp.focus();inp.dispatchEvent(new Event('input'))};fl.appendChild(d)})}
+  cd.querySelector('#fq').oninput=fRender;
+  cd.querySelectorAll('.ctabs [data-k]').forEach(b=>b.onclick=()=>{const k=b.dataset.k;if(k==='x')return cd.close();cd.querySelectorAll('.ctabs [data-k]').forEach(x=>x.classList.toggle('on',x===b));cd.querySelector('#cv').hidden=k!=='c';cd.querySelector('#fv').hidden=k!=='f';if(k==='f')fRender()});
+  cd.addEventListener('keydown',e=>{if(cd.querySelector('#cv').hidden)return;if(e.key==='Enter'){e.preventDefault();calc()}else if(e.key==='Backspace'){ex1=ex1.slice(0,-1);sh()}else if(e.key==='Escape'){}else if(/^[0-9a-z.+\-*\/^()]$/i.test(e.key)&&!e.ctrlKey&&!e.metaKey){ex1+=e.key.replace('*','×').replace('/','÷');sh()}});
+  const openCalc=tab=>{cd.showModal();if(tab==='f')cd.querySelector('[data-k=f]').click();else cd.querySelector('[data-k=c]').click()};
+  bc.onclick=()=>openCalc('c');
+  /* ---- + menu: upload files, math signs, tools ---- */
+  const bar=document.querySelector('.bar'),plus=E('button','att','＋');plus.type='button';plus.title='Add files, math signs and tools';plus.id='nxplus';
+  const pm=E('div');pm.id='plusmenu';
+  const fin=E('input');fin.type='file';fin.multiple=true;fin.hidden=true;fin.accept='.txt,.md,.csv,.json,.js,.ts,.py,.java,.c,.cpp,.cs,.go,.rs,.php,.rb,.html,.css,.sql,.xml,.yml,.yaml,.log,.tex';document.body.appendChild(fin);
+  const symp=E('div');symp.id='sympop';
+  '² ³ √ π ∫ ∑ ∞ ≤ ≥ ≠ ≈ ± × ÷ ° θ Δ α β λ μ σ ∈ → ⇒'.split(' ').forEach(c=>{const b=E('button','',c);b.type='button';b.onmousedown=e=>e.preventDefault();b.onclick=()=>{const s=inp.selectionStart,e=inp.selectionEnd;inp.value=inp.value.slice(0,s)+c+inp.value.slice(e);inp.selectionStart=inp.selectionEnd=s+c.length;inp.focus();inp.dispatchEvent(new Event('input'))};symp.appendChild(b)});
+  const item=(ic,tx,fn)=>{const b=E('button','pmi');b.type='button';b.append(E('span','',ic),E('span','',tx));b.onclick=e=>{e.stopPropagation();fn()};pm.appendChild(b)};
+  const closePm=()=>{pm.classList.remove('open');symp.classList.remove('open')};
+  item('📷','Upload a photo',()=>{closePm();if(typeof imgCaps!=='undefined'&&imgCaps)$('pick').click();else{note.textContent='Photos are not set up on this site.';setTimeout(()=>{note.textContent='Johnny made this AI just for fun.'},3500)}});
+  item('📄','Upload a file',()=>{closePm();fin.click()});
+  item('∑','Math signs',()=>{symp.classList.toggle('open')});
+  item('🧮','Calculator',()=>{closePm();openCalc('c')});
+  item('📐','Formula sheet',()=>{closePm();openCalc('f')});
+  fin.onchange=async()=>{for(const f of [...fin.files]){if(f.size>400000){note.textContent=f.name+' is too big (max 400 KB).';continue}let t=await f.text();const cut=t.length>7000;if(cut)t=t.slice(0,7000);inp.value+=(inp.value&&!inp.value.endsWith('\n')?'\n':'')+'File: '+f.name+'\n```\n'+t+(cut?'\n… (file shortened)':'')+'\n```\n'}fin.value='';inp.focus();inp.dispatchEvent(new Event('input'))};
+  bar.insertBefore(plus,bar.firstChild);bar.appendChild(pm);bar.appendChild(symp);
+  plus.onclick=e=>{e.stopPropagation();const o=!pm.classList.contains('open');closePm();pm.classList.toggle('open',o)};
+  document.addEventListener('click',e=>{if(!pm.contains(e.target)&&!symp.contains(e.target))closePm()});
+  /* ---- command palette ---- */
+  const pd=dlg('nxpal','<h3>Command palette</h3><input class="nxi2" id="pq" placeholder="Type a command, a chat or a topic…" autocomplete="off"><div id="pl"></div>');
+  const pq=pd.querySelector('#pq'),pl=pd.querySelector('#pl');let items=[],pi=0;
+  const acts=()=>[['New chat','Action',()=>newChat()],['Themes','Action',()=>tdlg.showModal()],['Calculator','Tool',()=>openCalc('c')],['Formula sheet','Tool',()=>openCalc('f')],['Question notebook','Tool',()=>openLab('nb')],['Graph Lab','Tool',()=>openLab('gl')],['Export this chat','Action',()=>$('exp').click()],['Show or hide chats','Action',()=>$('chats').click()],['Focus mode (hide menus)','Action',()=>document.body.classList.toggle('nxfocus')],['Study stats: '+statsMsg(),'Stats',()=>{}]]
+    .concat((typeof CMDS!=='undefined'?CMDS:[]).map(c=>[c[0]+' '+c[1],c[2],()=>cPick(c)])).concat((typeof chats!=='undefined'?chats:[]).map(c=>[c.title||'Untitled chat','Chat',()=>openChat(c)]));
+  function pRender(){const q=pq.value.toLowerCase().trim();items=acts().filter(a=>!q||(a[0]+a[1]).toLowerCase().includes(q)).slice(0,40);pi=Math.min(pi,Math.max(0,items.length-1));pl.replaceChildren();
+    items.forEach((a,i)=>{const d=E('div','pi'+(i===pi?' on':''));d.appendChild(E('span','',a[0]));d.appendChild(E('small','',a[1]));d.onclick=()=>run(i);pl.appendChild(d)});if(!items.length)pl.appendChild(E('div','pi','No matches'))}
+  function run(i){const a=items[i];if(!a)return;pd.close();setTimeout(a[2],30)}
+  pq.oninput=()=>{pi=0;pRender()};
+  pq.onkeydown=e=>{if(e.key==='ArrowDown'){e.preventDefault();pi=Math.min(items.length-1,pi+1);pRender();pl.children[pi]&&pl.children[pi].scrollIntoView({block:'nearest'})}else if(e.key==='ArrowUp'){e.preventDefault();pi=Math.max(0,pi-1);pRender();pl.children[pi]&&pl.children[pi].scrollIntoView({block:'nearest'})}else if(e.key==='Enter'){e.preventDefault();run(pi)}};
+  const openPal=()=>{pq.value='';pi=0;pRender();pd.showModal();pq.focus()};
+  const MM=[['🏠 Home',()=>location.href='https://home.neoxai.website'],['💳 Pricing',()=>location.href='https://pricing.neoxai.website'],['🎨 Themes',()=>tdlg.showModal()],['📒 Question notebook',()=>openLab('nb')],['📈 Graph Lab',()=>openLab('gl')],['🧮 Calculator and formulas',()=>openCalc('c')],['⬇ Export this chat',()=>$('exp').click()],['🎯 Focus mode',()=>document.body.classList.toggle('nxfocus')],['⌘ Command palette',()=>openPal()],['🔥 Study streak',()=>{note.textContent=statsMsg();setTimeout(()=>{note.textContent='Johnny made this AI just for fun.'},4500)}]];
+  MM.forEach(m=>{const b=E('button','pmi',m[0]);b.onclick=()=>{mm.classList.remove('open');m[1]()};mm.appendChild(b)});
+  more.onclick=e=>{e.stopPropagation();mm.classList.toggle('open')};document.addEventListener('click',e=>{if(!mm.contains(e.target))mm.classList.remove('open')});
+  bk.onclick=openPal;bs.onclick=()=>{note.textContent=statsMsg();setTimeout(()=>{note.textContent='Johnny made this AI just for fun.'},4000)};
+  addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();pd.open?pd.close():openPal()}});
 })();
 </script>
 </body>
