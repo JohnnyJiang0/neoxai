@@ -275,13 +275,49 @@ header #themes,header #nbbtn,header #glbtn,header #exp,header #nxc,header #nxst,
 #nxmenu.open,#plusmenu.open{display:block}
 .pmi{display:flex;gap:10px;align-items:center;width:100%;text-align:left;padding:9px 12px;border:0;border-radius:10px;background:none;color:var(--fg);font:inherit;font-size:14px;cursor:pointer}.pmi:hover{background:var(--bubble)}.pmi span:first-child{width:20px;text-align:center}
 .fcard.fcx{display:block}.fch{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.fch .ic{font-size:26px}.fch .nm{font-weight:700;word-break:break-all}.fch small{display:block;color:var(--dim);font-size:12px}.fch .acts{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}.fcv{margin-top:10px}
+.send,.att,#nxplus,#attach,.mbtn{transform:none!important}
 .mbtn.on{border-color:var(--fg);box-shadow:0 0 22px var(--fg)}
 
 /* ---- button animations: hover pop, press squish (plus the magnet below) ---- */
-.btn,.send,.att,.chip,.pmi{transition:transform .18s cubic-bezier(.2,.8,.2,1),box-shadow .2s,border-color .2s,background .2s}
-.btn:not(.mbtn):hover,.send:hover,.att:hover,.chip:hover{transform:translateY(-2px) scale(1.05);box-shadow:0 6px 26px var(--line)}
-.btn:not(.mbtn):active,.send:active,.att:active,.chip:active{transform:scale(.93)!important;box-shadow:none}
-@media(prefers-reduced-motion:reduce){.btn,.send,.att,.chip{transition:none}.btn:hover,.send:hover,.att:hover,.chip:hover{transform:none}}
+.btn,.chip,.pmi{transition:transform .18s cubic-bezier(.2,.8,.2,1),box-shadow .2s,border-color .2s,background .2s}
+.btn:not(.mbtn):hover,.chip:hover{transform:translateY(-2px) scale(1.05);box-shadow:0 6px 26px var(--line)}
+.btn:not(.mbtn):active,.chip:active{transform:scale(.93)!important;box-shadow:none}
+@media(prefers-reduced-motion:reduce){.btn,.chip{transition:none}.btn:hover,.chip:hover{transform:none}}
+/* ---------- periodic table, new-model badge, formula chips ---------- */
+dialog.nxp{width:min(1080px,97vw);max-height:94vh;overflow:auto;padding:14px}
+.nxp .ph{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.nxp .ph h3{margin:0;flex:1 1 140px}
+.nxp .ph input.nxi2{width:min(240px,100%)}
+.pt-detail{display:flex;gap:16px;flex-wrap:wrap;border:1px solid var(--line);border-radius:16px;padding:14px;background:var(--bubble);margin-bottom:10px}
+.pt-tile{width:132px;height:132px;flex:none;border:2px solid var(--c,var(--line));background:var(--bubble);background:color-mix(in srgb,var(--c) 22%,transparent);border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
+.pt-tile b{font-size:46px;font-weight:300;line-height:1}.pt-tile span{font-size:13px}.pt-tile small{font-size:11px;color:var(--dim)}
+.pt-info{flex:1 1 320px;min-width:0}
+.pt-info h4{margin:0 0 6px;font-weight:300;font-size:22px}
+.pt-info p{margin:0 0 12px;line-height:1.55;font-size:14px}
+.pt-props{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px 14px;font-size:13px;margin-bottom:12px}
+.pt-props .wide{grid-column:1/-1}
+.pt-props span{display:block;color:var(--dim);font-size:10px;letter-spacing:1px;text-transform:uppercase}
+.pt-detail .ctabs{flex-wrap:wrap;margin:0}
+.pt-leg{margin:0 0 8px}
+.pt-leg .chip.on{border-color:var(--fg)}
+.pt-dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+.pt-scroll{overflow-x:auto;padding-bottom:6px}
+.pt-grid{display:grid;grid-template-columns:repeat(18,minmax(46px,1fr));gap:3px;min-width:880px}
+.pt-el{aspect-ratio:1/1;border:1px solid var(--c);border:1px solid color-mix(in srgb,var(--c) 70%,transparent);background:var(--bubble);background:color-mix(in srgb,var(--c) 16%,transparent);color:var(--fg);border-radius:8px;padding:2px 1px;display:flex;flex-direction:column;align-items:center;justify-content:center;font:inherit;line-height:1.1;cursor:pointer;min-width:0;transition:opacity .15s,border-color .15s}
+.pt-el i{font-style:normal;font-size:9px;color:var(--dim);align-self:flex-start;margin-left:4px;min-height:10px}
+.pt-el b{font-size:16px;font-weight:600}
+.pt-el em{font-style:normal;font-size:8px;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.pt-el:hover{border-color:var(--fg)}
+.pt-el.sel{outline:2px solid var(--fg);outline-offset:1px}
+.pt-el.dim{opacity:.16}
+.pt-ph{cursor:default}.pt-ph b{font-size:11px;font-weight:500}
+.pt-gap{grid-row:8;grid-column:1/-1;height:6px}
+.pt-tip{margin:8px 0 0;font-size:12px;color:var(--dim)}
+.nw{font-style:normal;font-size:10px;font-weight:700;letter-spacing:1px;margin-left:8px;padding:1px 7px;border-radius:999px;background:var(--fg);color:var(--bg);vertical-align:middle}
+#mnew{margin-left:6px}
+.fi>div{min-width:0}.fi>span{max-width:60%;overflow-x:auto;overflow-y:hidden}
+#fcat .chip.on{border-color:var(--fg)}
+@media(max-width:560px){.pt-tile{width:100%;height:96px}}
 </style>
 </head>
 <body>
@@ -323,7 +359,7 @@ header #themes,header #nbbtn,header #glbtn,header #exp,header #nxc,header #nxst,
       <textarea id="in" rows="1" placeholder="Ask a math question… or type /help"></textarea>
       <div class="mwrap">
         <div class="mmenu" id="mmenu" role="menu"></div>
-        <button class="btn mbtn" id="models" aria-haspopup="menu" aria-expanded="false"><span id="mname">NeoStandard 1.0</span><span class="car">▾</span></button>
+        <button class="btn mbtn" id="models" aria-haspopup="menu" aria-expanded="false"><span id="mname">Neo-1.0 Asteroid</span><span class="nw" id="mnew">NEW</span><span class="car">▾</span></button>
       </div>
       <button class="send" id="send">➤</button>
     </div>
@@ -376,23 +412,33 @@ let history=[],busy=false,sample=null;
 
 /* ---------- models ---------- */
 const MODELS=[
-  {id:'standard',name:'NeoStandard 1.0',d:'Fast answers, graphs, quizzes and photo problems.'},
-  {id:'flash',name:'NeoLight 1.5',d:'Everything: code files, Graph Lab, notebook, memory, 3D and step-by-step.'},
-  {id:'asteroids',name:'NeoAsteroids 2.0',d:'Unavailable right now. Great for programming and design: writes code, builds layouts and explains it step by step.',lock:true},
-  {id:'galaxy',name:'NeoGalaxy 2.0',d:'Unavailable right now. The deep thinker: it questions assumptions, explores the big ideas behind a problem and reasons slowly before it answers.',lock:true}];
-let mid='standard'; try{ mid=localStorage.getItem('neoxai-model')||mid; }catch(e){}
-if(!MODELS.some(m=>m.id===mid&&!m.lock)) mid='standard';
+  {id:'asteroid',name:'Neo-1.0 Asteroid',d:'Fast and sharp. Built for programming and design: writes code, builds pages and layouts and explains it step by step.',isNew:true},
+  {id:'galaxy',name:'Neo-1.0 Galaxy',d:'The deep thinker. It questions assumptions, explores the big ideas behind a problem and reasons slowly before it answers.',isNew:true}];
+let mid='asteroid'; try{ mid=localStorage.getItem('neoxai-model')||mid; }catch(e){}
+if(!MODELS.some(m=>m.id===mid&&!m.lock)) mid='asteroid';   // older saved choices (NeoStandard, NeoLight) become Asteroid
+const OLD=[{name:'NeoStandard 1.0',d:'Fast answers, graphs, quizzes and photo problems.'},{name:'NeoLight 1.5',d:'Everything: code files, Graph Lab, notebook, memory, 3D and step-by-step.'},{name:'NeoAsteroids 2.0',d:'Programming and design.'},{name:'NeoGalaxy 2.0',d:'The deep thinker.'}];
+let showOld=false;
 const curModel=()=>MODELS.find(m=>m.id===mid), mbtn=$('models'), menu=$('mmenu');
 function renderModels(){
-  $('mname').textContent=curModel().name; menu.textContent='';
+  $('mname').textContent=curModel().name; $('mnew').hidden=!curModel().isNew; menu.textContent='';
   for(const m of MODELS){
     const b=document.createElement('button'); b.className='mopt'+(m.lock?' lock':'')+(m.id===mid?' on':'');
     b.dataset.m=m.id; b.setAttribute('role','menuitem'); if(m.lock) b.setAttribute('aria-disabled','true');
     const info=document.createElement('div'), n=document.createElement('b'), s=document.createElement('span'), ic=document.createElement('div');
-    n.textContent=m.name; s.textContent=m.d; info.append(n,s);
+    n.textContent=m.name; if(m.isNew){ const nw=document.createElement('em'); nw.className='nw'; nw.textContent='NEW'; n.appendChild(nw); } s.textContent=m.d; info.append(n,s);
     ic.className='ic'; ic.textContent=m.lock?'🔒':(m.id===mid?'✓':'');
     b.append(info,ic); menu.appendChild(b);
   }
+  if(showOld) for(const m of OLD){
+    const b=document.createElement('button'); b.className='mopt lock'; b.setAttribute('role','menuitem'); b.setAttribute('aria-disabled','true'); b.tabIndex=-1;
+    const info=document.createElement('div'), n=document.createElement('b'), s=document.createElement('span'), ic=document.createElement('div');
+    n.textContent=m.name; const rt=document.createElement('em'); rt.className='nw'; rt.style.background='var(--line)'; rt.style.color='var(--dim)'; rt.textContent='OLD'; n.appendChild(rt);
+    s.textContent=m.d+' No longer available.'; info.append(n,s); ic.className='ic'; ic.textContent='🔒'; b.append(info,ic); menu.appendChild(b);
+  }
+  const tg=document.createElement('button'); tg.type='button'; tg.className='mopt'; tg.id='oldtg'; tg.style.justifyContent='center'; tg.style.color='var(--dim)'; tg.style.fontSize='12px';
+  tg.textContent=showOld?'Hide old models':'Show old models';
+  tg.onclick=e=>{ e.stopPropagation(); showOld=!showOld; renderModels(); };
+  menu.appendChild(tg);
 }
 function toggleMenu(open){ menu.classList.toggle('open',open); mbtn.setAttribute('aria-expanded',open); }
 mbtn.onclick=e=>{ e.stopPropagation(); toggleMenu(!menu.classList.contains('open')); };
@@ -408,7 +454,9 @@ let dl=null,imgCaps=null,deepNext=false,ctl=null; sample=true;
 fetch('/api/chat').then(r=>r.json()).then(i=>{ if(i&&i.vision){ imgCaps={maxCount:3,maxInputBytes:20e6}; $('pick').accept='image/*'; $('attach').hidden=false; } }).catch(()=>{});
 async function ask(msgs,onText){
   const res=await fetch('/api/chat',{method:'POST',signal:ctl&&ctl.signal,headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:msgs,model:mid,memory:memText(),deep:(()=>{ const d=deepNext; deepNext=false; return d; })()})});
-  if(!res.ok){ let m=''; try{ m=(await res.json()).error||''; }catch(e){} const er=new Error(m||('Server '+res.status)); er.status=res.status; throw er; }
+  if(!res.ok){ let m='',j={}; try{ j=await res.json(); m=j.error||''; }catch(e){} const er=new Error(m||('Server '+res.status)); er.status=res.status; er.thinking=!!j.thinking; er.retry=j.retry||0; throw er; }
+  try{ const sh=res.headers.get('X-Neo-Sources'); if(sh){ const si=JSON.parse(decodeURIComponent(sh)), sq=si.find(x=>x.search), pg=si.filter(x=>!x.search), ok=pg.filter(x=>x.ok).map(x=>x.host), bad=pg.filter(x=>!x.ok).map(x=>x.host);
+    note.textContent=[sq?(sq.ok?'🔎 Searched the web: '+sq.search:'⚠ Web search failed'):'',ok.length?'🔗 Read '+ok.join(', '):'',bad.length?'⚠ Could not open '+bad.join(', '):''].filter(Boolean).join(' · '); setTimeout(()=>{ note.textContent='Johnny made this AI just for fun.'; },7000); } }catch(e){}
   const rd=res.body.getReader(),dec=new TextDecoder(); let buf='',out='';
   for(;;){ const {done,value}=await rd.read(); if(done) break; buf+=dec.decode(value,{stream:true}); const L=buf.split('\n'); buf=L.pop();
     for(let l of L){ l=l.trim(); if(!l.startsWith('data:')) continue; l=l.slice(5).trim(); if(l==='[DONE]') continue;
@@ -436,13 +484,19 @@ async function send(text){
     if(m===um&&urls.length) return {role:m.role,content:[{type:'text',text:c},...urls.map(u=>({type:'image_url',image_url:{url:u}}))]}; return {role:m.role,content:c}; });
   let part=''; ctl=new AbortController(); $('nxstop').hidden=false;
   try{
-    const raw=await ask(msgs,t=>{ part=t; stopDots(); render(b,noMem(t)); chat.scrollTop=chat.scrollHeight; }); const r={text:noMem(raw)}, fx=factsOf(raw); remember(fx);
+    // Hit the per-minute token limit? Keep the dots going, wait quietly and try again, so it just looks like the AI is thinking.
+    const dp=deepNext; let raw;
+    for(let tr=0;;tr++){
+      try{ raw=await ask(msgs,t=>{ part=t; stopDots(); render(b,noMem(t)); chat.scrollTop=chat.scrollHeight; }); break; }
+      catch(e){ if(!(e&&e.thinking&&tr<3&&ctl&&!ctl.signal.aborted)) throw e;
+        const ms=Math.min(40,Math.max(3,e.retry||5))*1000; deepNext=dp;
+        await new Promise((res,rej)=>{ const tm=setTimeout(res,ms); ctl.signal.addEventListener('abort',()=>{ clearTimeout(tm); rej(Object.assign(new Error('Aborted'),{name:'AbortError'})); },{once:true}); }); } } const r={text:noMem(raw)}, fx=factsOf(raw); remember(fx);
     stopDots(); render(b,r.text); chat.scrollTop=chat.scrollHeight; history.push({role:'assistant',content:r.text}); addTools(b,r.text); if(fx.length){ const k=document.createElement('div'); k.className='nxk'; k.textContent='🧠 Remembered: '+fx.join(' · '); b.appendChild(k); }
     if(!chats.includes(cur)) chats.unshift(cur); cur.title=cur.title||history[0].content.slice(0,50); cur.ts=Date.now(); saveChats();
   }catch(e){
     stopDots(); if(e&&e.name==='AbortError'){ const pt=noMem(part).trim(); if(pt){ render(b,pt); history.push({role:'assistant',content:pt}); addTools(b,pt); persist(); } else { history.pop(); b.remove(); } busy=false; sendBtn.disabled=!sample; $('nxstop').hidden=true; ctl=null; inp.focus(); return; }
     history.pop(); b.classList.add('err');
-    b.textContent=e&&e.status===429?'NeoXAI is busy right now (the free daily limit may be used up). Please try again later.':e&&e.message&&e.message!=='empty'?'Something went wrong: '+e.message:'Something went wrong. Please try again.';
+    b.textContent=e&&e.status===429?'NeoXAI is busy right now. Please try again in a moment.':e&&e.message&&e.message!=='empty'?'Something went wrong: '+e.message:'Something went wrong. Please try again.';
   }
   $('nxstop').hidden=true; ctl=null;
   busy=false; sendBtn.disabled=!sample; inp.focus();
@@ -521,7 +575,7 @@ $('snew').onclick=()=>newChat();
 $('nxq').oninput=renderSide;
 addEventListener('keydown',e=>{ if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){ e.preventDefault(); document.body.classList.add('nxsb'); $('nxq').focus(); } });
 if(wide()) document.body.classList.add('nxsb');
-const HELP='**What I can do**\n- Type a calculation like `12*(3+4)^2` and I answer instantly\n- Type `y = x^2 - 4` and I draw it instantly\n- `/solve x^2 - 5x + 6 = 0` finds the roots and plots them\n- `/graph sin(x)` draws a function\n- `/quiz fractions`, `/flash topic`, `/steps problem`, `/explain topic`, `/hint problem`, `/code task` and `/debug code` ask the AI\n- `/memory` shows what I remember about you\n- `/3d cylinder r=3 h=5` shows a 3D shape you can spin, and `/stats`, `/factor`, `/convert` are instant tools\n- `/notes` makes study notes from this chat and `/plan topic` makes a study plan\n- `/notebook` collects every question you ask, and `/lab a*x^2+b*x+c` opens a graph with sliders\n- 🧠 Deeper re-answers with more thinking, and ■ Stop cuts an answer short\n- `/export` saves this chat, `/clear` starts a new one\n- Use 🔊 to hear an answer and ↻ to redo it';
+const HELP='**What I can do**\n- Type a calculation like `12*(3+4)^2` and I answer instantly\n- Type `y = x^2 - 4` and I draw it instantly\n- `/solve x^2 - 5x + 6 = 0` finds the roots and plots them\n- `/graph sin(x)` draws a function\n- `/quiz fractions`, `/flash topic`, `/steps problem`, `/explain topic`, `/hint problem`, `/code task` and `/debug code` ask the AI\n- `/memory` shows what I remember about you\n- `/3d cylinder r=3 h=5` shows a 3D shape you can spin, and `/stats`, `/factor`, `/convert` are instant tools\n- `/notes` makes study notes from this chat and `/plan topic` makes a study plan\n- `/notebook` collects every question you ask, and `/lab a*x^2+b*x+c` opens a graph with sliders\n- `/periodic` opens the periodic table with every element explained (try `/periodic Fe`)\n- 🧠 Deeper re-answers with more thinking, and ■ Stop cuts an answer short\n- `/export` saves this chat, `/clear` starts a new one\n- Use 🔊 to hear an answer and ↻ to redo it';
 /* ---------- memory: notes live on each chat, so deleting a chat deletes what was learned in it ---------- */
 const noMem=t=>t.replace(/\[\[mem\]\][\s\S]*?\[\[\/mem\]\]/g,'').replace(/\[\[mem\]\][\s\S]*$/,'').replace(/\[\[?m?e?m?\]?$/,'').trimEnd();
 const factsOf=t=>[...t.matchAll(/\[\[mem\]\]([\s\S]*?)\[\[\/mem\]\]/g)].map(m=>m[1].trim().replace(/\s+/g,' ').slice(0,160)).filter(Boolean);
@@ -711,6 +765,7 @@ function auto(t){ const s=t.trim().replace(/[=?\s]+$/,''); if(/^(y|f\(x\))\s*=.*
 function cmd(t){ const m=t.match(/^\/(\w+)\s*([\s\S]*)$/); if(!m) return null; const k=m[1].toLowerCase(),a=m[2].trim();
   if(k==='help') return {local:HELP};
   if(k==='3d'){ const p=a.split(/\s+/).filter(Boolean); if(!p.length) return {local:'Try `/3d cylinder r=3 h=5`. Shapes: cube, box, sphere, cylinder, cone, pyramid, prism, torus, tetrahedron, octahedron.'}; const L=['shape: '+p[0]]; p.slice(1).forEach(x=>{ const m=x.match(/^([A-Za-z]+)=(.+)$/); if(m) L.push(m[1]+': '+m[2]); }); return {local:'Here is your 3D '+p[0]+'. Drag to turn it and scroll to zoom.\n\n[[3d]]\n'+L.join('\n')+'\n[[/3d]]'}; }
+  if(k==='periodic'||k==='element'||k==='elements'||k==='table'){ if(window.nxOpenPeriodic) window.nxOpenPeriodic(a); return {done:1}; }
   if(k==='stats') return {local:statsReply(a)};
   if(k==='factor') return {local:factorReply(a)};
   if(k==='convert') return {local:convertReply(a)};
@@ -734,7 +789,7 @@ function cmd(t){ const m=t.match(/^\/(\w+)\s*([\s\S]*)$/); if(!m) return null; c
   return null; }
 function exportChat(){ const t=history.map(m=>(m.role==='user'?'## You\n':'## NeoXAI\n')+m.content).join('\n\n'); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([t],{type:'text/markdown'})); a.download='neoxai-chat.md'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),2000); }
 $('exp').onclick=exportChat;
-const CMDS=[['/solve','x^2 - 5x + 6 = 0','Find the roots and plot them',1],['/graph','sin(x)','Draw a function',1],['/calc','3*(4+5)^2','Calculate instantly',1],['/quiz','fractions','Make a 5-question quiz',1],['/flash','topic','Make flashcards',1],['/steps','problem','Walk through it step by step',1],['/explain','topic','Explain it simply',1],['/hint','problem','A hint, not the answer',1],['/code','python reverse a string','Write code and explain it',1],['/debug','paste your code','Find and fix a bug',1],['/memory','','See what I remember about you',0],['/3d','cylinder r=3 h=5','Show a 3D shape you can spin',1],['/stats','4, 8, 15, 16, 23','Mean, median, mode, spread',1],['/factor','360','Prime factors of a number',1],['/convert','5 km to miles','Convert units',1],['/notes','','Study notes from this chat',0],['/plan','fractions','Make a study plan',1],['/notebook','','Open your question notebook',0],['/lab','a*x^2 + b*x + c','Open the adjustable graph',1],['/export','','Save this chat as a file',0],['/clear','','Start a new chat',0],['/help','','Show all commands',0]];
+const CMDS=[['/solve','x^2 - 5x + 6 = 0','Find the roots and plot them',1],['/graph','sin(x)','Draw a function',1],['/calc','3*(4+5)^2','Calculate instantly',1],['/quiz','fractions','Make a 5-question quiz',1],['/flash','topic','Make flashcards',1],['/steps','problem','Walk through it step by step',1],['/explain','topic','Explain it simply',1],['/hint','problem','A hint, not the answer',1],['/code','python reverse a string','Write code and explain it',1],['/debug','paste your code','Find and fix a bug',1],['/memory','','See what I remember about you',0],['/3d','cylinder r=3 h=5','Show a 3D shape you can spin',1],['/stats','4, 8, 15, 16, 23','Mean, median, mode, spread',1],['/factor','360','Prime factors of a number',1],['/convert','5 km to miles','Convert units',1],['/notes','','Study notes from this chat',0],['/plan','fractions','Make a study plan',1],['/notebook','','Open your question notebook',0],['/lab','a*x^2 + b*x + c','Open the adjustable graph',1],['/periodic','Fe','Open the periodic table',1],['/export','','Save this chat as a file',0],['/clear','','Start a new chat',0],['/help','','Show all commands',0]];
 const cbox=$('nxcmd'); let cl=[],ci=0;
 function cHide(){ cbox.classList.remove('open'); cl=[]; }
 function cShow(){ const v=inp.value.toLowerCase(); if(!/^\/\S*$/.test(v)){ cHide(); return; }
@@ -765,12 +820,12 @@ function addTools(b,text){ chat.querySelectorAll('.nxm,.nxs').forEach(x=>x.remov
 $('clear').onclick=()=>newChat();
 
 
-/* ---------- NeoLight-only features ---------- */
-const isLight=()=>mid==='flash';
-function lock(f){ note.textContent='🔒 '+f+' is a NeoLight feature. Pick NeoLight 1.5 in the model menu.'; mbtn.classList.add('on'); setTimeout(()=>{ mbtn.classList.remove('on'); note.textContent='Johnny made this AI just for fun.'; },4500); }
+/* ---------- feature gate (both models have every feature now) ---------- */
+const isLight=()=>true;   // both Neo-1.0 models have every feature
+function lock(f){ note.textContent='🔒 '+f+' is not available right now.'; mbtn.classList.add('on'); setTimeout(()=>{ mbtn.classList.remove('on'); note.textContent='Johnny made this AI just for fun.'; },4500); }
 { const _ol=openLab; openLab=function(t,e){ if(!isLight()){ lock(t==='gl'?'The Graph Lab':'The question notebook'); return; } return _ol.apply(this,arguments); };
   const GATED={'3d':'3D shapes',code:'Coding',debug:'Coding',memory:'Memory',flash:'Flashcards',steps:'Step-by-step mode',notes:'Study notes',plan:'Study plans'}, _cmd=cmd;
-  cmd=function(t){ const m=t.match(/^\/(\w+)/), k=m&&m[1].toLowerCase(); if(k&&GATED[k]&&!isLight()) return {local:'🔒 **'+GATED[k]+' is a NeoLight feature.** Pick **NeoLight 1.5** in the model menu next to the message box to use `/'+k+'`.'}; return _cmd.apply(this,arguments); }; }
+  cmd=function(t){ const m=t.match(/^\/(\w+)/), k=m&&m[1].toLowerCase(); if(k&&GATED[k]&&!isLight()) return {local:'🔒 **'+GATED[k]+' is not available right now.**'}; return _cmd.apply(this,arguments); }; }
 /* ---------- drawing ---------- */
 const PD=['#4da3ff','#ff5c8a','#3ddc97','#ffb84d','#b388ff'],PL=['#2563eb','#e11d48','#059669','#d97706','#7c3aed'],G={bg:'#000000',fg:'#ffffff',dark:true};
 function mkFn(src){
@@ -1188,12 +1243,12 @@ chats.length?openChat([...chats].sort((a,b)=>b.ts-a.ts)[0]):newChat();
 (function(){
   if(matchMedia('(hover:none)').matches||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
   let raf=0,px=0,py=0;
-  function tick(){raf=0;document.querySelectorAll('.btn:not(.mbtn):not(.still),.send,.att').forEach(b=>{
+  function tick(){raf=0;document.querySelectorAll('.btn:not(.mbtn):not(.still)').forEach(b=>{
     const r=b.getBoundingClientRect();if(!r.width){b.style.transform='';return}
     const dx=px-(r.left+r.width/2),dy=py-(r.top+r.height/2),d=Math.hypot(dx,dy),R=Math.max(90,r.width*.9);
     b.style.transform=d<R?`translate(${(dx*.28).toFixed(1)}px,${(dy*.28).toFixed(1)}px)`:''})}
   addEventListener('pointermove',e=>{px=e.clientX;py=e.clientY;if(!raf)raf=requestAnimationFrame(tick)},{passive:true});
-  document.addEventListener('pointerleave',()=>document.querySelectorAll('.btn:not(.mbtn):not(.still),.send,.att').forEach(b=>b.style.transform=''));
+  document.addEventListener('pointerleave',()=>document.querySelectorAll('.btn:not(.mbtn):not(.still)').forEach(b=>b.style.transform=''));
 })();
 /* ================= NeoXAI+ : more features ================= */
 (function(){
@@ -1213,8 +1268,145 @@ chats.length?openChat([...chats].sort((a,b)=>b.ts-a.ts)[0]):newChat();
   const _s=send;send=async function(t){const typed=typeof t==='string'?t:inp.value;if(!busy&&typed&&typed.trim()){const S=ld();S.days[day()]=(S.days[day()]||0)+1;S.total++;try{localStorage.setItem(SK,JSON.stringify(S))}catch(e){}paint()}return _s.apply(this,arguments)};
   const statsMsg=()=>{const S=ld();return '🔥 '+streak(S)+'-day streak · '+(S.days[day()]||0)+' questions today · '+S.total+' in total'};
   /* ---- calculator + formulas ---- */
-  const FM=[['Algebra','Quadratic formula','x=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}'],['Algebra','Difference of squares','a^2-b^2=(a-b)(a+b)'],['Algebra','Slope of a line','m=\\frac{y_2-y_1}{x_2-x_1}'],['Geometry','Pythagorean theorem','a^2+b^2=c^2'],['Geometry','Circle area','A=\\pi r^2'],['Geometry','Circumference','C=2\\pi r'],['Geometry','Cylinder volume','V=\\pi r^2 h'],['Geometry','Sphere volume','V=\\tfrac43\\pi r^3'],['Geometry','Triangle area','A=\\tfrac12 bh'],['Trig','Pythagorean identity','\\sin^2\\theta+\\cos^2\\theta=1'],['Trig','Law of cosines','c^2=a^2+b^2-2ab\\cos C'],['Calculus','Power rule','\\tfrac{d}{dx}x^n=nx^{n-1}'],['Calculus','Product rule',"(uv)'=u'v+uv'"],['Calculus','Power rule for integrals','\\int x^n\\,dx=\\tfrac{x^{n+1}}{n+1}+C'],['Statistics','Mean','\\bar{x}=\\tfrac{\\sum x_i}{n}'],['Statistics','Standard deviation','\\sigma=\\sqrt{\\tfrac{\\sum(x_i-\\mu)^2}{N}}'],['Finance','Compound interest','A=P\\left(1+\\tfrac rn\\right)^{nt}'],['Logs','Product rule for logs','\\log_b(xy)=\\log_b x+\\log_b y']];
-  const cd=dlg('nxcalc','<div class="ctabs"><button class="btn still on" data-k="c">🧮 Calculator</button><button class="btn still" data-k="f">📐 Formulas</button><span style="flex:1"></span><button class="btn still" data-k="x">✕</button></div><div id="cv"><div id="chist"></div><div id="cdisp">0</div><div class="kp" id="kp"></div><div class="ctabs" style="margin-top:10px"><button class="btn still" id="cask">Ask AI how</button></div></div><div id="fv" hidden><input class="nxi2" id="fq" placeholder="Search formulas…"><div id="fl"></div></div>');
+  const FM=[['Algebra','Quadratic formula','x=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}'],['Algebra','Difference of squares','a^2-b^2=(a-b)(a+b)'],['Algebra','Slope of a line','m=\\frac{y_2-y_1}{x_2-x_1}'],['Geometry','Pythagorean theorem','a^2+b^2=c^2'],['Geometry','Circle area','A=\\pi r^2'],['Geometry','Circumference','C=2\\pi r'],['Geometry','Cylinder volume','V=\\pi r^2 h'],['Geometry','Sphere volume','V=\\tfrac43\\pi r^3'],['Geometry','Triangle area','A=\\tfrac12 bh'],['Trig','Pythagorean identity','\\sin^2\\theta+\\cos^2\\theta=1'],['Trig','Law of cosines','c^2=a^2+b^2-2ab\\cos C'],['Calculus','Power rule','\\tfrac{d}{dx}x^n=nx^{n-1}'],['Calculus','Product rule',"(uv)'=u'v+uv'"],['Calculus','Power rule for integrals','\\int x^n\\,dx=\\tfrac{x^{n+1}}{n+1}+C'],['Statistics','Mean','\\bar{x}=\\tfrac{\\sum x_i}{n}'],['Statistics','Standard deviation','\\sigma=\\sqrt{\\tfrac{\\sum(x_i-\\mu)^2}{N}}'],['Finance','Compound interest','A=P\\left(1+\\tfrac rn\\right)^{nt}'],['Logs','Product rule for logs','\\log_b(xy)=\\log_b x+\\log_b y'],
+["Algebra","Vertex form of a parabola","y=a(x-h)^2+k"],
+["Algebra","Discriminant","\\Delta=b^2-4ac"],
+["Algebra","Square of a sum","(a+b)^2=a^2+2ab+b^2"],
+["Algebra","Square of a difference","(a-b)^2=a^2-2ab+b^2"],
+["Algebra","Sum of cubes","a^3+b^3=(a+b)(a^2-ab+b^2)"],
+["Algebra","Difference of cubes","a^3-b^3=(a-b)(a^2+ab+b^2)"],
+["Algebra","Binomial theorem","(a+b)^n=\\sum_{k=0}^{n}\\binom{n}{k}a^{n-k}b^k"],
+["Algebra","Vieta's formulas","x_1+x_2=-\\tfrac ba,\\quad x_1x_2=\\tfrac ca"],
+["Algebra","Slope-intercept form","y=mx+b"],
+["Algebra","Point-slope form","y-y_1=m(x-x_1)"],
+["Algebra","Absolute value inequality","|x|<a\\iff -a<x<a"],
+["Algebra","Completing the square","x^2+bx=\\left(x+\\tfrac b2\\right)^2-\\tfrac{b^2}{4}"],
+["Algebra","Factorial","n!=n(n-1)(n-2)\\cdots 2\\cdot 1"],
+["Exponents","Product of powers","a^m\\cdot a^n=a^{m+n}"],
+["Exponents","Quotient of powers","\\tfrac{a^m}{a^n}=a^{m-n}"],
+["Exponents","Power of a power","(a^m)^n=a^{mn}"],
+["Exponents","Negative exponent","a^{-n}=\\tfrac1{a^n}"],
+["Exponents","Rational exponent","a^{m/n}=\\sqrt[n]{a^m}"],
+["Exponents","Zero exponent","a^0=1\\quad(a\\ne0)"],
+["Exponents","Power of a product","(ab)^n=a^nb^n"],
+["Logs","Quotient rule for logs","\\log_b\\tfrac xy=\\log_b x-\\log_b y"],
+["Logs","Power rule for logs","\\log_b x^n=n\\log_b x"],
+["Logs","Change of base","\\log_b x=\\tfrac{\\ln x}{\\ln b}"],
+["Logs","Definition of a log","b^y=x\\iff y=\\log_b x"],
+["Logs","Exponential growth or decay","N(t)=N_0e^{kt}"],
+["Logs","Half-life","N(t)=N_0\\left(\\tfrac12\\right)^{t/T}"],
+["Geometry","Rectangle area and perimeter","A=lw,\\quad P=2(l+w)"],
+["Geometry","Parallelogram area","A=bh"],
+["Geometry","Trapezoid area","A=\\tfrac12(a+b)h"],
+["Geometry","Heron's formula","A=\\sqrt{s(s-a)(s-b)(s-c)},\\; s=\\tfrac{a+b+c}{2}"],
+["Geometry","Equilateral triangle area","A=\\tfrac{\\sqrt3}{4}a^2"],
+["Geometry","Sector area","A=\\tfrac12r^2\\theta"],
+["Geometry","Arc length","s=r\\theta"],
+["Geometry","Cube volume and surface","V=a^3,\\quad S=6a^2"],
+["Geometry","Box volume and surface","V=lwh,\\quad S=2(lw+lh+wh)"],
+["Geometry","Cone volume","V=\\tfrac13\\pi r^2h"],
+["Geometry","Cone lateral surface","A=\\pi r\\sqrt{r^2+h^2}"],
+["Geometry","Pyramid volume","V=\\tfrac13Bh"],
+["Geometry","Prism volume","V=Bh"],
+["Geometry","Sphere surface area","S=4\\pi r^2"],
+["Geometry","Cylinder surface area","S=2\\pi r(r+h)"],
+["Geometry","Ellipse area","A=\\pi ab"],
+["Geometry","Torus volume","V=2\\pi^2Rr^2"],
+["Geometry","Interior angles of a polygon","\\text{sum}=(n-2)\\cdot180^\\circ"],
+["Geometry","Box diagonal","d=\\sqrt{l^2+w^2+h^2}"],
+["Geometry","Similar figures","\\tfrac{A_1}{A_2}=k^2,\\quad \\tfrac{V_1}{V_2}=k^3"],
+["Coordinates","Distance formula","d=\\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}"],
+["Coordinates","Midpoint formula","M=\\left(\\tfrac{x_1+x_2}{2},\\tfrac{y_1+y_2}{2}\\right)"],
+["Coordinates","Circle equation","(x-h)^2+(y-k)^2=r^2"],
+["Coordinates","Ellipse equation","\\tfrac{x^2}{a^2}+\\tfrac{y^2}{b^2}=1"],
+["Coordinates","Hyperbola equation","\\tfrac{x^2}{a^2}-\\tfrac{y^2}{b^2}=1"],
+["Coordinates","Parabola with focus","x^2=4py"],
+["Coordinates","Perpendicular slopes","m_1m_2=-1"],
+["Coordinates","Distance from a point to a line","d=\\tfrac{|Ax_0+By_0+C|}{\\sqrt{A^2+B^2}}"],
+["Coordinates","Triangle area from vertices","A=\\tfrac12\\left|x_1(y_2-y_3)+x_2(y_3-y_1)+x_3(y_1-y_2)\\right|"],
+["Trig","SOH CAH TOA","\\sin\\theta=\\tfrac{\\text{opp}}{\\text{hyp}},\\ \\cos\\theta=\\tfrac{\\text{adj}}{\\text{hyp}},\\ \\tan\\theta=\\tfrac{\\text{opp}}{\\text{adj}}"],
+["Trig","Tangent identity","\\tan\\theta=\\tfrac{\\sin\\theta}{\\cos\\theta}"],
+["Trig","Secant identity","1+\\tan^2\\theta=\\sec^2\\theta"],
+["Trig","Law of sines","\\tfrac{a}{\\sin A}=\\tfrac{b}{\\sin B}=\\tfrac{c}{\\sin C}"],
+["Trig","Triangle area with sine","A=\\tfrac12ab\\sin C"],
+["Trig","Double angle: sine","\\sin2\\theta=2\\sin\\theta\\cos\\theta"],
+["Trig","Double angle: cosine","\\cos2\\theta=\\cos^2\\theta-\\sin^2\\theta"],
+["Trig","Angle sum: sine","\\sin(a+b)=\\sin a\\cos b+\\cos a\\sin b"],
+["Trig","Angle sum: cosine","\\cos(a+b)=\\cos a\\cos b-\\sin a\\sin b"],
+["Trig","Angle sum: tangent","\\tan(a+b)=\\tfrac{\\tan a+\\tan b}{1-\\tan a\\tan b}"],
+["Trig","Half-angle form","\\sin^2\\theta=\\tfrac{1-\\cos2\\theta}{2}"],
+["Trig","Even and odd","\\sin(-\\theta)=-\\sin\\theta,\\quad \\cos(-\\theta)=\\cos\\theta"],
+["Trig","Degrees to radians","\\theta_{\\text{rad}}=\\theta_{\\text{deg}}\\cdot\\tfrac{\\pi}{180}"],
+["Trig","Sine wave","y=A\\sin(Bx+C)+D,\\quad \\text{period}=\\tfrac{2\\pi}{B}"],
+["Calculus","Derivative of e^x","\\tfrac{d}{dx}e^x=e^x"],
+["Calculus","Derivative of ln x","\\tfrac{d}{dx}\\ln x=\\tfrac1x"],
+["Calculus","Derivative of sin x","\\tfrac{d}{dx}\\sin x=\\cos x"],
+["Calculus","Derivative of cos x","\\tfrac{d}{dx}\\cos x=-\\sin x"],
+["Calculus","Derivative of tan x","\\tfrac{d}{dx}\\tan x=\\sec^2x"],
+["Calculus","Quotient rule","\\left(\\tfrac uv\\right)'=\\tfrac{u'v-uv'}{v^2}"],
+["Calculus","Chain rule","\\tfrac{d}{dx}f(g(x))=f'(g(x))\\,g'(x)"],
+["Calculus","Definition of the derivative","f'(x)=\\lim_{h\\to0}\\tfrac{f(x+h)-f(x)}{h}"],
+["Calculus","Fundamental theorem of calculus","\\int_a^b f(x)\\,dx=F(b)-F(a)"],
+["Calculus","Integral of 1/x","\\int\\tfrac1x\\,dx=\\ln|x|+C"],
+["Calculus","Integral of e^x","\\int e^x\\,dx=e^x+C"],
+["Calculus","Integral of sin x","\\int\\sin x\\,dx=-\\cos x+C"],
+["Calculus","Integral of cos x","\\int\\cos x\\,dx=\\sin x+C"],
+["Calculus","Integration by parts","\\int u\\,dv=uv-\\int v\\,du"],
+["Calculus","L'Hôpital's rule","\\lim\\tfrac{f(x)}{g(x)}=\\lim\\tfrac{f'(x)}{g'(x)}"],
+["Calculus","Taylor series","f(x)=\\sum_{n=0}^{\\infty}\\tfrac{f^{(n)}(a)}{n!}(x-a)^n"],
+["Calculus","Average value of a function","f_{\\text{avg}}=\\tfrac1{b-a}\\int_a^b f(x)\\,dx"],
+["Calculus","Disk method volume","V=\\pi\\int_a^b[f(x)]^2\\,dx"],
+["Calculus","Arc length of a curve","L=\\int_a^b\\sqrt{1+[f'(x)]^2}\\,dx"],
+["Calculus","Famous limit","\\lim_{x\\to0}\\tfrac{\\sin x}{x}=1"],
+["Calculus","Definition of e","e=\\lim_{n\\to\\infty}\\left(1+\\tfrac1n\\right)^n"],
+["Sequences","Arithmetic term","a_n=a_1+(n-1)d"],
+["Sequences","Arithmetic sum","S_n=\\tfrac n2(a_1+a_n)"],
+["Sequences","Geometric term","a_n=a_1r^{n-1}"],
+["Sequences","Geometric sum","S_n=a_1\\tfrac{1-r^n}{1-r}"],
+["Sequences","Infinite geometric series","S=\\tfrac{a_1}{1-r},\\quad |r|<1"],
+["Sequences","Sum of the first n integers","\\sum_{k=1}^{n}k=\\tfrac{n(n+1)}{2}"],
+["Sequences","Sum of squares","\\sum_{k=1}^{n}k^2=\\tfrac{n(n+1)(2n+1)}{6}"],
+["Sequences","Sum of cubes","\\sum_{k=1}^{n}k^3=\\left(\\tfrac{n(n+1)}{2}\\right)^2"],
+["Statistics","Sample variance","s^2=\\tfrac{\\sum(x_i-\\bar x)^2}{n-1}"],
+["Statistics","Z-score","z=\\tfrac{x-\\mu}{\\sigma}"],
+["Statistics","Normal distribution","f(x)=\\tfrac1{\\sigma\\sqrt{2\\pi}}e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}"],
+["Statistics","Standard error of the mean","SE=\\tfrac{\\sigma}{\\sqrt n}"],
+["Statistics","Confidence interval for a mean","\\bar x\\pm z\\tfrac{\\sigma}{\\sqrt n}"],
+["Statistics","Correlation coefficient","r=\\tfrac{\\sum(x_i-\\bar x)(y_i-\\bar y)}{\\sqrt{\\sum(x_i-\\bar x)^2\\sum(y_i-\\bar y)^2}}"],
+["Statistics","Regression slope","b=r\\tfrac{s_y}{s_x}"],
+["Statistics","Interquartile range","IQR=Q_3-Q_1"],
+["Statistics","Expected value","E(X)=\\sum x_iP(x_i)"],
+["Probability","Basic probability","P(A)=\\tfrac{\\text{favorable outcomes}}{\\text{total outcomes}}"],
+["Probability","Complement rule","P(A')=1-P(A)"],
+["Probability","Addition rule","P(A\\cup B)=P(A)+P(B)-P(A\\cap B)"],
+["Probability","Independent events","P(A\\cap B)=P(A)P(B)"],
+["Probability","Conditional probability","P(A\\mid B)=\\tfrac{P(A\\cap B)}{P(B)}"],
+["Probability","Bayes' theorem","P(A\\mid B)=\\tfrac{P(B\\mid A)P(A)}{P(B)}"],
+["Probability","Permutations","P(n,r)=\\tfrac{n!}{(n-r)!}"],
+["Probability","Combinations","\\binom nr=\\tfrac{n!}{r!(n-r)!}"],
+["Probability","Binomial probability","P(X=k)=\\binom nk p^k(1-p)^{n-k}"],
+["Probability","Binomial mean and spread","\\mu=np,\\quad\\sigma=\\sqrt{np(1-p)}"],
+["Complex","Imaginary unit","i^2=-1"],
+["Complex","Modulus of a complex number","|a+bi|=\\sqrt{a^2+b^2}"],
+["Complex","Euler's formula","e^{i\\theta}=\\cos\\theta+i\\sin\\theta"],
+["Complex","Euler's identity","e^{i\\pi}+1=0"],
+["Complex","De Moivre's theorem","\\left[r(\\cos\\theta+i\\sin\\theta)\\right]^n=r^n(\\cos n\\theta+i\\sin n\\theta)"],
+["Vectors","Dot product","\\vec a\\cdot\\vec b=|\\vec a||\\vec b|\\cos\\theta"],
+["Vectors","Cross product size","|\\vec a\\times\\vec b|=|\\vec a||\\vec b|\\sin\\theta"],
+["Vectors","Vector length","|\\vec v|=\\sqrt{v_1^2+v_2^2+v_3^2}"],
+["Matrices","2×2 determinant","\\det\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}=ad-bc"],
+["Matrices","2×2 inverse","A^{-1}=\\tfrac1{ad-bc}\\begin{pmatrix}d&-b\\\\-c&a\\end{pmatrix}"],
+["Number theory","GCD and LCM","\\gcd(a,b)\\cdot\\operatorname{lcm}(a,b)=ab"],
+["Number theory","Fermat's little theorem","a^{p-1}\\equiv1\\pmod p"],
+["Finance","Simple interest","I=Prt"],
+["Finance","Continuous compounding","A=Pe^{rt}"],
+["Finance","Percent change","\\tfrac{\\text{new}-\\text{old}}{\\text{old}}\\times100\\%"],
+["Finance","Future value of an annuity","FV=P\\tfrac{(1+r)^n-1}{r}"],
+["Finance","Loan payment","M=P\\tfrac{r(1+r)^n}{(1+r)^n-1}"],
+["Finance","Rule of 72","t\\approx\\tfrac{72}{r\\%}"],
+["Everyday","Distance, speed, time","d=vt"],
+["Everyday","Average speed","\\bar v=\\tfrac{\\text{total distance}}{\\text{total time}}"]];
+  const cd=dlg('nxcalc','<div class="ctabs"><button class="btn still on" data-k="c">🧮 Calculator</button><button class="btn still" data-k="f">📐 Formulas</button><span style="flex:1"></span><button class="btn still" data-k="x">✕</button></div><div id="cv"><div id="chist"></div><div id="cdisp">0</div><div class="kp" id="kp"></div><div class="ctabs" style="margin-top:10px"><button class="btn still" id="cask">Ask AI how</button></div></div><div id="fv" hidden><input class="nxi2" id="fq" placeholder="Search formulas…"><div class="nxs" id="fcat"></div><div id="fl"></div></div>');
   const disp=cd.querySelector('#cdisp'),hist=cd.querySelector('#chist');let ex1='',ans='';
   const sh=()=>{disp.textContent=ex1||'0'};
   function calc(){if(!ex1)return;let s=ex1.replace(/√\(/g,'sqrt(').replace(/ans/g,'('+(ans||0)+')');const f=mkFn(s);let v=NaN;try{v=f?f(0):NaN}catch(e){}
@@ -1222,8 +1414,11 @@ chats.length?openChat([...chats].sort((a,b)=>b.ts-a.ts)[0]):newChat();
   '7 8 9 ÷ C|4 5 6 × ⌫|1 2 3 − (|0 . ^ + )|sin( cos( tan( √( π|ln( log( ans , =' .split('|').join(' ').split(' ').forEach(k=>{const b=E('button',k==='='?'eq':/[÷×−+^]/.test(k)?'op':'',k);b.onclick=()=>{if(k==='C')ex1='';else if(k==='⌫')ex1=ex1.replace(/(sin\(|cos\(|tan\(|ln\(|log\(|√\(|ans|.)$/,'');else if(k==='=')return calc();else ex1+=k;sh()};cd.querySelector('#kp').appendChild(b)});
   cd.querySelector('#cask').onclick=()=>{cd.close();if(ex1)send('How do I calculate '+ex1+' step by step?')};
   const fl=cd.querySelector('#fl');
-  function fRender(){const q=cd.querySelector('#fq').value.toLowerCase();fl.replaceChildren();FM.filter(f=>(f[0]+f[1]).toLowerCase().includes(q)).forEach(f=>{const d=E('div','fi');const l=E('div');l.innerHTML='<small>'+f[0]+'</small><b>'+f[1]+'</b>';d.appendChild(l);d.appendChild(mathNode(f[2],false));d.onclick=()=>{cd.close();inp.value='Explain the '+f[1].toLowerCase()+' with a worked example';inp.focus();inp.dispatchEvent(new Event('input'))};fl.appendChild(d)})}
+  let catSel='';
+  function fRender(){const q=cd.querySelector('#fq').value.toLowerCase();fl.replaceChildren();FM.filter(f=>(!catSel||f[0]===catSel)&&(f[0]+f[1]).toLowerCase().includes(q)).forEach(f=>{const d=E('div','fi');const l=E('div');l.innerHTML='<small>'+f[0]+'</small><b>'+f[1]+'</b>';d.appendChild(l);d.appendChild(mathNode(f[2],false));d.onclick=()=>{cd.close();inp.value='Explain the '+f[1].toLowerCase()+' with a worked example';inp.focus();inp.dispatchEvent(new Event('input'))};fl.appendChild(d)})}
   cd.querySelector('#fq').oninput=fRender;
+  cd.querySelector('#fq').placeholder='Search '+FM.length+' formulas…';
+  { const fc=cd.querySelector('#fcat'); ['All',...new Set(FM.map(f=>f[0]))].forEach(c=>{ const b=E('button','chip'+(c==='All'?' on':''),c); b.type='button'; b.onclick=()=>{ catSel=c==='All'?'':c; fc.querySelectorAll('.chip').forEach(x=>x.classList.toggle('on',x===b)); fRender(); }; fc.appendChild(b); }); }
   cd.querySelectorAll('.ctabs [data-k]').forEach(b=>b.onclick=()=>{const k=b.dataset.k;if(k==='x')return cd.close();cd.querySelectorAll('.ctabs [data-k]').forEach(x=>x.classList.toggle('on',x===b));cd.querySelector('#cv').hidden=k!=='c';cd.querySelector('#fv').hidden=k!=='f';if(k==='f')fRender()});
   cd.addEventListener('keydown',e=>{if(cd.querySelector('#cv').hidden)return;if(e.key==='Enter'){e.preventDefault();calc()}else if(e.key==='Backspace'){ex1=ex1.slice(0,-1);sh()}else if(e.key==='Escape'){}else if(/^[0-9a-z.+\-*\/^()]$/i.test(e.key)&&!e.ctrlKey&&!e.metaKey){ex1+=e.key.replace('*','×').replace('/','÷');sh()}});
   const openCalc=tab=>{cd.showModal();if(tab==='f')cd.querySelector('[data-k=f]').click();else cd.querySelector('[data-k=c]').click()};
@@ -1241,6 +1436,7 @@ chats.length?openChat([...chats].sort((a,b)=>b.ts-a.ts)[0]):newChat();
   item('∑','Math signs',()=>{symp.classList.toggle('open')});
   item('🧮','Calculator',()=>{closePm();openCalc('c')});
   item('📐','Formula sheet',()=>{closePm();openCalc('f')});
+  item('⚗️','Periodic table',()=>{closePm();window.nxOpenPeriodic()});
   fin.onchange=async()=>{for(const f of [...fin.files]){if(f.size>400000){note.textContent=f.name+' is too big (max 400 KB).';continue}let t=await f.text();const cut=t.length>7000;if(cut)t=t.slice(0,7000);inp.value+=(inp.value&&!inp.value.endsWith('\n')?'\n':'')+'File: '+f.name+'\n```\n'+t+(cut?'\n… (file shortened)':'')+'\n```\n'}fin.value='';inp.focus();inp.dispatchEvent(new Event('input'))};
   bar.insertBefore(plus,bar.firstChild);bar.appendChild(pm);bar.appendChild(symp);
   plus.onclick=e=>{e.stopPropagation();const o=!pm.classList.contains('open');closePm();pm.classList.toggle('open',o)};
@@ -1248,7 +1444,7 @@ chats.length?openChat([...chats].sort((a,b)=>b.ts-a.ts)[0]):newChat();
   /* ---- command palette ---- */
   const pd=dlg('nxpal','<h3>Command palette</h3><input class="nxi2" id="pq" placeholder="Type a command, a chat or a topic…" autocomplete="off"><div id="pl"></div>');
   const pq=pd.querySelector('#pq'),pl=pd.querySelector('#pl');let items=[],pi=0;
-  const acts=()=>[['New chat','Action',()=>newChat()],['Themes','Action',()=>tdlg.showModal()],['Calculator','Tool',()=>openCalc('c')],['Formula sheet','Tool',()=>openCalc('f')],['Question notebook','Tool',()=>openLab('nb')],['Graph Lab','Tool',()=>openLab('gl')],['Export this chat','Action',()=>$('exp').click()],['Show or hide chats','Action',()=>$('chats').click()],['Focus mode (hide menus)','Action',()=>document.body.classList.toggle('nxfocus')],['Study stats: '+statsMsg(),'Stats',()=>{}]]
+  const acts=()=>[['New chat','Action',()=>newChat()],['Themes','Action',()=>tdlg.showModal()],['Calculator','Tool',()=>openCalc('c')],['Formula sheet','Tool',()=>openCalc('f')],['Periodic table','Tool',()=>window.nxOpenPeriodic()],['Question notebook','Tool',()=>openLab('nb')],['Graph Lab','Tool',()=>openLab('gl')],['Export this chat','Action',()=>$('exp').click()],['Show or hide chats','Action',()=>$('chats').click()],['Focus mode (hide menus)','Action',()=>document.body.classList.toggle('nxfocus')],['Study stats: '+statsMsg(),'Stats',()=>{}]]
     .concat((typeof CMDS!=='undefined'?CMDS:[]).map(c=>[c[0]+' '+c[1],c[2],()=>cPick(c)])).concat((typeof chats!=='undefined'?chats:[]).map(c=>[c.title||'Untitled chat','Chat',()=>openChat(c)]));
   function pRender(){const q=pq.value.toLowerCase().trim();items=acts().filter(a=>!q||(a[0]+a[1]).toLowerCase().includes(q)).slice(0,40);pi=Math.min(pi,Math.max(0,items.length-1));pl.replaceChildren();
     items.forEach((a,i)=>{const d=E('div','pi'+(i===pi?' on':''));d.appendChild(E('span','',a[0]));d.appendChild(E('small','',a[1]));d.onclick=()=>run(i);pl.appendChild(d)});if(!items.length)pl.appendChild(E('div','pi','No matches'))}
@@ -1256,11 +1452,214 @@ chats.length?openChat([...chats].sort((a,b)=>b.ts-a.ts)[0]):newChat();
   pq.oninput=()=>{pi=0;pRender()};
   pq.onkeydown=e=>{if(e.key==='ArrowDown'){e.preventDefault();pi=Math.min(items.length-1,pi+1);pRender();pl.children[pi]&&pl.children[pi].scrollIntoView({block:'nearest'})}else if(e.key==='ArrowUp'){e.preventDefault();pi=Math.max(0,pi-1);pRender();pl.children[pi]&&pl.children[pi].scrollIntoView({block:'nearest'})}else if(e.key==='Enter'){e.preventDefault();run(pi)}};
   const openPal=()=>{pq.value='';pi=0;pRender();pd.showModal();pq.focus()};
-  const MM=[['🏠 Home',()=>location.href='https://home.neoxai.website'],['💳 Pricing',()=>location.href='https://pricing.neoxai.website'],['🎨 Themes',()=>tdlg.showModal()],['📒 Question notebook',()=>openLab('nb')],['📈 Graph Lab',()=>openLab('gl')],['🧮 Calculator and formulas',()=>openCalc('c')],['⬇ Export this chat',()=>$('exp').click()],['🎯 Focus mode',()=>document.body.classList.toggle('nxfocus')],['⌘ Command palette',()=>openPal()],['🔥 Study streak',()=>{note.textContent=statsMsg();setTimeout(()=>{note.textContent='Johnny made this AI just for fun.'},4500)}]];
+  const MM=[['🏠 Home',()=>location.href='https://home.neoxai.website'],['💳 Pricing',()=>location.href='https://pricing.neoxai.website'],['🎨 Themes',()=>tdlg.showModal()],['📒 Question notebook',()=>openLab('nb')],['📈 Graph Lab',()=>openLab('gl')],['🧮 Calculator and formulas',()=>openCalc('c')],['⚗️ Periodic table',()=>window.nxOpenPeriodic()],['⬇ Export this chat',()=>$('exp').click()],['🎯 Focus mode',()=>document.body.classList.toggle('nxfocus')],['⌘ Command palette',()=>openPal()],['🔥 Study streak',()=>{note.textContent=statsMsg();setTimeout(()=>{note.textContent='Johnny made this AI just for fun.'},4500)}]];
   MM.forEach(m=>{const b=E('button','pmi',m[0]);b.onclick=()=>{mm.classList.remove('open');m[1]()};mm.appendChild(b)});
   more.onclick=e=>{e.stopPropagation();mm.classList.toggle('open')};document.addEventListener('click',e=>{if(!mm.contains(e.target))mm.classList.remove('open')});
   bk.onclick=openPal;bs.onclick=()=>{note.textContent=statsMsg();setTimeout(()=>{note.textContent='Johnny made this AI just for fun.'},4000)};
   addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();pd.open?pd.close():openPal()}});
+})();
+/* ---------- periodic table: every element explained ---------- */
+(function(){
+const EL=[
+['H','Hydrogen','1.008','Cavendish, 1766','The lightest and most abundant element in the universe, making up most of the Sun and the stars. Stars shine by fusing it. On Earth it is mostly found in water and fuels, and it is used to make ammonia and as a clean fuel.'],
+['He','Helium','4.0026','Janssen and Lockyer, 1868 (in sunlight)','A colorless, completely unreactive noble gas, lighter than air, with the lowest boiling point of any element. It cools MRI magnets, fills balloons and is mixed into deep-sea breathing gas. It was found in the Sun before it was found on Earth.'],
+['Li','Lithium','6.94','Arfwedson, 1817','The lightest metal: soft enough to cut with a knife and light enough to float on water. It powers the rechargeable batteries in phones and electric cars, and lithium compounds are used in medicine.'],
+['Be','Beryllium','9.0122','Vauquelin, 1798','A light, stiff, strong metal that X-rays pass through. It is used in aircraft parts, X-ray windows and the mirror segments of the James Webb Space Telescope. Beryllium dust is toxic.'],
+['B','Boron','10.81','Gay-Lussac, Thenard and Davy, 1808','A hard, brittle metalloid. Boron compounds go into heat-resistant borosilicate glass, detergents and fertilizers, and plants need a little of it to grow.'],
+['C','Carbon','12.011','Known since antiquity','The backbone of all known life: every organic molecule contains it. It exists as diamond, graphite, graphene and fullerenes, and it is in fuels, plastics and the carbon dioxide of the air.'],
+['N','Nitrogen','14.007','Rutherford, 1772','Makes up about 78% of the air we breathe, where it is a fairly unreactive gas. It is essential in proteins and DNA. Industry turns it into ammonia for fertilizers, and liquid nitrogen is used for freezing and cooling.'],
+['O','Oxygen','15.999','Scheele (c. 1771) and Priestley (1774)','Needed for breathing and burning, about 21% of the air. It is the most abundant element in Earth\'s crust, mostly locked in rocks and water. Used in steelmaking, hospitals and rocket engines.'],
+['F','Fluorine','18.998','Moissan, 1886','The most reactive and most electronegative element, a pale yellow gas. Fluoride in toothpaste strengthens teeth, and fluorine is in non-stick coatings such as PTFE and in many refrigerants.'],
+['Ne','Neon','20.180','Ramsay and Travers, 1898','A colorless noble gas that glows reddish-orange when electricity passes through it, which is what neon signs use. It is chemically inert and is also used in lasers and cooling.'],
+['Na','Sodium','22.990','Davy, 1807','A soft, silvery, very reactive metal that reacts fiercely with water. Sodium chloride is table salt, sodium ions help nerves and muscles work, and its compounds are used in glass, soap and street lamps.'],
+['Mg','Magnesium','24.305','Davy, 1808 (isolated)','A light, strong metal that burns with a brilliant white flame. It is alloyed for cars and aircraft and sits at the center of chlorophyll, so plants need it. People need it for muscles and nerves.'],
+['Al','Aluminium','26.982','Ørsted, 1825 / Wöhler, 1827','A light, corrosion-resistant metal and the most abundant metal in Earth\'s crust. It is used in cans, foil, aircraft and buildings and recycles very well. A thin oxide layer on its surface protects it.'],
+['Si','Silicon','28.085','Berzelius, 1823','A metalloid and the second most abundant element in Earth\'s crust after oxygen. Pure silicon is the semiconductor in computer chips and solar panels, and its compounds make up sand, glass and concrete.'],
+['P','Phosphorus','30.974','Brand, 1669','It exists in several forms, such as the very reactive white form and the safer red form. It is vital in DNA, in the energy molecule ATP and in bones, and it is used in fertilizers and matches.'],
+['S','Sulfur','32.06','Known since antiquity','A yellow, brittle solid. It is used to make sulfuric acid, the most produced industrial chemical, and also fertilizers, gunpowder and vulcanized rubber. Many bad smells come from its compounds.'],
+['Cl','Chlorine','35.45','Scheele, 1774','A greenish-yellow, poisonous gas. It disinfects drinking water and swimming pools and is used to make plastics such as PVC. The chloride in table salt is essential for the body.'],
+['Ar','Argon','39.948','Rayleigh and Ramsay, 1894','A colorless noble gas that makes up about 0.93% of the air, the third most common gas in it. Because it does not react, it protects metal during welding and fills some light bulbs.'],
+['K','Potassium','39.098','Davy, 1807','A soft, very reactive metal that reacts violently with water and burns with a lilac flame. Potassium ions are needed for nerves, muscles and the heartbeat. It is used in fertilizers and is found in bananas.'],
+['Ca','Calcium','40.078','Davy, 1808','A reactive metal that is the main mineral in bones, teeth and shells. It occurs in limestone, chalk and marble and is used in cement and plaster. It also helps muscles and nerves work.'],
+['Sc','Scandium','44.956','Nilson, 1879','A soft, silvery, fairly rare metal. Small amounts make aluminium alloys stronger for sports gear and aircraft parts, and scandium compounds are used in bright stadium lights.'],
+['Ti','Titanium','47.867','Gregor, 1791','A strong, light, corrosion-resistant metal, as strong as many steels at much lower weight. It is used in aircraft, spacecraft, medical implants and jewelry, and titanium dioxide is the white pigment in paint.'],
+['V','Vanadium','50.942','del Río, 1801 / Sefström, 1830','A hard metal that makes steel tougher, used in tools and springs and in large flow batteries. Its compounds come in many colors, and it was named after Vanadís, a Norse goddess.'],
+['Cr','Chromium','51.996','Vauquelin, 1797','A hard, shiny metal that resists tarnishing. It gives chrome plating its shine, makes steel stainless and gives rubies and emeralds their color. Its name comes from the Greek word for color.'],
+['Mn','Manganese','54.938','Gahn, 1774','A hard, brittle metal that is essential in steelmaking, where it removes impurities and adds strength. It is used in alkaline batteries, and the body needs a tiny amount of it.'],
+['Fe','Iron','55.845','Known since antiquity','The most abundant element on Earth by mass and the main part of its core. Iron makes steel, carries oxygen in your blood as part of hemoglobin, and rusts when it meets air and water.'],
+['Co','Cobalt','58.933','Brandt, c. 1735','A hard, silvery, magnetic metal. Its compounds give glass and ceramics a deep blue color. It is used in rechargeable batteries, strong alloys and magnets, and it sits at the heart of vitamin B12.'],
+['Ni','Nickel','58.693','Cronstedt, 1751','A silvery, corrosion-resistant, magnetic metal. It is used in stainless steel, coins and rechargeable batteries and as a catalyst. Its name comes from a mischievous goblin of German miners\' folklore.'],
+['Cu','Copper','63.546','Known since antiquity','A reddish metal that conducts heat and electricity very well, so it is used in wires and pipes. Mixed with tin it makes bronze and with zinc it makes brass. People have used it for thousands of years.'],
+['Zn','Zinc','65.38','Marggraf, 1746','A bluish-white metal used to galvanize steel against rust, in brass and in batteries. The body needs zinc for its immune system and for healing wounds.'],
+['Ga','Gallium','69.723','Lecoq de Boisbaudran, 1875','A soft metal that melts at about 30 °C, so it can melt in your hand. It is used in LEDs, chips and solar cells. Mendeleev had predicted it before it was found.'],
+['Ge','Germanium','72.630','Winkler, 1886','A shiny metalloid and semiconductor used in early transistors, fiber optics and infrared lenses. Mendeleev predicted it, and it was named after Germany.'],
+['As','Arsenic','74.922','Known since the Middle Ages','A metalloid famous as a poison. Some of its compounds are used in semiconductors such as gallium arsenide. In some regions it contaminates groundwater, which is a health problem.'],
+['Se','Selenium','78.971','Berzelius, 1817','A nonmetal whose electrical conductivity rises in light, so it was used in photocells. The body needs a trace of it, but too much is toxic. Its name comes from Selene, the Moon.'],
+['Br','Bromine','79.904','Balard, 1826','A red-brown, strong-smelling liquid, one of only two elements that are liquid at room temperature (the other is mercury). It is used in flame retardants and in some medicines and chemicals.'],
+['Kr','Krypton','83.798','Ramsay and Travers, 1898','A colorless, almost inert noble gas used in some lamps and photo flashes. From 1960 to 1983 the meter was defined using light from krypton-86.'],
+['Rb','Rubidium','85.468','Bunsen and Kirchhoff, 1861','A soft, silvery, extremely reactive metal that ignites in air. It is used in atomic clocks and research and gives a red-violet flame color.'],
+['Sr','Strontium','87.62','Crawford, 1790','A soft metal that burns bright red, which gives fireworks and flares their crimson color. It is used in some glass and magnets. Strontium-90 is a dangerous radioactive by-product of fission.'],
+['Y','Yttrium','88.906','Gadolin, 1794','A silvery metal used in LEDs, lasers and the red color in old TV screens. Yttrium compounds also help make high-temperature superconductors. It is named after Ytterby, a village in Sweden.'],
+['Zr','Zirconium','91.224','Klaproth, 1789','A strong, corrosion-resistant metal that barely absorbs neutrons, so it covers fuel rods in nuclear reactors. Cubic zirconia, a diamond look-alike, is made from zirconium dioxide.'],
+['Nb','Niobium','92.906','Hatchett, 1801','A soft, ductile metal that becomes a superconductor at very low temperatures. It is used in MRI magnets, in strong steel for pipelines and in jet engines.'],
+['Mo','Molybdenum','95.95','Hjelm, 1781','A metal with a very high melting point that makes steel stronger at high heat. It is used in tools and engines and as a catalyst, and plants need it to use nitrogen.'],
+['Tc','Technetium','(98)','Perrier and Segrè, 1937','The lightest element with no stable isotopes, and the first one made artificially. Technetium-99m is the most widely used isotope for medical imaging scans.'],
+['Ru','Ruthenium','101.07','Claus, 1844','A hard, silvery platinum-group metal used in electrical contacts, hard-wearing alloys and as a catalyst. It is named after Ruthenia, an old name for Russia.'],
+['Rh','Rhodium','102.91','Wollaston, 1803','A rare, silvery, very reflective platinum-group metal. It is mostly used in car catalytic converters to cut exhaust pollution, and as shiny plating on jewelry. It is one of the most expensive metals.'],
+['Pd','Palladium','106.42','Wollaston, 1803','A platinum-group metal that can soak up large amounts of hydrogen. It is used in catalytic converters, electronics, dentistry and jewelry, and it is named after the asteroid Pallas.'],
+['Ag','Silver','107.87','Known since antiquity','A shiny metal with the highest electrical and thermal conductivity of any metal. It is used in jewelry, coins, mirrors, electronics and photography. Its symbol comes from the Latin argentum.'],
+['Cd','Cadmium','112.41','Stromeyer, 1817','A soft, bluish metal used in nickel-cadmium batteries and in pigments. It is toxic, so its use is now restricted.'],
+['In','Indium','114.82','Reich and Richter, 1863','A very soft metal used in touchscreens (as indium tin oxide), LEDs and solders. It is named after the bright indigo line in its spectrum.'],
+['Sn','Tin','118.71','Known since antiquity','A soft, silvery metal that resists corrosion. Mixed with copper it makes bronze, and it is used in solder and to coat steel cans. Its symbol comes from the Latin stannum.'],
+['Sb','Antimony','121.76','Known since antiquity','A brittle, silvery metalloid used in flame retardants and batteries and to harden lead. Its symbol comes from the Latin stibium, and it was used in ancient eye makeup.'],
+['Te','Tellurium','127.60','von Reichenstein, 1782','A brittle metalloid that is rare in Earth\'s crust. It is used in thin-film solar panels (cadmium telluride) and in alloys. It is named after Tellus, the Latin word for Earth.'],
+['I','Iodine','126.90','Courtois, 1811','A shiny purple-black solid that gives off violet vapor. The thyroid gland needs iodine to make hormones, which is why it is added to table salt. It is also an antiseptic.'],
+['Xe','Xenon','131.29','Ramsay and Travers, 1898','A heavy, colorless noble gas used in camera flashes, car headlights and spacecraft ion thrusters. It was one of the first noble gases shown to form compounds.'],
+['Cs','Caesium','132.91','Bunsen and Kirchhoff, 1860','A soft, golden, extremely reactive metal that melts at about 28 °C. Atomic clocks define one second as 9,192,631,770 vibrations of a caesium atom.'],
+['Ba','Barium','137.33','Davy, 1808','A soft, silvery metal that burns green. Barium sulfate is swallowed as a "barium meal" to show the gut on X-rays, while soluble barium compounds are poisonous.'],
+['La','Lanthanum','138.91','Mosander, 1839','The first of the lanthanides, a soft, silvery metal. It is used in camera lenses, rechargeable nickel-metal-hydride batteries and in catalysts for refining oil.'],
+['Ce','Cerium','140.12','Berzelius and Hisinger, 1803','The most abundant of the rare-earth metals. It is used in lighter flints, catalytic converters, glass polishing and self-cleaning ovens.'],
+['Pr','Praseodymium','140.91','von Welsbach, 1885','A soft, silvery rare-earth metal whose compounds color glass and ceramics yellow-green. It is used in strong magnets, aircraft engine alloys and welding goggles.'],
+['Nd','Neodymium','144.24','von Welsbach, 1885','A rare-earth metal used in the strongest permanent magnets, found in headphones, hard drives, wind turbines and electric motors. It also colors glass violet and is used in lasers.'],
+['Pm','Promethium','(145)','Marinsky, Glendenin and Coryell, 1945','A radioactive rare earth with no stable isotopes, extremely rare in nature. It has been used in luminous paint and small nuclear batteries. It is named after Prometheus.'],
+['Sm','Samarium','150.36','Lecoq de Boisbaudran, 1879','A silvery rare-earth metal used in samarium-cobalt magnets, which stay strong at high temperatures, and in some nuclear reactor control rods.'],
+['Eu','Europium','151.96','Demarçay, 1901','A fairly soft, very reactive rare earth. Its compounds give the red and blue light in display phosphors, and they are used in security ink on euro banknotes. It is named after Europe.'],
+['Gd','Gadolinium','157.25','de Marignac, 1880','A rare-earth metal that is strongly magnetic near room temperature. Gadolinium compounds are used as contrast agents in MRI scans, and the metal absorbs neutrons very well.'],
+['Tb','Terbium','158.93','Mosander, 1843','A soft, silvery rare earth that gives off green light in phosphors for lighting and displays. It is also used in some sensors and sonar alloys.'],
+['Dy','Dysprosium','162.50','Lecoq de Boisbaudran, 1886','A rare earth added to magnets so they keep their strength when hot, which matters for wind turbines and electric cars. Its name comes from a Greek word meaning "hard to get".'],
+['Ho','Holmium','164.93','Delafontaine, Soret and Cleve, 1878-79','A rare earth with the strongest magnetic moment of any element. It is used in some medical lasers and in nuclear control rods, and it is named after Stockholm.'],
+['Er','Erbium','167.26','Mosander, 1843','A rare earth that gives glass a pink color. Erbium-doped fibers amplify the light signals in long-distance internet cables, and it is also used in lasers.'],
+['Tm','Thulium','168.93','Cleve, 1879','One of the rarest of the rare earths. It is used in some lasers and in a few portable X-ray devices.'],
+['Yb','Ytterbium','173.05','de Marignac, 1878','A soft, silvery rare earth used in extremely precise atomic clocks, lasers and some steel alloys. It is named after Ytterby, Sweden.'],
+['Lu','Lutetium','174.97','Urbain, 1907','The last, hardest and densest lanthanide. Its compounds are used in PET scanner detectors, and lutetium-177 is used in some cancer treatments.'],
+['Hf','Hafnium','178.49','Coster and von Hevesy, 1923','A silvery metal that absorbs neutrons well, used in nuclear control rods and in the transistors of modern computer chips. It is named after Hafnia, the Latin name of Copenhagen.'],
+['Ta','Tantalum','180.95','Ekeberg, 1802','A hard metal that is extremely resistant to corrosion. It is used for tiny capacitors in phones and laptops and for surgical implants. It is named after Tantalus from Greek myth.'],
+['W','Tungsten','183.84','de Elhuyar brothers, 1783','It has the highest melting point of any metal, 3422 °C, so it is used in old light-bulb filaments, rocket nozzles and cutting tools. Its symbol W comes from the name wolfram.'],
+['Re','Rhenium','186.21','Noddack, Tacke and Berg, 1925','One of the rarest and densest metals, with a very high melting point. It is used in jet engine alloys and catalysts, and it was the last stable element to be discovered.'],
+['Os','Osmium','190.23','Tennant, 1803','The densest naturally occurring element, a hard, bluish metal. It is used in fountain-pen tips and electrical contacts. Its name comes from a Greek word for smell, because its oxide stinks.'],
+['Ir','Iridium','192.22','Tennant, 1803','A very hard, corrosion-resistant metal and one of the densest elements. It is used in spark plugs and crucibles. A thin iridium-rich layer in rocks worldwide is linked to the asteroid that ended the dinosaurs.'],
+['Pt','Platinum','195.08','Known in pre-Columbian South America; described in Europe in the 1700s','A dense, silvery precious metal that does not tarnish. It is used in jewelry, catalytic converters, lab equipment and some cancer drugs such as cisplatin.'],
+['Au','Gold','196.97','Known since antiquity','A soft, yellow, dense metal that does not corrode. It is used for jewelry, coins and electronics and as a store of value. Its symbol comes from the Latin aurum.'],
+['Hg','Mercury','200.59','Known since antiquity','The only metal that is liquid at room temperature. It was used in thermometers, barometers and lamps, but it is toxic, so it is being phased out. Its symbol comes from the Latin hydrargyrum.'],
+['Tl','Thallium','204.38','Crookes, 1861','A soft, heavy metal whose compounds are highly poisonous, once used in rat poison. Today it appears in some electronics and medical imaging. Its name comes from a green line in its spectrum.'],
+['Pb','Lead','207.2','Known since antiquity','A soft, dense, toxic metal. It is used in car batteries and in radiation shielding, and it used to be common in pipes, paint and fuel. Its symbol comes from the Latin plumbum.'],
+['Bi','Bismuth','208.98','Known since antiquity; recognized as an element by Geoffroy, 1753','A brittle, pinkish metal that is so weakly radioactive it is treated as practically stable. It is used in stomach medicines and in low-melting alloys, and it grows iridescent, stair-step crystals.'],
+['Po','Polonium','(209)','Marie and Pierre Curie, 1898','An extremely radioactive, rare element found in tiny amounts in uranium ores. It is named after Poland, Marie Curie\'s homeland, and it is used in static eliminators and as a heat source in some spacecraft.'],
+['At','Astatine','(210)','Corson, MacKenzie and Segrè, 1940','The rarest naturally occurring element, intensely radioactive, with only short-lived isotopes. Astatine-211 is being studied for targeted cancer therapy.'],
+['Rn','Radon','(222)','Dorn, 1900','A radioactive, colorless noble gas that seeps out of uranium-bearing rocks and can collect in buildings. It is a leading cause of lung cancer after smoking, so homes are tested for it.'],
+['Fr','Francium','(223)','Perey, 1939','An extremely radioactive alkali metal. Its longest-lived isotope lasts only about 22 minutes, and only tiny amounts exist in nature. It is named after France.'],
+['Ra','Radium','(226)','Marie and Pierre Curie, 1898','A radioactive alkaline earth metal that glows faintly. It was once used in glow-in-the-dark paint, which harmed the workers who made it. Today it is used only rarely in medicine.'],
+['Ac','Actinium','(227)','Debierne, 1899','A radioactive metal that glows blue in the dark. It gives the actinide series its name and is used in research and in some cancer therapies.'],
+['Th','Thorium','232.04','Berzelius, 1828','A weakly radioactive metal, more common than tin. It is studied as a possible nuclear fuel and was used in gas lantern mantles. It is named after Thor, the Norse god.'],
+['Pa','Protactinium','231.04','Hahn and Meitner, 1917','A rare, dense, radioactive metal found in uranium ores. It is mostly of interest to researchers, for example for dating ocean sediments.'],
+['U','Uranium','238.03','Klaproth, 1789','A dense, radioactive metal that is the main fuel in nuclear power plants. Its isotope uranium-235 can undergo fission. It is named after the planet Uranus.'],
+['Np','Neptunium','(237)','McMillan and Abelson, 1940','The first element heavier than uranium to be made. It is a radioactive by-product of nuclear reactors and is named after the planet Neptune.'],
+['Pu','Plutonium','(244)','Seaborg and colleagues, 1940','A dense radioactive metal made in nuclear reactors. It is used in nuclear weapons, as reactor fuel and as the power source of some space probes. It is named after Pluto.'],
+['Am','Americium','(243)','Seaborg and colleagues, 1944','A radioactive metal made in reactors. Americium-241 sits inside most household smoke detectors. It is named after the Americas.'],
+['Cm','Curium','(247)','Seaborg and colleagues, 1944','A radioactive, silvery metal made in reactors. It has been used as a power source in spacecraft and in the X-ray instruments of Mars rovers. It is named after Marie and Pierre Curie.'],
+['Bk','Berkelium','(247)','Berkeley laboratory, 1949','A synthetic radioactive metal first made at Berkeley, California. It is used only in research, for example as a target to make heavier elements such as tennessine.'],
+['Cf','Californium','(251)','Berkeley laboratory, 1950','A synthetic radioactive element. Californium-252 is a strong neutron source used to start nuclear reactors, to search for gold and oil and to scan luggage.'],
+['Es','Einsteinium','(252)','Found in 1952 in the debris of the first hydrogen bomb test','A synthetic radioactive element, made only in tiny amounts for research. It is named after Albert Einstein.'],
+['Fm','Fermium','(257)','Found in 1952 in the debris of the first hydrogen bomb test','A synthetic radioactive element named after Enrico Fermi. It is one of the heaviest elements that can be made by bombarding lighter ones with neutrons.'],
+['Md','Mendelevium','(258)','Ghiorso and colleagues, 1955','A synthetic radioactive element first made a few atoms at a time. It is named after Dmitri Mendeleev, who created the periodic table.'],
+['No','Nobelium','(259)','1950s-60s (credit was disputed)','A synthetic radioactive element made only a few atoms at a time for research. It is named after Alfred Nobel.'],
+['Lr','Lawrencium','(266)','Ghiorso and colleagues, 1961','A synthetic radioactive element at the end of the actinide series. It is named after Ernest Lawrence, who invented the cyclotron, and only a few atoms are made at a time.'],
+['Rf','Rutherfordium','(267)','Dubna and Berkeley teams, 1960s','A synthetic, highly radioactive element, the first one heavier than the actinides. It is named after Ernest Rutherford and is made a few atoms at a time.'],
+['Db','Dubnium','(268)','Dubna (1968) and Berkeley (1970)','A synthetic radioactive element named after Dubna, the Russian research town where it was made. Its isotopes are short-lived.'],
+['Sg','Seaborgium','(269)','Ghiorso and colleagues, Berkeley, 1974','A synthetic radioactive element named after Glenn Seaborg, the first element to be named after a person who was still alive.'],
+['Bh','Bohrium','(270)','GSI Darmstadt, Germany, 1981','A synthetic radioactive element named after Niels Bohr. It was made by smashing chromium atoms into bismuth.'],
+['Hs','Hassium','(277)','GSI Darmstadt, Germany, 1984','A synthetic radioactive element named after Hesse, the German state of Darmstadt. Experiments show it behaves like a heavy version of osmium.'],
+['Mt','Meitnerium','(278)','GSI Darmstadt, Germany, 1982','A synthetic radioactive element named after Lise Meitner, who helped explain nuclear fission. Only a few atoms have ever been made.'],
+['Ds','Darmstadtium','(281)','GSI Darmstadt, Germany, 1994','A synthetic, extremely short-lived element named after the German city of Darmstadt, where it was first made.'],
+['Rg','Roentgenium','(282)','GSI Darmstadt, Germany, 1994','A synthetic radioactive element named after Wilhelm Röntgen, who discovered X-rays. Only a few atoms have been made.'],
+['Cn','Copernicium','(285)','GSI Darmstadt, Germany, 1996','A synthetic radioactive element named after Nicolaus Copernicus. It is predicted to be a very volatile metal, related to mercury.'],
+['Nh','Nihonium','(286)','RIKEN, Japan, 2004','A synthetic radioactive element named after Nihon, a Japanese name for Japan. It was the first element discovered in an Asian country.'],
+['Fl','Flerovium','(289)','Dubna, Russia, 1998','A synthetic radioactive element named after the Flerov Laboratory in Dubna. It lies close to the predicted "island of stability" of longer-lived heavy nuclei.'],
+['Mc','Moscovium','(290)','Dubna, Russia, 2003','A synthetic radioactive element named after the Moscow region, where Dubna lies. Only a few hundred atoms have ever been made, and they last a fraction of a second.'],
+['Lv','Livermorium','(293)','Dubna, Russia, 2000','A synthetic radioactive element named after the Lawrence Livermore National Laboratory in California. It is extremely short-lived.'],
+['Ts','Tennessine','(294)','Dubna, Oak Ridge and Livermore teams, 2010','A synthetic radioactive element named after Tennessee, home of Oak Ridge National Laboratory. It was made by hitting berkelium with calcium ions.'],
+['Og','Oganesson','(294)','Dubna and Livermore teams, 2002-2006','The heaviest element known, synthetic and radioactive. It sits in the noble gas column but is predicted to behave very differently. It is named after the physicist Yuri Oganessian.']
+];
+
+const E=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+const CATS={alkali:['Alkali metal','#ef4444'],alkaline:['Alkaline earth metal','#f59e0b'],tm:['Transition metal','#3b82f6'],post:['Post-transition metal','#14b8a6'],metalloid:['Metalloid','#84cc16'],nonmetal:['Reactive nonmetal','#22c55e'],halogen:['Halogen','#06b6d4'],noble:['Noble gas','#a855f7'],lan:['Lanthanide','#ec4899'],act:['Actinide','#f97316'],unk:['Unknown properties','#94a3b8']};
+const CAT=[];const put=(k,a)=>a.forEach(z=>CAT[z]=k);
+put('nonmetal',[1,6,7,8,15,16,34]);put('noble',[2,10,18,36,54,86]);put('halogen',[9,17,35,53,85]);put('metalloid',[5,14,32,33,51,52]);
+put('alkali',[3,11,19,37,55,87]);put('alkaline',[4,12,20,38,56,88]);put('post',[13,31,49,50,81,82,83,84]);
+for(let z=57;z<=71;z++)CAT[z]='lan';for(let z=89;z<=103;z++)CAT[z]='act';
+for(let z=21;z<=30;z++)CAT[z]='tm';for(let z=39;z<=48;z++)CAT[z]='tm';for(let z=72;z<=80;z++)CAT[z]='tm';for(let z=104;z<=108;z++)CAT[z]='tm';
+for(let z=109;z<=118;z++)CAT[z]='unk';
+const ALT={13:'aluminum',55:'cesium',16:'sulphur'};
+function pos(z){
+  if(z===1)return[1,1];if(z===2)return[1,18];
+  if(z<=4)return[2,z-2];if(z<=10)return[2,z+8];
+  if(z<=12)return[3,z-10];if(z<=18)return[3,z];
+  if(z<=36)return[4,z-18];if(z<=54)return[5,z-36];
+  if(z<=56)return[6,z-54];if(z<=71)return[9,z-54];
+  if(z<=86)return[6,z-68];if(z<=88)return[7,z-86];
+  if(z<=103)return[10,z-86];return[7,z-100];
+}
+const SUP={'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+const sup=n=>String(n).replace(/\d/g,d=>SUP[d]);
+const ORD=[['1s',2],['2s',2],['2p',6],['3s',2],['3p',6],['4s',2],['3d',10],['4p',6],['5s',2],['4d',10],['5p',6],['6s',2],['4f',14],['5d',10],['6p',6],['7s',2],['5f',14],['6d',10],['7p',6]];
+const NOB=[[2,'He',1],[10,'Ne',3],[18,'Ar',5],[36,'Kr',8],[54,'Xe',11],[86,'Rn',15]];
+const EX={24:['Ar','4s1 3d5'],29:['Ar','4s1 3d10'],41:['Kr','5s1 4d4'],42:['Kr','5s1 4d5'],44:['Kr','5s1 4d7'],45:['Kr','5s1 4d8'],46:['Kr','4d10'],47:['Kr','5s1 4d10'],57:['Xe','6s2 5d1'],58:['Xe','6s2 4f1 5d1'],64:['Xe','6s2 4f7 5d1'],78:['Xe','6s1 4f14 5d9'],79:['Xe','6s1 4f14 5d10'],89:['Rn','7s2 6d1'],90:['Rn','7s2 6d2'],91:['Rn','7s2 5f2 6d1'],92:['Rn','7s2 5f3 6d1'],93:['Rn','7s2 5f4 6d1'],96:['Rn','7s2 5f7 6d1'],103:['Rn','7s2 5f14 7p1'],111:['Rn','7s1 5f14 6d10']};
+function cfg(z){
+  let core=null;for(const n of NOB)if(n[0]<z)core=n;let txt;
+  if(EX[z])txt='['+EX[z][0]+'] '+EX[z][1];
+  else{let left=z;const parts=[];for(let i=0;i<ORD.length&&left>0;i++){const c=Math.min(ORD[i][1],left);left-=c;parts.push(ORD[i][0]+c);}
+    txt=(core?'['+core[1]+'] ':'')+parts.slice(core?core[2]:0).join(' ');}
+  return txt.replace(/([spdf])(\d+)/g,(m,l,n)=>l+sup(n));
+}
+const GAS=[1,2,7,8,9,10,17,18,36,54,86],LIQ=[35,80];
+const stateOf=z=>GAS.includes(z)?'Gas':LIQ.includes(z)?'Liquid':(z===85||z===87)?'Probably solid':z>=104?'Unknown':'Solid';
+const D=EL.map((r,i)=>{const z=i+1,p=pos(z),row=p[0],col=p[1];
+  const f=(z>=57&&z<=70)||(z>=89&&z<=102);
+  const group=row>=9?((z===71||z===103)?3:null):col;
+  const period=row<=7?row:(row===9?6:7);
+  const block=f?'f':(z===2||group<=2)?'s':group>=13?'p':'d';
+  return {z,sym:r[0],name:r[1],mass:r[2],disc:r[3],text:r[4],row,col,cat:CAT[z],state:stateOf(z),group,period,block,cfg:cfg(z)+(z>=104?' (predicted)':'')};});
+const d=E('dialog','nxd nxp');d.id='nxpt';
+d.innerHTML='<div class="ph"><h3>Periodic table</h3><input class="nxi2" id="ptq" placeholder="Find an element…" autocomplete="off" aria-label="Find an element"><button class="btn still" id="ptx" autofocus aria-label="Close">✕</button></div><div class="pt-detail" id="ptd"></div><div class="nxs pt-leg" id="ptl"></div><div class="pt-scroll"><div class="pt-grid" id="ptg"></div></div><p class="pt-tip">Click an element to read about it. Use ← and → to move through the table, and click a color to filter by family.</p>';
+document.body.appendChild(d);
+d.addEventListener('click',e=>{if(e.target===d)d.close()});
+const q=d.querySelector('#ptq'),det=d.querySelector('#ptd'),leg=d.querySelector('#ptl'),grid=d.querySelector('#ptg');
+d.querySelector('#ptx').onclick=()=>d.close();
+let sel=0,catF='';const cells=[];
+D.forEach((e,i)=>{const b=E('button','pt-el');b.type='button';b.style.gridRow=e.row;b.style.gridColumn=e.col;b.style.setProperty('--c',CATS[e.cat][1]);
+  b.title=e.name;b.setAttribute('aria-label',e.name+', atomic number '+e.z);
+  b.append(E('i','',e.z),E('b','',e.sym),E('em','',e.name));b.onclick=()=>show(i);grid.appendChild(b);cells.push(b)});
+[[6,'lan','57–71'],[7,'act','89–103']].forEach(a=>{const b=E('div','pt-el pt-ph');b.style.gridRow=a[0];b.style.gridColumn=3;b.style.setProperty('--c',CATS[a[1]][1]);b.append(E('i','',''),E('b','',a[2]),E('em','',a[1]==='lan'?'Lanthanides':'Actinides'));grid.appendChild(b)});
+const gap=E('div','pt-gap');grid.appendChild(gap);
+Object.keys(CATS).forEach(k=>{const c=E('button','chip');c.type='button';const dot=E('span','pt-dot');dot.style.background=CATS[k][1];c.append(dot,document.createTextNode(CATS[k][0]));
+  c.onclick=()=>{catF=catF===k?'':k;leg.querySelectorAll('.chip').forEach(x=>x.classList.toggle('on',x===c&&!!catF));filter()};leg.appendChild(c)});
+function massText(m){return m[0]==='('?m.slice(1,-1)+' (most stable isotope)':m}
+function show(i){sel=((i%118)+118)%118;const e=D[sel],col=CATS[e.cat][1];
+  cells.forEach((c,k)=>c.classList.toggle('sel',k===sel));
+  const prop=(l,v,w)=>'<div'+(w?' class="wide"':'')+'><span>'+l+'</span>'+v+'</div>';
+  det.innerHTML='<div class="pt-tile" style="--c:'+col+'"><small>'+e.z+'</small><b>'+e.sym+'</b><span>'+e.name+'</span><small>'+massText(e.mass).split(' ')[0]+'</small></div>'+
+   '<div class="pt-info"><h4>'+e.name+'</h4><p>'+e.text+'</p><div class="pt-props">'+
+   prop('Category',CATS[e.cat][0])+prop('Atomic number',e.z)+prop('Atomic mass',massText(e.mass))+prop('Group',e.group||'f-block series')+prop('Period',e.period)+prop('Block',e.block)+prop('State at room temperature',e.state)+prop('Electron configuration',e.cfg,1)+prop('Discovered',e.disc,1)+
+   '</div><div class="ctabs"><button class="btn still" data-a="p">← Previous</button><button class="btn still" data-a="n">Next →</button><button class="btn still" data-a="ask">Ask AI about '+e.name+'</button><button class="btn still" data-a="quiz">Quiz me</button></div></div>';
+  det.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{const a=b.dataset.a;
+    if(a==='p')show(sel-1);else if(a==='n')show(sel+1);
+    else{d.close();send(a==='ask'?'Explain the element '+e.name+' ('+e.sym+', atomic number '+e.z+') in detail: its atoms, properties, where it is found, what it is used for, and one surprising fact.':'Give me a 5-question quiz about the periodic table and chemical elements.');}});
+}
+function filter(){const s=q.value.trim().toLowerCase();
+  cells.forEach((c,i)=>{const e=D[i];const hay=(e.sym+' '+e.name+' '+e.z+' '+CATS[e.cat][0]+' '+(ALT[e.z]||'')).toLowerCase();
+    const okq=!s||hay.includes(s),okc=!catF||e.cat===catF;c.classList.toggle('dim',!(okq&&okc))});}
+q.oninput=filter;
+q.onkeydown=ev=>{if(ev.key==='Enter'){ev.preventDefault();const s=q.value.trim().toLowerCase();
+  let i=D.findIndex(e=>e.sym.toLowerCase()===s||e.name.toLowerCase()===s||String(e.z)===s||(ALT[e.z]||'')===s);
+  if(i<0)i=cells.findIndex(c=>!c.classList.contains('dim'));if(i>=0)show(i);}};
+d.addEventListener('keydown',ev=>{if(ev.target===q)return;if(ev.key==='ArrowRight'){ev.preventDefault();show(sel+1)}else if(ev.key==='ArrowLeft'){ev.preventDefault();show(sel-1)}});
+show(0);
+window.nxOpenPeriodic=function(s){
+  s=String(s||'').trim().toLowerCase();
+  if(s){const i=D.findIndex(e=>e.sym.toLowerCase()===s||e.name.toLowerCase()===s||String(e.z)===s||(ALT[e.z]||'')===s);if(i>=0)show(i);}
+  q.value='';catF='';leg.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));filter();
+  if(!d.open)d.showModal();
+};
 })();
 </script>
 </body>
