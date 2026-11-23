@@ -498,8 +498,8 @@ renderModels();
 /* ---------- brain ---------- */
 let dl=null,imgCaps=null,deepNext=false,ctl=null; sample=true;
 fetch('/api/chat').then(r=>r.json()).then(i=>{ if(i&&i.vision){ imgCaps={maxCount:3,maxInputBytes:20e6}; $('pick').accept='image/*'; $('attach').hidden=false; } }).catch(()=>{});
-async function ask(msgs,onText){
-  const res=await fetch('/api/chat',{method:'POST',signal:ctl&&ctl.signal,headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:msgs,model:mid,memory:memText(),deep:(()=>{ const d=deepNext; deepNext=false; return d; })()})});
+async function ask(msgs,onText,opts){
+  const res=await fetch('/api/chat',{method:'POST',signal:ctl&&ctl.signal,headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:msgs,model:mid,memory:memText(),deep:(()=>{ const d=deepNext; deepNext=false; return d; })(),fast:!!(opts&&opts.fast)})});
   if(!res.ok){ let m='',j={}; try{ j=await res.json(); m=j.error||''; }catch(e){} const er=new Error(m||('Server '+res.status)); er.status=res.status; er.thinking=!!j.thinking; er.retry=j.retry||0; throw er; }
   try{ const sh=res.headers.get('X-Neo-Sources'); if(sh){ const si=JSON.parse(decodeURIComponent(sh)), sq=si.find(x=>x.search), pg=si.filter(x=>!x.search), ok=pg.filter(x=>x.ok).map(x=>x.host), bad=pg.filter(x=>!x.ok).map(x=>x.host);
     note.textContent=[sq?(sq.ok?'🔎 Searched the web: '+sq.search:'⚠ Web search failed'):'',ok.length?'🔗 Read '+ok.join(', '):'',bad.length?'⚠ Could not open '+bad.join(', '):''].filter(Boolean).join(' · '); setTimeout(()=>{ note.textContent='Johnny made this AI just for fun.'; },7000); } }catch(e){}
@@ -516,7 +516,10 @@ function add(role,text,imgs){ const h=$('hero'); if(h) h.remove();
   if(imgs&&imgs.length) d.appendChild(document.createElement('br'));
   d.appendChild(document.createTextNode(text));
   chat.appendChild(d); chat.scrollTop=chat.scrollHeight; return d; }
-async function send(text){
+let autoN=0;
+const openFiles=t=>(t.match(/\[\[file:/g)||[]).length-(t.match(/\[\[\/file\]\]/g)||[]).length;
+const CONT='Your last answer was cut off in the middle of a file. Continue exactly from the next character after where it stopped. Output only the missing rest of that file and any remaining files, with no repetition, no apology and no introduction, and close every open [[file]] block with [[/file]].';
+async function send(text,isAuto){
   text=(text||inp.value).trim(); const ims=pend.slice(); if((!text&&!ims.length)||busy||!sample) return; if(!text) text='Please solve the problem in this photo.';
   const cm=ims.length?null:cmd(text); if(cm&&cm.done){ inp.value=''; return; } if(cm&&cm.prompt) text=cm.prompt;
   inp.value=''; inp.style.height='auto'; busy=true; sendBtn.disabled=true;
@@ -528,24 +531,36 @@ async function send(text){
   const urls=(await Promise.all(ims.map(p=>shrink(p.file).catch(()=>null)))).filter(Boolean);
   const msgs=hh.map(m=>{ let c=m.content; if(m.imgs&&m.imgs.length) c=(m===um?'The person attached '+m.imgs.length+' photo(s) of a question. Read the photo carefully, say what the problem is, then solve it step by step. ':'[Earlier the person sent a photo.] ')+c;
     if(m===um&&urls.length) return {role:m.role,content:[{type:'text',text:c},...urls.map(u=>({type:'image_url',image_url:{url:u}}))]}; return {role:m.role,content:c}; });
-  let part=''; ctl=new AbortController(); $('nxstop').hidden=false;
+  let part='',okDone=false,ptxt=null,tm=0; ctl=new AbortController();
+  // Paint the growing answer at most ~25 times a second (less for very long answers) instead of on every tiny chunk: much smoother and faster.
+  const draw=t=>{ part=t; ptxt=t; if(!tm) tm=setTimeout(()=>{ tm=0; const x=ptxt; ptxt=null; if(x!=null){ stopDots(); render(b,noMem(x)); chat.scrollTop=chat.scrollHeight; } },t.length>5000?110:40); };
+  const flush=()=>{ clearTimeout(tm); tm=0; ptxt=null; }; $('nxstop').hidden=false;
   try{
     // Hit the per-minute token limit? Keep the dots going, wait quietly and try again, so it just looks like the AI is thinking.
-    const dp=deepNext; let raw;
+    const dp=deepNext; let raw,fast=false;
     for(let tr=0;;tr++){
-      try{ raw=await ask(msgs,t=>{ part=t; stopDots(); render(b,noMem(t)); chat.scrollTop=chat.scrollHeight; }); break; }
-      catch(e){ if(!(e&&e.thinking&&tr<3&&ctl&&!ctl.signal.aborted)) throw e;
+      try{ raw=await ask(msgs,draw,fast?{fast:true}:null); break; }
+      catch(e){ if(e&&e.message==='empty'&&!fast&&ctl&&!ctl.signal.aborted){ fast=true; continue; }   // nothing came back (the AI used its whole budget thinking): retry once with less thinking
+        if(!(e&&e.thinking&&tr<3&&ctl&&!ctl.signal.aborted)) throw e;
         const ms=Math.min(40,Math.max(3,e.retry||5))*1000; deepNext=dp;
-        await new Promise((res,rej)=>{ const tm=setTimeout(res,ms); ctl.signal.addEventListener('abort',()=>{ clearTimeout(tm); rej(Object.assign(new Error('Aborted'),{name:'AbortError'})); },{once:true}); }); } } const r={text:noMem(raw)}, fx=factsOf(raw); remember(fx);
+        await new Promise((res,rej)=>{ const tm=setTimeout(res,ms); ctl.signal.addEventListener('abort',()=>{ clearTimeout(tm); rej(Object.assign(new Error('Aborted'),{name:'AbortError'})); },{once:true}); }); } }
+    // Answer cut off in the middle of a file? Ask the AI to carry on and join the pieces, so every file (js, css...) gets its card.
+    for(let k=0;k<4&&openFiles(raw)>0&&ctl&&!ctl.signal.aborted;k++){
+      let more=''; try{ more=await ask([...msgs,{role:'assistant',content:raw},{role:'user',content:CONT}],t=>draw(raw+t),{fast:true}); }catch(e){ if(e&&e.name==='AbortError') throw e; break; }
+      raw+=more; part=raw; }
+    flush(); if(openFiles(raw)>0) raw+='\n[[/file]]';
+    const r={text:noMem(raw)}, fx=factsOf(raw); remember(fx);
     stopDots(); render(b,r.text); chat.scrollTop=chat.scrollHeight; history.push({role:'assistant',content:r.text}); addTools(b,r.text); if(fx.length){ const k=document.createElement('div'); k.className='nxk'; k.textContent='🧠 Remembered: '+fx.join(' · '); b.appendChild(k); }
-    if(!chats.includes(cur)) chats.unshift(cur); cur.title=cur.title||history[0].content.slice(0,50); cur.ts=Date.now(); saveChats();
+    if(!chats.includes(cur)) chats.unshift(cur); cur.title=cur.title||history[0].content.slice(0,50); cur.ts=Date.now(); saveChats(); okDone=true;
   }catch(e){
-    stopDots(); if(e&&e.name==='AbortError'){ const pt=noMem(part).trim(); if(pt){ render(b,pt); history.push({role:'assistant',content:pt}); addTools(b,pt); persist(); } else { history.pop(); b.remove(); } busy=false; sendBtn.disabled=!sample; $('nxstop').hidden=true; ctl=null; inp.focus(); return; }
+    flush(); stopDots(); if(e&&e.name==='AbortError'){ const pt=noMem(part).trim(); if(pt){ render(b,pt); history.push({role:'assistant',content:pt}); addTools(b,pt); persist(); } else { history.pop(); b.remove(); } busy=false; sendBtn.disabled=!sample; $('nxstop').hidden=true; ctl=null; inp.focus(); return; }
     history.pop(); b.classList.add('err');
     b.textContent=e&&e.status===429?'NeoXAI is busy right now. Please try again in a moment.':e&&e.message&&e.message!=='empty'?'Something went wrong: '+e.message:'Something went wrong. Please try again.';
   }
   $('nxstop').hidden=true; ctl=null;
   busy=false; sendBtn.disabled=!sample; inp.focus();
+  // Auto-repair: if the page or script Asteroid just wrote does not even parse, send it back for a fix (at most twice in a row).
+  if(okDone&&mid==='asteroid'){ if(!isAuto) autoN=0; const fm=b._files||new Map(), se=syntaxErrs(fm); if(se.length&&autoN<2){ autoN++; setTimeout(()=>send('🛠 Auto-fix: '+fixPrompt('your code',se,fm.size>1),true),500); } }
 }
 sendBtn.onclick=()=>send();
 inp.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();} });
@@ -1442,7 +1457,7 @@ chats.length?openChat([...chats].sort((a,b)=>b.ts-a.ts)[0]):newChat();
   const ld=()=>{try{return JSON.parse(localStorage.getItem(SK))||{days:{},total:0}}catch(e){return{days:{},total:0}}};
   function streak(S){let n=0,d=new Date();if(!S.days[day(d)])d.setDate(d.getDate()-1);while(S.days[day(d)]){n++;d.setDate(d.getDate()-1)}return n}
   const paint=()=>{const S=ld();bs.textContent='🔥 '+streak(S)};paint();
-  const _s=send;send=async function(t){const typed=typeof t==='string'?t:inp.value;if(!busy&&typed&&typed.trim()){const S=ld();S.days[day()]=(S.days[day()]||0)+1;S.total++;try{localStorage.setItem(SK,JSON.stringify(S))}catch(e){}paint()}return _s.apply(this,arguments)};
+  const _s=send;send=async function(t){const typed=typeof t==='string'?t:inp.value;if(!busy&&typed&&typed.trim()&&arguments[1]!==true){const S=ld();S.days[day()]=(S.days[day()]||0)+1;S.total++;try{localStorage.setItem(SK,JSON.stringify(S))}catch(e){}paint()}return _s.apply(this,arguments)};
   const statsMsg=()=>{const S=ld();return '🔥 '+streak(S)+'-day streak · '+(S.days[day()]||0)+' questions today · '+S.total+' in total'};
   /* ---- calculator + formulas ---- */
   const FM=[['Algebra','Quadratic formula','x=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}'],['Algebra','Difference of squares','a^2-b^2=(a-b)(a+b)'],['Algebra','Slope of a line','m=\\frac{y_2-y_1}{x_2-x_1}'],['Geometry','Pythagorean theorem','a^2+b^2=c^2'],['Geometry','Circle area','A=\\pi r^2'],['Geometry','Circumference','C=2\\pi r'],['Geometry','Cylinder volume','V=\\pi r^2 h'],['Geometry','Sphere volume','V=\\tfrac43\\pi r^3'],['Geometry','Triangle area','A=\\tfrac12 bh'],['Trig','Pythagorean identity','\\sin^2\\theta+\\cos^2\\theta=1'],['Trig','Law of cosines','c^2=a^2+b^2-2ab\\cos C'],['Calculus','Power rule','\\tfrac{d}{dx}x^n=nx^{n-1}'],['Calculus','Product rule',"(uv)'=u'v+uv'"],['Calculus','Power rule for integrals','\\int x^n\\,dx=\\tfrac{x^{n+1}}{n+1}+C'],['Statistics','Mean','\\bar{x}=\\tfrac{\\sum x_i}{n}'],['Statistics','Standard deviation','\\sigma=\\sqrt{\\tfrac{\\sum(x_i-\\mu)^2}{N}}'],['Finance','Compound interest','A=P\\left(1+\\tfrac rn\\right)^{nt}'],['Logs','Product rule for logs','\\log_b(xy)=\\log_b x+\\log_b y'],
